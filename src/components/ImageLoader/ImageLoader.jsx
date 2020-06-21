@@ -1,30 +1,35 @@
 /** @jsx jsx */
 import {jsx} from '@emotion/core'
 import React, {useState} from "react";
-import UrlForm from "../UrlForm/UrlForm";
-import {dark, lighter} from "../../styles/colors";
-import Spinner from "../Spinner/Spinner";
+import SimpleForm from "../SimpleForm/SimpleForm";
 
 const ImageLoader = () => {
 
     const [imageUrl,setImageUrl] = useState();
+    const [isLoading,setIsLoading] = useState(false);
     const [loadState,setLoadState] = useState('');
 
     function loadImage({url}){
-        setLoadState('loading');
-        setImageUrl(url);
+        if(imageUrl !== url){
+            setIsLoading(true);
+            setImageUrl(url);
+        }
     }
 
     function loadingImage(){
-        setLoadState(true);
+        setIsLoading(true);
     }
 
     function imageLoaded(){
         setLoadState('loaded');
+        setIsLoading(false);
     }
 
     function imageNotLoaded(){
+        console.log('error')
+
         setLoadState('error');
+        setIsLoading(false);
     }
 
     return (
@@ -35,17 +40,18 @@ const ImageLoader = () => {
                 justifyContent: 'center',
                 marginBottom: '1em'
             }}>
-                {loadState === 'loading' && <Spinner/> }
                 {loadState === 'error' && 'Error Loading Image, try with another URL' }
                 <img style={loadState !== 'loaded' ? { display: 'none' } :  {}}
                      onLoadStart={loadingImage}
                      onLoad={imageLoaded}
                      onError={imageNotLoaded}
+                     onErrorCapture={imageLoaded}
+
                      width={'100%'}
                      src={imageUrl}
                      alt={'custom user loaded'}/>
             </div>
-            <UrlForm onSubmit={loadImage} buttonText={'Load Image'}/>
+            <SimpleForm onSubmit={loadImage} buttonText={'Load Image'} inputText={'load image url'} inputName={'url'} isLoading={isLoading}/>
         </div>)
 };
 

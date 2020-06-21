@@ -3,15 +3,17 @@ import {jsx} from '@emotion/core'
 import * as React from 'react';
 import Button from "../Button/Button";
 import Input from "../Input/Input";
+import Spinner from "../Spinner/Spinner";
 
 
-export const UrlForm = ({onSubmit, buttonText}) => {
+export const SimpleForm = ({onSubmit, buttonText, inputText, inputName, isLoading}) => {
     function handleSubmit(event) {
         event.preventDefault();
-        const { url } = event.target.elements;
+        console.log(event.target.elements);
+        const input = event.target.elements[inputName];
 
         onSubmit({
-            url: url.value
+            [inputName]: input.value
         })
     }
 
@@ -27,14 +29,16 @@ export const UrlForm = ({onSubmit, buttonText}) => {
                 gridTemplateColumns: '1fr 10fr',
                 gridGap: '0.5em',
             }}>
-            <label htmlFor="url">image url</label>
-            <Input id="url" />
+                <label htmlFor={inputName}>{inputText}</label>
+                <Input id={inputName} />
             </div>
             <div>
-                <Button type="submit">{buttonText}</Button>
+                <Button type="submit">
+                    {isLoading ? <Spinner/> : buttonText}
+                </Button>
             </div>
         </form>
     )
 };
 
-export default UrlForm;
+export default SimpleForm;
