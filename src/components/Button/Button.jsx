@@ -8,7 +8,7 @@ const buttonVariants = {
     },
     secondary: {
         background: dark,
-        color: '#434449',
+        color: 'white',
     },
 };
 

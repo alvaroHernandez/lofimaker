@@ -5,7 +5,7 @@ import {dark} from "../../styles/colors";
 import {useAsync} from "../../hooks/useAsync";
 import GifGrid from "../GifGrid/GifGrid";
 
-const GifSearcher = props => {
+const GifSearcher = ({clickHandler}) => {
     const {data, error, run, isLoading, isError, isSuccess} = useAsync();
     const [query, setQuery] = React.useState();
     const [queried, setQueried] = React.useState(false);
@@ -18,7 +18,6 @@ const GifSearcher = props => {
     }, [query, queried, run]);
 
     function handleSearchSubmit({search}) {
-        console.log(search)
         setQueried(true);
         setQuery(search);
     }
@@ -36,7 +35,7 @@ const GifSearcher = props => {
             }
 
             {isSuccess  ?
-                <GifGrid gifs={data.data}/> : Error
+                <GifGrid clickHandler={clickHandler} gifs={data.data}/> : Error
             }
         </div>
     );

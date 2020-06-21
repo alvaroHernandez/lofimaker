@@ -2,7 +2,7 @@
 import {jsx} from '@emotion/core'
 import React from 'react';
 
-const GifGrid = ({gifs}) => {
+const GifGrid = ({gifs,clickHandler}) => {
     return (
         <ul css={{
             display: 'grid',
@@ -15,7 +15,7 @@ const GifGrid = ({gifs}) => {
         }}>
             {
                 gifs.map(gif =>
-                    <li>
+                    <li onClick={() => clickHandler({url:gif.images.downsized_large.url})}>
                         <img css={{
                             display: 'block',
                             objectFit: 'cover',

@@ -6,7 +6,9 @@ import BeatsCreator from "../BeatsCreator/BeatsCreator";
 import Dialog from "@reach/dialog";
 import ImageLoader from "../ImageLoader/ImageLoader";
 import {dark, light} from "../../styles/colors";
-import GifSearcher from "../GifSearcher/GifSearcher";
+import "@reach/tabs/styles.css";
+
+
 
 
 const LoFiMaker = () => {
@@ -19,12 +21,15 @@ const LoFiMaker = () => {
                     Lo-fi Maker
                 </h1>
                 <Dialog aria-label="welcome dialog" isOpen={openDialog}>
-                    Bienvenido a LofiMaker
+                    Welcome to LofiMaker
                     <button onClick={() => setOpenDialog(false)}>Close</button>
                 </Dialog>
-                <GifSearcher/>
                 <ImageLoader/>
+                <div css={{
+                    marginTop: '1em',
+                }}>
                 <BeatsCreator/>
+                </div>
             </Column>
             <Column spanSmall={1} spanMedium={2}/>
         </Layout>

@@ -33,7 +33,7 @@ export const SimpleForm = ({onSubmit, buttonText, inputText, inputName, isLoadin
                 <Input id={inputName} />
             </div>
             <div>
-                <Button type="submit">
+                <Button variant={'secondary'} type="submit">
                     {isLoading ? <Spinner/> : buttonText}
                 </Button>
             </div>
