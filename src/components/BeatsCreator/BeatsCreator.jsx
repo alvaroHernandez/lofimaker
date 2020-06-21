@@ -1,51 +1,13 @@
+import styled from '@emotion/styled/macro'
 import React, {useEffect, useState} from "react";
-import styled from "styled-components";
 import kick from '../../assets/sounds/kick1.aif.mp3';
 import hihat from '../../assets/sounds/cl_hihat.aif.mp3';
 import snare from '../../assets/sounds/snare.aif.mp3';
+import Beat from "../Beat/Beat";
+import Button from "../Button/Button";
 
 const separation = '0.5em';
 const totalMeasures = 16;
-
-const StyledBeatsCreator = styled.div`
-    background-color: #61dafb;
-    display: grid;
-    grid-gap: ${separation};
-    grid-template-columns: 1fr 10fr;
-    grid-template-rows: 1fr;
-    grid-template-areas: "trackInstrument trackBeats";
-`;
-
-const TrackInstrument = styled.div`
-    background-color: #282c34;
-    display: grid;
-    grid-gap: ${separation};
-    grid-area: trackInstrument;
-`;
-
-const TrackBeats = styled.div`
-    background-color: red;
-    display: grid;
-    grid-gap: ${separation};
-    grid-area: trackBeats;
-    grid-template-columns: repeat(${totalMeasures},  1fr);
-`;
-
-const StyledBeat = styled.div`
-    border: 1px solid blue;
-    background-color: ${props => props.isOn ? 'green' : 'yellow'};
-    width: 30px;
-    height: 30px;
-`;
-
-const Beat = ({ trackName, beatIndex, clickHandler}) => {
-    const [isOn,setIsOn] = useState(false);
-    function toggle(trackName,beatIndex)  {
-        clickHandler(trackName,beatIndex);
-        setIsOn(!isOn);
-    }
-    return <StyledBeat isOn={isOn} onClick={() => toggle(trackName, beatIndex)}/>;
-};
 
 const tracks = {
     "kick": {
@@ -58,6 +20,46 @@ const tracks = {
         "sound": hihat
     }
 };
+
+const StyledBeatsCreator = styled.div`
+    display: grid;
+    grid-gap: ${separation};
+    grid-template-columns: 1fr 10fr;
+    grid-template-rows: 2fr 1fr;
+    grid-template-areas: "trackInstrument trackBeats" "trackControls trackControls";
+    overflow: scroll;
+`;
+
+const TrackInstrumentsContainer = styled.div`
+    display: grid;
+    grid-gap: ${separation};
+    grid-area: trackInstrument;
+`;
+
+const TrackInstrument = styled.div`
+    align-items: center;
+    display: flex;
+`;
+
+const TrackBeats = styled.div`
+    display: grid;
+    grid-gap: ${separation};
+    grid-area: trackBeats;
+    grid-template-columns: repeat(${totalMeasures},  1fr);
+`;
+
+const TrackControls = styled.div`
+    display: grid;
+    grid-gap: ${separation};
+    grid-area: trackControls;
+    grid-template-columns: 60px 60px 60px;
+`;
+
+const TrackControl = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`;
 
 const BeatsCreator = () => {
     const [currentBeat,setCurrentBeat] = useState(0);
@@ -72,10 +74,15 @@ const BeatsCreator = () => {
 
     function stop() {
         if (player != undefined) {
-            setPlayer(clearInterval(player))
+            clearInterval(player);
+            setPlayer();
+            setCurrentBeat(0);
         }
     }
     function play() {
+        if (player != undefined) {
+            return;
+        }
         let beat = 0;
         setPlayer(window.setInterval(function()
         {
@@ -109,14 +116,25 @@ const BeatsCreator = () => {
 
     return (
             <StyledBeatsCreator>
-                {currentBeat}
-                <TrackInstrument onClick={play}/>
-                <div onClick={stop}>
-                    Stop
-                </div>
+                <TrackInstrumentsContainer>
+                    {Object.keys(tracks).map((track) => <TrackInstrument>
+                        {track}
+                    </TrackInstrument>)}
+                </TrackInstrumentsContainer>
                 <TrackBeats>
                     {Object.keys(tracks).map((track) => renderBeats(track,totalMeasures))}
                 </TrackBeats>
+                <TrackControls>
+                    <TrackControl>
+                        {currentBeat}
+                    </TrackControl>
+                    <TrackControl>
+                        <Button onClick={play}>Play</Button>
+                    </TrackControl>
+                    <TrackControl>
+                        <Button onClick={stop}>Stop</Button>
+                    </TrackControl>
+                </TrackControls>
             </StyledBeatsCreator>
     );
 };

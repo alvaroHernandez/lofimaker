@@ -1,4 +1,9 @@
+/** @jsx jsx */
+import {jsx} from '@emotion/core'
 import * as React from 'react';
+import Button from "../Button/Button";
+import Input from "../Input/Input";
+
 
 export const UrlForm = ({onSubmit, buttonText}) => {
     function handleSubmit(event) {
@@ -11,13 +16,22 @@ export const UrlForm = ({onSubmit, buttonText}) => {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <div>
-            <label htmlFor="url">Username</label>
-            <input id="url" />
+        <form onSubmit={handleSubmit} css={{
+            display: 'grid',
+            gridTemplateColumns: '10fr 1fr',
+            gridGap: '0.5em',
+            marginBottom: '1em',
+        }}>
+            <div css={{
+                display: 'grid',
+                gridTemplateColumns: '1fr 10fr',
+                gridGap: '0.5em',
+            }}>
+            <label htmlFor="url">image url</label>
+            <Input id="url" />
             </div>
             <div>
-                <button type="submit">{buttonText}</button>
+                <Button type="submit">{buttonText}</Button>
             </div>
         </form>
     )
