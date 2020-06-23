@@ -2,8 +2,7 @@
 import {jsx} from '@emotion/core'
 import React from 'react';
 
-const GifGrid = ({gifs,clickHandler}) => {
-    return (
+const GifGrid = ({gifs,clickHandler}) => {return (
         <ul css={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))',
@@ -23,7 +22,6 @@ const GifGrid = ({gifs,clickHandler}) => {
                             height: '100%',
                         }} src={gif.images.preview_gif.url}/>
                     </li>
-
                 )
             }
         </ul>

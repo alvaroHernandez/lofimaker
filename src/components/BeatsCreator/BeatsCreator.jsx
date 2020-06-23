@@ -1,33 +1,18 @@
 import styled from '@emotion/styled/macro'
 import React, {useEffect, useState} from "react";
-import kick from '../../assets/sounds/kick1.aif.mp3';
-import hihat from '../../assets/sounds/cl_hihat.aif.mp3';
-import snare from '../../assets/sounds/snare.aif.mp3';
 import Beat from "../Beat/Beat";
 import Button from "../Button/Button";
+import Box from "../BoxWithCenteredText/Box";
+import {tracks} from "../../assets/sounds/tracks";
 
 const separation = '0.5em';
-const totalMeasures = 16;
+const totalMeasures = 20;
 
-const tracks = {
-    "kick": {
-        "sound": kick,
-    },
-    "snare": {
-        "sound": snare,
-    },
-    "hihat": {
-        "sound": hihat
-    }
-};
-
-const StyledBeatsCreator = styled.div`
+const BeatsCreatorGrid = styled.div`
     display: grid;
     grid-gap: ${separation};
     grid-template-columns: 1fr 10fr;
-    grid-template-rows: 2fr 1fr;
-    grid-template-areas: "trackInstrument trackBeats" "trackControls trackControls";
-    overflow: scroll;
+    grid-template-areas: "trackInstrument trackBeats";
 `;
 
 const TrackInstrumentsContainer = styled.div`
@@ -49,9 +34,9 @@ const TrackBeats = styled.div`
 `;
 
 const TrackControls = styled.div`
+    margin-top: 1em;
     display: grid;
     grid-gap: ${separation};
-    grid-area: trackControls;
     grid-template-columns: 60px 60px 60px;
 `;
 
@@ -67,20 +52,20 @@ const BeatsCreator = () => {
     const [player, setPlayer] = useState();
 
     useEffect(()=>{
-        for(let i = 0; i < 16; i++){
+        for(let i = 0; i < totalMeasures; i++){
             setBeats(beats => [...beats,{}]);
         }
     },[]);
 
     function stop() {
-        if (player != undefined) {
+        if (player !== undefined) {
             clearInterval(player);
             setPlayer();
             setCurrentBeat(0);
         }
     }
     function play() {
-        if (player != undefined) {
+        if (player !== undefined) {
             return;
         }
         let beat = 0;
@@ -115,7 +100,9 @@ const BeatsCreator = () => {
     }
 
     return (
-            <StyledBeatsCreator>
+        <div>
+            <Box>Make your own beat!</Box>
+            <BeatsCreatorGrid>
                 <TrackInstrumentsContainer>
                     {Object.keys(tracks).map((track) => <TrackInstrument>
                         {track}
@@ -124,18 +111,20 @@ const BeatsCreator = () => {
                 <TrackBeats>
                     {Object.keys(tracks).map((track) => renderBeats(track,totalMeasures))}
                 </TrackBeats>
-                <TrackControls>
-                    <TrackControl>
-                        {currentBeat}
-                    </TrackControl>
-                    <TrackControl>
-                        <Button onClick={play}>Play</Button>
-                    </TrackControl>
-                    <TrackControl>
-                        <Button onClick={stop}>Stop</Button>
-                    </TrackControl>
-                </TrackControls>
-            </StyledBeatsCreator>
+            </BeatsCreatorGrid>
+            <TrackControls>
+                <TrackControl>
+                    <Button variant={'secondary'} onClick={play}>Play</Button>
+                </TrackControl>
+                <TrackControl>
+                    <Button variant={'secondary'} onClick={stop}>Stop</Button>
+                </TrackControl>
+                <TrackControl>
+                    {currentBeat}
+                </TrackControl>
+            </TrackControls>
+        </div>
+
     );
 };
 

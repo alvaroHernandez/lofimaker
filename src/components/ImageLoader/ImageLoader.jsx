@@ -3,9 +3,10 @@ import {jsx} from '@emotion/core'
 import React, {useState} from "react";
 import SimpleForm from "../SimpleForm/SimpleForm";
 import {Tab, TabList, TabPanel, TabPanels, Tabs} from "@reach/tabs";
+import "@reach/tabs/styles.css";
 import GifSearcher from "../GifSearcher/GifSearcher";
-import {darker, light} from "../../styles/colors";
 import {useAsync} from "../../hooks/useAsync";
+import Box from "../BoxWithCenteredText/Box";
 
 const ImageLoader = () => {
 
@@ -45,20 +46,11 @@ const ImageLoader = () => {
     return (
         <div>
             <div>
-                <div css={{
-                    width: '100%',
-                    backgroundColor: darker,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                }}>
+                <Box>
                     {renderMessage()}
-                </div>
+                </Box>
             </div>
-            <Tabs css={{
-                marginTop: '1em',
-                backgroundColor: darker,
-            }}>
+            <Tabs>
                 <TabList>
                     <Tab>Search a Gif</Tab>
                     <Tab>Load Image from URL</Tab>
