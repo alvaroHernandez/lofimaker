@@ -1,5 +1,4 @@
-console.log(process.env.REACT_APP_GIPHY_API_KEY);
-function client(query, customConfig = {}) {
+function giphyClient(query, customConfig = {}) {
     const config = {
         method: 'GET',
         ...customConfig,
@@ -17,4 +16,4 @@ function client(query, customConfig = {}) {
         })
 }
 
-export {client}
+export {giphyClient}

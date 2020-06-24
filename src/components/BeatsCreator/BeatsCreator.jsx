@@ -104,9 +104,11 @@ const BeatsCreator = () => {
             <Box>Make your own beat!</Box>
             <BeatsCreatorGrid>
                 <TrackInstrumentsContainer>
-                    {Object.keys(tracks).map((track) => <TrackInstrument>
-                        {track}
-                    </TrackInstrument>)}
+                    {Object.keys(tracks).map((track) =>
+                        <TrackInstrument id={{track}}>
+                            {track}
+                        </TrackInstrument>
+                    )}
                 </TrackInstrumentsContainer>
                 <TrackBeats>
                     {Object.keys(tracks).map((track) => renderBeats(track,totalMeasures))}

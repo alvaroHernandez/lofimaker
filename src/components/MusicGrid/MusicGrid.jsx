@@ -17,7 +17,7 @@ const MusicGrid = ({tracks,clickHandler}) => {
         }}>
             {
                 tracks.map(track =>
-                    <li onClick={() => clickHandler({id:track.id,title: track.title})}>
+                    <li id={track.id} onClick={() => clickHandler({id:track.id,title: track.title})}>
                         <div css={{
                             display: 'block',
                             objectFit: 'cover',

@@ -14,7 +14,7 @@ const GifGrid = ({gifs,clickHandler}) => {return (
         }}>
             {
                 gifs.map(gif =>
-                    <li onClick={() => clickHandler({url:gif.images.downsized_large.url})}>
+                    <li key={gif.id} onClick={() => clickHandler({url:gif.images.downsized_large.url})}>
                         <img css={{
                             display: 'block',
                             objectFit: 'cover',

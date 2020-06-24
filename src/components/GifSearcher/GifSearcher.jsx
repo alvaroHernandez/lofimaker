@@ -1,6 +1,6 @@
 import React from 'react';
 import SimpleForm from "../SimpleForm/SimpleForm";
-import  {client} from '../../clients/client'
+import  {giphyClient} from '../../clients/giphyClient'
 import {dark} from "../../styles/colors";
 import {useAsync} from "../../hooks/useAsync";
 import GifGrid from "../GifGrid/GifGrid";
@@ -14,7 +14,7 @@ const GifSearcher = ({clickHandler}) => {
         if (!queried) {
             return
         }
-        run(client(encodeURIComponent(query)))
+        run(giphyClient(encodeURIComponent(query)))
     }, [query, queried, run]);
 
     function handleSearchSubmit({search}) {
@@ -34,8 +34,8 @@ const GifSearcher = ({clickHandler}) => {
                 ) : null
             }
 
-            {isSuccess  ?
-                <GifGrid clickHandler={clickHandler} gifs={data.data}/> : Error
+            {isSuccess &&
+                <GifGrid clickHandler={clickHandler} gifs={data.data}/>
             }
         </div>
     );

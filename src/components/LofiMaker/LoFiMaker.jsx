@@ -18,7 +18,6 @@ const LoFiMaker = () => {
         <Layout color={'white'} backgroundColor={light}>
             <Column spanSmall={1} spanMedium={2}/>
             <Column backgroundColor={dark} spanSmall={10} spanMedium={8}>
-
                 <Dialog aria-label="welcome dialog" isOpen={openDialog}>
                     Welcome to LofiMaker
                     <button onClick={() => setOpenDialog(false)}>Close</button>
