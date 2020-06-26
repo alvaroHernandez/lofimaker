@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import {jsx} from '@emotion/core'
-import React, {useState} from 'react';
+import {useState} from 'react';
 import { Layout, Column } from "../Layout/Column";
 import BeatsCreator from "../BeatsCreator/BeatsCreator";
 import {DialogContent, DialogOverlay} from "@reach/dialog";

@@ -17,7 +17,6 @@ class SoundCloudClient {
   }
 
   stream(track) {
-    console.log(track)
     return this.client.stream(track)
   }
 }
