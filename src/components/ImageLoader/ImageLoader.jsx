@@ -8,7 +8,7 @@ import GifSearcher from "../GifSearcher/GifSearcher";
 import {useAsync} from "../../hooks/useAsync";
 import Box from "../BoxWithCenteredText/Box";
 
-const ImageLoader = () => {
+const ImageLoader = ({updateFinalImage}) => {
 
     const {data, run, isLoading, isError, isSuccess} = useAsync();
     const [imageUrl,setImageUrl] = useState();
@@ -34,6 +34,7 @@ const ImageLoader = () => {
         if(isError) {
             return <span>Error Loading Image, try with another URL</span>
         }else if(isSuccess){
+            updateFinalImage(data);
             return <img
                         width={'100%'}
                         src={data}
