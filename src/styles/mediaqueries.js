@@ -1,1 +1,1 @@
-export const medium = '@media (min-width: 768px)';
+export const medium = '@media (min-width: 768px)'

@@ -1,11 +1,8 @@
-import React, {useState} from 'react';
-import LoFiMaker from "./components/LofiMaker/LoFiMaker";
+import React, {useState} from 'react'
+import LoFiMaker from './components/LofiMaker/LoFiMaker'
 
 function App() {
-
-  return (
-          <LoFiMaker/>
-  );
+  return <LoFiMaker />
 }
 
-export default App;
+export default App
