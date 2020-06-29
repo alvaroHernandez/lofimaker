@@ -1,90 +1,96 @@
 import styled from '@emotion/styled/macro'
-import React, {useEffect, useRef, useState} from "react";
-import Button from "../Button/Button";
-import Box from "../BoxWithCenteredText/Box";
-import {tracks} from "../../assets/sounds/tracks";
-import BeatsCreatorGrid from "../BeatsCreatorGrid/BeatsCreatorGrid";
+import React, {useEffect, useRef, useState} from 'react'
+import Button from '../Button/Button'
+import Box from '../BoxWithCenteredText/Box'
+import {tracks} from '../../assets/sounds/tracks'
+import BeatsCreatorGrid from '../BeatsCreatorGrid/BeatsCreatorGrid'
 
-const totalBeats = 20;
+const totalBeats = 20
 
 const TrackControls = styled.div`
-    margin-top: 1em;
-    grid-gap: 1em;
-    display: grid;
-    grid-template-columns: 60px 60px 60px;
-`;
+  margin-top: 1em;
+  grid-gap: 1em;
+  display: grid;
+  grid-template-columns: 60px 60px 60px;
+`
 
 const TrackControl = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-`;
-
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
 
 const BeatsCreator = () => {
-    const beatsContainer = useRef([]);
-    const [currentBeat,setCurrentBeat] = useState(0);
-    const [player, setPlayer] = useState();
+  const beatsContainer = useRef([])
+  const [currentBeat, setCurrentBeat] = useState(0)
+  const [player, setPlayer] = useState()
 
-    useEffect(()=>{
-        for(let i = 0; i < totalBeats; i++){
-            beatsContainer.current.push({})
-        }
-    },[]);
-
-    function stop() {
-        if (player !== undefined) {
-            clearInterval(player);
-            setPlayer();
-            setCurrentBeat(0);
-        }
+  useEffect(() => {
+    for (let i = 0; i < totalBeats; i++) {
+      beatsContainer.current.push({})
     }
-    function play() {
-        if (player !== undefined) {
-            return;
-        }
-        let beat = 0;
-        setPlayer(window.setInterval(function()
-        {
-            for (let [, value] of Object.entries(beatsContainer.current[beat])) {
-                value.play();
-            }
+  }, [])
 
-            beat += 1;
-            if(beat === beatsContainer.current.length){
-                beat=0;
-            }
-            setCurrentBeat(beat);
-        }, 100));
+  function stop() {
+    if (player !== undefined) {
+      clearInterval(player)
+      setPlayer()
+      setCurrentBeat(0)
     }
-
-    const toggleBeat = (trackName,beatIndex) => {
-        if (beatsContainer.current[beatIndex][trackName] === undefined){
-            beatsContainer.current[beatIndex][trackName] = new Audio(tracks[trackName].sound);
-        }else{
-            delete beatsContainer.current[beatIndex][trackName]
+  }
+  function play() {
+    if (player !== undefined) {
+      return
+    }
+    let beat = 0
+    setPlayer(
+      window.setInterval(function () {
+        for (let [, value] of Object.entries(beatsContainer.current[beat])) {
+          value.play()
         }
-    };
 
+        beat += 1
+        if (beat === beatsContainer.current.length) {
+          beat = 0
+        }
+        setCurrentBeat(beat)
+      }, 100),
+    )
+  }
 
-    return (
-        <div>
-            <Box>Make your own beat!</Box>
-            <BeatsCreatorGrid totalBeats={totalBeats} tracks={tracks} toggleBeat={toggleBeat} />
-            <TrackControls>
-                <TrackControl>
-                    <Button variant={'secondary'} onClick={play}>Play</Button>
-                </TrackControl>
-                <TrackControl>
-                    <Button variant={'secondary'} onClick={stop}>Stop</Button>
-                </TrackControl>
-                <TrackControl>
-                    {currentBeat}
-                </TrackControl>
-            </TrackControls>
-        </div>
+  const toggleBeat = (trackName, beatIndex) => {
+    if (beatsContainer.current[beatIndex][trackName] === undefined) {
+      beatsContainer.current[beatIndex][trackName] = new Audio(
+        tracks[trackName].sound,
+      )
+    } else {
+      delete beatsContainer.current[beatIndex][trackName]
+    }
+  }
 
-    );
-};
+  return (
+    <div>
+      <Box>Make your own beat!</Box>
+      <BeatsCreatorGrid
+        totalBeats={totalBeats}
+        tracks={tracks}
+        toggleBeat={toggleBeat}
+      />
+      <TrackControls>
+        <TrackControl>
+          <Button variant={'secondary'} onClick={play}>
+            Play
+          </Button>
+        </TrackControl>
+        <TrackControl>
+          <Button variant={'secondary'} onClick={stop}>
+            Stop
+          </Button>
+        </TrackControl>
+        <TrackControl>{currentBeat}</TrackControl>
+      </TrackControls>
+    </div>
+  )
+}
 
-export default BeatsCreator;
+export default BeatsCreator

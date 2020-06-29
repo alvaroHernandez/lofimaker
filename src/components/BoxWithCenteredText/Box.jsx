@@ -1,19 +1,23 @@
 /** @jsx jsx */
-import {jsx} from "@emotion/core";
-import React from 'react';
-import {darker} from "../../styles/colors";
+import {jsx} from '@emotion/core'
+import React from 'react'
+import {darker} from '../../styles/colors'
 
 const Box = ({children}) => {
-    return (
-        <div css={{
-            margin: '0.5em 0 2em',
-            width: '100%',
-            backgroundColor: darker,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-        }}>{children}</div>
-    );
-};
+  return (
+    <div
+      css={{
+        margin: '0.5em 0 2em',
+        width: '100%',
+        backgroundColor: darker,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      {children}
+    </div>
+  )
+}
 
-export default Box;
+export default Box
