@@ -1,3 +1,5 @@
+import {client} from './baseClient'
+
 class SoundCloudClient {
   constructor() {
     this.client = require('soundcloud')
@@ -17,7 +19,10 @@ class SoundCloudClient {
   }
 
   stream(track) {
-    return this.client.stream(track)
+    return client(
+      `${track}?client_id=${process.env.REACT_APP_SOUND_CLOUD_CLIENT_ID}`,
+      {redirect: 'manual'},
+    )
   }
 }
 

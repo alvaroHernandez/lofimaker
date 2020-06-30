@@ -14,6 +14,9 @@ function client(
   }
 
   return window.fetch(endpoint, config).then(async response => {
+    if (response.type === 'opaqueredirect') {
+      return response.url
+    }
     const data = await response.json()
     if (response.ok) {
       return data

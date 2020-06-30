@@ -1,7 +1,7 @@
 import styled from '@emotion/styled/macro'
 import React, {useEffect, useRef, useState} from 'react'
 import Button from '../Button/Button'
-import Box from '../BoxWithCenteredText/Box'
+import BoxWithCenteredContent from '../BoxWithCenteredText/BoxWithCenteredContent'
 import {tracks} from '../../assets/sounds/tracks'
 import BeatsCreatorGrid from '../BeatsCreatorGrid/BeatsCreatorGrid'
 
@@ -70,7 +70,7 @@ const BeatsCreator = () => {
 
   return (
     <div>
-      <Box>Make your own beat!</Box>
+      <BoxWithCenteredContent>Make your own beat!</BoxWithCenteredContent>
       <BeatsCreatorGrid
         totalBeats={totalBeats}
         tracks={tracks}

@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import {jsx} from '@emotion/core'
 import React from 'react'
-import {light} from '../../styles/colors'
 
 const MusicGrid = ({tracks, clickHandler}) => {
   console.log(tracks)
@@ -20,7 +19,14 @@ const MusicGrid = ({tracks, clickHandler}) => {
       {tracks.map(track => (
         <li
           id={track.id}
-          onClick={() => clickHandler({id: track.id, title: track.title})}
+          onClick={() =>
+            clickHandler({
+              id: track.id,
+              title: track.title,
+              duration: track.duration,
+              streamUrl: track.stream_url,
+            })
+          }
         >
           <div
             css={{

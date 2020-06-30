@@ -3,7 +3,6 @@ import {jsx} from '@emotion/core'
 import {useState} from 'react'
 import {Layout, Column} from '../Layout/Column'
 import BeatsCreator from '../BeatsCreator/BeatsCreator'
-import {DialogContent, DialogOverlay} from '@reach/dialog'
 import '@reach/dialog/styles.css'
 import ImageLoader from '../ImageLoader/ImageLoader'
 import {dark, light} from '../../styles/colors'
@@ -12,40 +11,75 @@ import MusicSelector from '../MusicSelector/MusicSelector'
 import Section from '../Section/Section'
 import Header from '../Header/Header'
 import Button from '../Button/Button'
+import FinalImageModal from '../FinalImageModal/FinalImageModal'
+import BoxWithCenteredContent from '../BoxWithCenteredText/BoxWithCenteredContent'
+import AutoFitGrid from '../AutoFitGrid/AutoFitGrid'
 
 const LoFiMaker = () => {
-  const [openDialog, setOpenDialog] = useState(false)
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [finalImage, setFinalImage] = useState()
+  const [finalImageFilter, setFinalImageFilter] = useState()
+  const [tracks, setTracks] = useState([])
 
   const updateFinalImage = imageSrc => {
     setFinalImage(imageSrc)
   }
 
+  const addTrack = type => {
+    switch (type) {
+      case 'sound':
+        setTracks([
+          ...tracks,
+          <Section>
+            <MusicSelector />
+          </Section>,
+        ])
+        break
+      case 'drum':
+        setTracks([
+          ...tracks,
+          <Section>
+            <BeatsCreator />
+          </Section>,
+        ])
+        break
+    }
+  }
+
   return (
     <Layout color={'white'} backgroundColor={light}>
-      <Column spanSmall={1} spanMedium={2} />
-      <Column backgroundColor={dark} spanSmall={10} spanMedium={8}>
-        <DialogOverlay
-          onDismiss={() => setOpenDialog(false)}
-          aria-label="welcome dialog"
-          isOpen={openDialog}
-          style={{background: 'hsla(0, 0%, 0%, 0.9)'}}
-        >
-          <DialogContent>
-            <img alt={'final image'} src={finalImage} width={'100%'} />
-          </DialogContent>
-        </DialogOverlay>
-
+      <Column backgroundColor={dark} spanSmall={10} spanMedium={12}>
         <Header />
         <Section>
-          <ImageLoader updateFinalImage={updateFinalImage} />
+          <ImageLoader
+            setGlobalFilter={setFinalImageFilter}
+            updateFinalImage={updateFinalImage}
+          />
         </Section>
         <Section>
-          <MusicSelector />
+          <BoxWithCenteredContent>Now add as many tracks as you want!</BoxWithCenteredContent>
+          <AutoFitGrid>
+            <Button variant={'secondary'} onClick={() => addTrack('sound')}>
+              Sound
+            </Button>
+            <Button variant={'secondary'} onClick={() => addTrack('melody')}>
+              Melody
+            </Button>
+            <Button variant={'secondary'} onClick={() => addTrack('drum')}>
+              Drum
+            </Button>
+            <Button variant={'secondary'} onClick={() => addTrack('bass')}>
+              Bass
+            </Button>
+          </AutoFitGrid>
         </Section>
-        <Section>
-          <BeatsCreator />
-        </Section>
+        {tracks}
+        <FinalImageModal
+          imageFilter={finalImageFilter}
+          setIsDialogOpen={setIsDialogOpen}
+          isDialogOpen={isDialogOpen}
+          image={finalImage}
+        />
         {finalImage && (
           <Section>
             <Button
@@ -53,14 +87,13 @@ const LoFiMaker = () => {
                 width: '100%',
               }}
               variant={'secondary'}
-              onClick={() => setOpenDialog(true)}
+              onClick={() => setIsDialogOpen(true)}
             >
-              I'm Ready!
+              {"I'm Ready!"}
             </Button>
           </Section>
         )}
       </Column>
-      <Column spanSmall={1} spanMedium={2} />
     </Layout>
   )
 }

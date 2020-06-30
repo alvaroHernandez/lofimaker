@@ -3,17 +3,16 @@ import {jsx} from '@emotion/core'
 import React from 'react'
 import {darker} from '../../styles/colors'
 
-const Section = ({children}) => {
+const Section = props => {
   return (
     <div
+      {...props}
       css={{
         marginTop: '1em',
         backgroundColor: darker,
         padding: '1em',
       }}
-    >
-      {children}
-    </div>
+    />
   )
 }
 
