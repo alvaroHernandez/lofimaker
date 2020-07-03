@@ -24,7 +24,14 @@ const Tone = ({name, player, effect, property, from, to, step}) => {
   }
 
   function sliderChangeHandler(value) {
-    effect[property] = value
+    console.log('-------')
+    console.log(value)
+    console.log('-------')
+    console.log(effect)
+    console.log(property)
+    console.log(effect[property])
+    // debugger
+    effect[property].value = value
   }
 
   return (

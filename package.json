@@ -5,16 +5,21 @@
   "dependencies": {
     "@emotion/core": "^10.0.28",
     "@emotion/styled": "^10.0.27",
+    "@reach/checkbox": "^0.10.5",
     "@reach/dialog": "^0.10.4",
     "@reach/slider": "^0.10.5",
     "@reach/tabs": "^0.10.4",
     "@reach/visually-hidden": "^0.10.4",
+    "prop-types": "^15.7.2",
+    "rc-knob": "^1.0.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-icons": "^3.10.0",
     "react-scripts": "3.4.1",
+    "react-toggle": "^4.1.1",
     "soundcloud": "^3.3.2",
-    "tone": "^14.7.12"
+    "tone": "^14.7.12",
+    "tunajs": "^1.0.11"
   },
   "scripts": {
     "start": "react-scripts start",

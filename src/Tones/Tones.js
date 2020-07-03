@@ -7,16 +7,20 @@ import {
   Chebyshev,
   Chorus,
   Distortion,
+  EQ3,
+  FrequencyEnvelope,
   Noise,
   PitchShift,
   Player,
   Reverb,
   Vibrato,
 } from 'tone'
-import am from './am2.mp3'
+import am from './am.mp3'
 
 var player = new Player(am).toDestination()
 player.autostart = true
+
+var eq = new EQ3().toDestination()
 
 var reverb = new Reverb().toDestination()
 var distortion = new Distortion().toDestination()
@@ -45,6 +49,33 @@ function stop() {
 const Tones = () => {
   return (
     <>
+      <Tone
+        player={player}
+        name={'eq'}
+        effect={eq}
+        property={'low'}
+        from={-10}
+        to={10}
+        step={0.1}
+      />
+      <Tone
+        player={player}
+        name={'eq'}
+        effect={eq}
+        property={'mid'}
+        from={-10}
+        to={10}
+        step={0.1}
+      />
+      <Tone
+        player={player}
+        name={'eq'}
+        effect={eq}
+        property={'high'}
+        from={-10}
+        to={10}
+        step={0.1}
+      />
       <Tone
         player={player}
         name={'reverb'}

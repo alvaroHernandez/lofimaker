@@ -8,10 +8,9 @@ import BoxWithCenteredContent from '../BoxWithCenteredText/BoxWithCenteredConten
 import SoundCloudClient from '../../clients/SoundCloudClient'
 import {useAsync} from '../../hooks/useAsync'
 import Track from '../Track/Track'
-import {Distortion, Player, Reverb} from 'tone'
-import Tone from '../../Tone/Tone'
-var reverb = new Reverb().toDestination()
-var distortion = new Distortion().toDestination()
+import MusicEffectsContainer from '../../MusicEffectsContainer/MusicEffectsContainer'
+import {Player} from 'tone'
+import Spinner from '../Spinner/Spinner'
 
 const MusicSelector = () => {
   const soundCloudClient = useRef(new SoundCloudClient())
@@ -27,15 +26,13 @@ const MusicSelector = () => {
   }
 
   function playIt() {
-    if (currentSongUrl !== undefined) {
-      const player = new Player(currentSongUrl).toDestination()
-      player.autostart = true
-      setPlayer(player)
+    if (player !== undefined) {
+      player.start()
     }
   }
 
   function stop() {
-    if (currentSongUrl !== undefined) {
+    if (player !== undefined) {
       player.stop()
     }
   }
@@ -45,6 +42,10 @@ const MusicSelector = () => {
     setCurrentSongDuration(duration)
     soundCloudClient.current.stream(streamUrl).then(response => {
       setCurrentSongUrl(response)
+      const player = new Player(response, () => {
+        setPlayer(player)
+      }).toDestination()
+      player.autostart = false
     })
   }
 
@@ -52,18 +53,24 @@ const MusicSelector = () => {
     <div>
       <BoxWithCenteredContent>
         {currentSongTitle ? (
-          <div>
-            {currentSongTitle}
-            <Button
-              css={{margin: '0 1em'}}
-              variant={'secondary'}
-              onClick={playIt}
-            >
-              Play
-            </Button>
-            <Button variant={'secondary'} onClick={stop}>
-              Stop
-            </Button>
+          <div css={{display: 'flex', alignItems: 'center'}}>
+            <span css={{marginRight: '1em'}}>{currentSongTitle}</span>
+            {player ? (
+              <div>
+                <Button
+                  css={{margin: '0 1em'}}
+                  variant={'secondary'}
+                  onClick={playIt}
+                >
+                  Play
+                </Button>
+                <Button variant={'secondary'} onClick={stop}>
+                  Stop
+                </Button>
+              </div>
+            ) : (
+              <Spinner />
+            )}
           </div>
         ) : (
           'Search and select a song...'
@@ -90,33 +97,7 @@ const MusicSelector = () => {
       {currentSongTitle && (
         <div>
           <Track songName={currentSongTitle} duration={currentSongDuration} />
-          <Tone
-            player={player}
-            name={'reverb'}
-            effect={reverb}
-            property={'decay'}
-            from={0.001}
-            to={10}
-            step={0.1}
-          />
-          <Tone
-            player={player}
-            name={'distortion'}
-            effect={distortion}
-            property={'distortion'}
-            from={0.001}
-            to={3}
-            step={0.01}
-          />
-          <Tone
-            player={player}
-            name={'speed'}
-            effect={player}
-            property={'playbackRate'}
-            form={0.1}
-            to={1}
-            step={0.01}
-          />
+          <MusicEffectsContainer player={player} />
         </div>
       )}
     </div>

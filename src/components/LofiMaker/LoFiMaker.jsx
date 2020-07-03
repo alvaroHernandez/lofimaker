@@ -57,7 +57,9 @@ const LoFiMaker = () => {
           />
         </Section>
         <Section>
-          <BoxWithCenteredContent>Now add as many tracks as you want!</BoxWithCenteredContent>
+          <BoxWithCenteredContent>
+            Now add as many tracks as you want!
+          </BoxWithCenteredContent>
           <AutoFitGrid>
             <Button variant={'secondary'} onClick={() => addTrack('sound')}>
               Sound
