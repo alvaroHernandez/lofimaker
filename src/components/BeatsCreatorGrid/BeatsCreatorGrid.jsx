@@ -1,22 +1,22 @@
 /** @jsx jsx */
-import {jsx} from '@emotion/core'
-import React from 'react'
-import {TrackBeats, TrackInstrument, TrackInstrumentsContainer} from './styles'
-import styled from '@emotion/styled/macro'
-import Beat from '../Beat/Beat'
+import {jsx} from '@emotion/core';
+import React from 'react';
+import {TrackBeats, TrackInstrument, TrackInstrumentsContainer} from './styles';
+import styled from '@emotion/styled/macro';
+import Beat from '../Beat/Beat';
 
-const separation = '0.5em'
+const separation = '0.5em';
 
 const StyledBeatsCreatorGrid = styled.div`
   display: grid;
   grid-gap: ${separation};
   grid-template-columns: 1fr 10fr;
   grid-template-areas: 'trackInstrument trackBeats';
-`
+`;
 
 const BeatsCreatorGrid = ({tracks, totalBeats, toggleBeat}) => {
   function renderBeats(trackName, totalMeasures) {
-    const beatsSquares = []
+    const beatsSquares = [];
     for (let i = 0; i < totalMeasures; i++) {
       beatsSquares.push(
         <Beat
@@ -25,9 +25,9 @@ const BeatsCreatorGrid = ({tracks, totalBeats, toggleBeat}) => {
           beatIndex={i}
           clickHandler={toggleBeat}
         />,
-      )
+      );
     }
-    return beatsSquares
+    return beatsSquares;
   }
   return (
     <StyledBeatsCreatorGrid>
@@ -40,7 +40,7 @@ const BeatsCreatorGrid = ({tracks, totalBeats, toggleBeat}) => {
         {Object.keys(tracks).map(track => renderBeats(track, totalBeats))}
       </TrackBeats>
     </StyledBeatsCreatorGrid>
-  )
-}
+  );
+};
 
-export default BeatsCreatorGrid
+export default BeatsCreatorGrid;

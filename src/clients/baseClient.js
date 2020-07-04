@@ -11,19 +11,19 @@ function client(
       ...customHeaders,
     },
     ...customConfig,
-  }
+  };
 
   return window.fetch(endpoint, config).then(async response => {
     if (response.type === 'opaqueredirect') {
-      return response.url
+      return response.url;
     }
-    const data = await response.json()
+    const data = await response.json();
     if (response.ok) {
-      return data
+      return data;
     } else {
-      return Promise.reject(data)
+      return Promise.reject(data);
     }
-  })
+  });
 }
 
-export {client}
+export {client};

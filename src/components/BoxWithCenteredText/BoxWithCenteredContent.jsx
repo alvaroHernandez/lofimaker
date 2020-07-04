@@ -1,7 +1,7 @@
 /** @jsx jsx */
-import {jsx} from '@emotion/core'
-import React from 'react'
-import {darker} from '../../styles/colors'
+import {jsx} from '@emotion/core';
+import React from 'react';
+import {darker} from '../../styles/colors';
 
 const BoxWithCenteredContent = ({children}) => {
   return (
@@ -17,7 +17,7 @@ const BoxWithCenteredContent = ({children}) => {
     >
       {children}
     </div>
-  )
-}
+  );
+};
 
-export default BoxWithCenteredContent
+export default BoxWithCenteredContent;

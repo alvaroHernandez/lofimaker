@@ -1,6 +1,6 @@
 /** @jsx jsx */
-import {jsx} from '@emotion/core'
-import React from 'react'
+import {jsx} from '@emotion/core';
+import React from 'react';
 
 const AutoFitGrid = props => {
   return (
@@ -12,7 +12,7 @@ const AutoFitGrid = props => {
         gridGap: '1em',
       }}
     />
-  )
-}
+  );
+};
 
-export default AutoFitGrid
+export default AutoFitGrid;

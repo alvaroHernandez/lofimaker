@@ -1,5 +1,5 @@
-import styled from '@emotion/styled/macro'
-import {dark, darker} from '../../styles/colors'
+import styled from '@emotion/styled/macro';
+import {dark, darker} from '../../styles/colors';
 
 const buttonVariants = {
   primary: {
@@ -10,7 +10,7 @@ const buttonVariants = {
     background: dark,
     color: 'white',
   },
-}
+};
 
 const Button = styled.button(
   {
@@ -20,6 +20,6 @@ const Button = styled.button(
     borderRadius: '3px',
   },
   ({variant = 'primary'}) => buttonVariants[variant],
-)
+);
 
-export default Button
+export default Button;

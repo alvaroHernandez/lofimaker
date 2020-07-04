@@ -1,6 +1,6 @@
 /** @jsx jsx */
-import {jsx} from '@emotion/core'
-import React from 'react'
+import {jsx} from '@emotion/core';
+import React from 'react';
 import {
   Distortion,
   Oscillator,
@@ -9,29 +9,29 @@ import {
   AutoFilter,
   Reverb,
   AmplitudeEnvelope,
-} from 'tone'
-import Button from '../components/Button/Button'
-import Slider from '@reach/slider'
-import '@reach/slider/styles.css'
+} from 'tone';
+import Button from '../components/Button/Button';
+import Slider from '@reach/slider';
+import '@reach/slider/styles.css';
 
 const Tone = ({name, player, effect, property, from, to, step}) => {
   function disableEffect() {
-    player.disconnect(effect)
+    player.disconnect(effect);
   }
 
   function enableEffect() {
-    player.connect(effect)
+    player.connect(effect);
   }
 
   function sliderChangeHandler(value) {
-    console.log('-------')
-    console.log(value)
-    console.log('-------')
-    console.log(effect)
-    console.log(property)
-    console.log(effect[property])
+    console.log('-------');
+    console.log(value);
+    console.log('-------');
+    console.log(effect);
+    console.log(property);
+    console.log(effect[property]);
     // debugger
-    effect[property].value = value
+    effect[property].value = value;
   }
 
   return (
@@ -53,7 +53,7 @@ const Tone = ({name, player, effect, property, from, to, step}) => {
         Disable
       </Button>
     </div>
-  )
-}
+  );
+};
 
-export default Tone
+export default Tone;

@@ -1,4 +1,4 @@
-import {setupWorker, rest} from 'msw'
+import {setupWorker, rest} from 'msw';
 
 const worker = setupWorker(
   rest.get('https://api.soundcloud.com/tracks', (req, res, ctx) => {
@@ -614,10 +614,10 @@ const worker = setupWorker(
         downloadable: false,
         downloads_remaining: null,
       },
-    ]
-    return res(ctx.json(tracks))
+    ];
+    return res(ctx.json(tracks));
   }),
-)
+);
 
 //uncomment to mock apis
 // worker.start();

@@ -1,6 +1,6 @@
-import React from 'react'
-import Tone from '../Tone/Tone'
-import Button from '../components/Button/Button'
+import React from 'react';
+import Tone from '../Tone/Tone';
+import Button from '../components/Button/Button';
 import {
   AutoFilter,
   BitCrusher,
@@ -14,36 +14,36 @@ import {
   Player,
   Reverb,
   Vibrato,
-} from 'tone'
-import am from './am.mp3'
+} from 'tone';
+import am from './am.mp3';
 
-var player = new Player(am).toDestination()
-player.autostart = true
+var player = new Player(am).toDestination();
+player.autostart = true;
 
-var eq = new EQ3().toDestination()
+var eq = new EQ3().toDestination();
 
-var reverb = new Reverb().toDestination()
-var distortion = new Distortion().toDestination()
-var vibrato = new Vibrato({type: 'sine'}).toDestination()
-var cheby = new Chebyshev(50).toDestination()
-var pitch = new PitchShift().toDestination()
-var crusher = new BitCrusher(4).toDestination()
+var reverb = new Reverb().toDestination();
+var distortion = new Distortion().toDestination();
+var vibrato = new Vibrato({type: 'sine'}).toDestination();
+var cheby = new Chebyshev(50).toDestination();
+var pitch = new PitchShift().toDestination();
+var crusher = new BitCrusher(4).toDestination();
 
-var noise = new Noise('white').start()
+var noise = new Noise('white').start();
 var autoFilter = new AutoFilter({
   frequency: '8m',
   min: 800,
   max: 900,
-}).toDestination()
+}).toDestination();
 
-var chorus = new Chorus(4, 2.5, 0.5)
+var chorus = new Chorus(4, 2.5, 0.5);
 
 function play() {
-  player.start()
+  player.start();
 }
 
 function stop() {
-  player.stop()
+  player.stop();
 }
 
 const Tones = () => {
@@ -160,7 +160,7 @@ const Tones = () => {
       <Button onClick={play}>Play</Button>
       <Button onClick={stop}>Stop</Button>
     </>
-  )
-}
+  );
+};
 
-export default Tones
+export default Tones;

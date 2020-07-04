@@ -1,6 +1,6 @@
 /** @jsx jsx */
-import {jsx} from '@emotion/core'
-import React from 'react'
+import {jsx} from '@emotion/core';
+import React from 'react';
 
 const MusicEffect = ({children}) => {
   return (
@@ -13,7 +13,7 @@ const MusicEffect = ({children}) => {
     >
       {children}
     </div>
-  )
-}
+  );
+};
 
-export default MusicEffect
+export default MusicEffect;

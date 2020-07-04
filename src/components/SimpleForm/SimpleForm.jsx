@@ -1,9 +1,9 @@
 /** @jsx jsx */
-import {jsx} from '@emotion/core'
-import * as React from 'react'
-import Button from '../Button/Button'
-import Input from '../Input/Input'
-import Spinner from '../Spinner/Spinner'
+import {jsx} from '@emotion/core';
+import * as React from 'react';
+import Button from '../Button/Button';
+import Input from '../Input/Input';
+import Spinner from '../Spinner/Spinner';
 
 export const SimpleForm = ({
   onSubmit,
@@ -13,13 +13,13 @@ export const SimpleForm = ({
   isLoading,
 }) => {
   function handleSubmit(event) {
-    event.preventDefault()
-    console.log(event.target.elements)
-    const input = event.target.elements[inputName]
+    event.preventDefault();
+    console.log(event.target.elements);
+    const input = event.target.elements[inputName];
 
     onSubmit({
       [inputName]: input.value,
-    })
+    });
   }
 
   return (
@@ -48,7 +48,7 @@ export const SimpleForm = ({
         </Button>
       </div>
     </form>
-  )
-}
+  );
+};
 
-export default SimpleForm
+export default SimpleForm;

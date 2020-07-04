@@ -1,5 +1,5 @@
-import {DialogContent, DialogOverlay} from '@reach/dialog'
-import React from 'react'
+import {DialogContent, DialogOverlay} from '@reach/dialog';
+import React from 'react';
 
 function FinalImageModal({setIsDialogOpen, isDialogOpen, image, imageFilter}) {
   return (
@@ -15,7 +15,7 @@ function FinalImageModal({setIsDialogOpen, isDialogOpen, image, imageFilter}) {
         </figure>
       </DialogContent>
     </DialogOverlay>
-  )
+  );
 }
 
-export default FinalImageModal
+export default FinalImageModal;

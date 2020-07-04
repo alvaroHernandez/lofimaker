@@ -1,52 +1,52 @@
 /** @jsx jsx */
-import {jsx} from '@emotion/core'
-import React, {useRef, useState} from 'react'
-import Button from '../Button/Button'
-import SimpleForm from '../SimpleForm/SimpleForm'
-import MusicGrid from '../MusicGrid/MusicGrid'
-import BoxWithCenteredContent from '../BoxWithCenteredText/BoxWithCenteredContent'
-import SoundCloudClient from '../../clients/SoundCloudClient'
-import {useAsync} from '../../hooks/useAsync'
-import Track from '../Track/Track'
-import MusicEffectsContainer from '../../MusicEffectsContainer/MusicEffectsContainer'
-import {Player} from 'tone'
-import Spinner from '../Spinner/Spinner'
+import {jsx} from '@emotion/core';
+import React, {useRef, useState} from 'react';
+import Button from '../Button/Button';
+import SimpleForm from '../SimpleForm/SimpleForm';
+import MusicGrid from '../MusicGrid/MusicGrid';
+import BoxWithCenteredContent from '../BoxWithCenteredText/BoxWithCenteredContent';
+import {useAsync} from '../../hooks/useAsync';
+import Track from '../Track/Track';
+import MusicEffectsContainer from '../../MusicEffectsContainer/MusicEffectsContainer';
+import {Player} from 'tone';
+import Spinner from '../Spinner/Spinner';
 
-const MusicSelector = () => {
-  const soundCloudClient = useRef(new SoundCloudClient())
-  const {data, error, run, isLoading, isError, isSuccess} = useAsync()
+const MusicSelector = ({soundClient}) => {
+  const soundCloudClient = useRef(soundClient);
+  const {data, error, run, isLoading, isError, isSuccess} = useAsync();
 
-  const [player, setPlayer] = useState()
-  const [currentSongUrl, setCurrentSongUrl] = useState()
-  const [currentSongTitle, setCurrentSongTitle] = useState()
-  const [currentSongDuration, setCurrentSongDuration] = useState()
+  const [player, setPlayer] = useState();
+  const [currentSongTitle, setCurrentSongTitle] = useState();
+  const [currentSongDuration, setCurrentSongDuration] = useState();
 
   function search({query}) {
-    run(soundCloudClient.current.search(query))
+    run(soundCloudClient.current.search(query));
   }
 
   function playIt() {
     if (player !== undefined) {
-      player.start()
+      player.start();
     }
   }
 
   function stop() {
     if (player !== undefined) {
-      player.stop()
+      player.stop();
     }
   }
 
   function clickHandler({id, title, duration, streamUrl}) {
-    setCurrentSongTitle(title)
-    setCurrentSongDuration(duration)
+    setCurrentSongTitle(title);
+    setCurrentSongDuration(duration);
     soundCloudClient.current.stream(streamUrl).then(response => {
-      setCurrentSongUrl(response)
+      console.log('response');
+      console.log(response);
+      console.log('response');
       const player = new Player(response, () => {
-        setPlayer(player)
-      }).toDestination()
-      player.autostart = false
-    })
+        setPlayer(player);
+      }).toDestination();
+      player.autostart = false;
+    });
   }
 
   return (
@@ -101,7 +101,7 @@ const MusicSelector = () => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default MusicSelector
+export default MusicSelector;

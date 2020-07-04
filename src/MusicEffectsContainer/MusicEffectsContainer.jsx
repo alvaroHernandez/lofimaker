@@ -1,39 +1,38 @@
 /** @jsx jsx */
-import {jsx} from '@emotion/core'
-import React, {useRef} from 'react'
-import Tone from '../Tone/Tone'
-import {Distortion, EQ3, Reverb, Volume} from 'tone'
-import Slider from '@reach/slider'
-import MusicEffect from '../components/MusicEffect/MusicEffect'
-import Switch from '../components/Switch/Switch'
-import {Knob, Arc, Value} from 'rc-knob'
-import {dark, light, lighter} from '../styles/colors'
-import Toggle from 'react-toggle'
-import './Knob.css'
-import './Toggle.css'
+import {jsx} from '@emotion/core';
+import React, {useRef} from 'react';
+import Tone from '../Tone/Tone';
+import {Distortion, EQ3, Reverb, Volume} from 'tone';
+import Slider from '@reach/slider';
+import MusicEffect from '../components/MusicEffect/MusicEffect';
+import Switch from '../components/Switch/Switch';
+import {Knob, Arc, Value} from 'rc-knob';
+import {dark, light, lighter} from '../styles/colors';
+import Toggle from 'react-toggle';
+import './Knob.css';
+import './Toggle.css';
 
 const MusicEffectsContainer = ({player}) => {
-  const reverberation = useRef(new Reverb().toDestination())
-  const distortion = useRef(new Distortion().toDestination())
-  const equalizer = useRef(new EQ3().toDestination())
-  const volume = useRef(new Volume().toDestination())
+  const reverberation = useRef(new Reverb().toDestination());
+  const distortion = useRef(new Distortion().toDestination());
+  const equalizer = useRef(new EQ3().toDestination());
 
   function sliderChangeHandlerForProperty(effect, property, value) {
-    effect[property] = value
+    effect[property] = value;
   }
 
   function sliderChangeHandlerForParameter(effect, property, value) {
-    effect[property].value = value
+    effect[property].value = value;
   }
 
   function toggleEffect(effect, e) {
     if (player === undefined) {
-      return
+      return;
     }
     if (e.target.checked) {
-      player.connect(effect)
+      player.connect(effect);
     } else {
-      player.disconnect(effect)
+      player.disconnect(effect);
     }
   }
 
@@ -207,7 +206,7 @@ const MusicEffectsContainer = ({player}) => {
         </label>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default MusicEffectsContainer
+export default MusicEffectsContainer;

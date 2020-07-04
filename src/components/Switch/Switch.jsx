@@ -1,15 +1,15 @@
-import React, {useState} from 'react'
-import {CustomCheckboxContainer, CustomCheckboxInput} from '@reach/checkbox'
-import PropTypes from 'prop-types'
-import './Switch.css'
+import React, {useState} from 'react';
+import {CustomCheckboxContainer, CustomCheckboxInput} from '@reach/checkbox';
+import PropTypes from 'prop-types';
+import './Switch.css';
 
 const Switch = props => {
-  const [checkedState, setChecked] = useState(props.checked || false)
-  const checked = props.checked != null ? props.checked : checkedState
+  const [checkedState, setChecked] = useState(props.checked || false);
+  const checked = props.checked != null ? props.checked : checkedState;
 
   function toggleCheckedState(state) {
-    setChecked(state)
-    props.toggleHandler(state)
+    setChecked(state);
+    props.toggleHandler(state);
   }
 
   return (
@@ -22,12 +22,12 @@ const Switch = props => {
         <span className="slider" />
       </CustomCheckboxContainer>
     </label>
-  )
-}
+  );
+};
 
 Switch.propTypes = {
   checked: PropTypes.bool,
   toggleHandler: PropTypes.any.isRequired,
-}
+};
 
-export default Switch
+export default Switch;

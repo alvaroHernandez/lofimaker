@@ -1,5 +1,5 @@
-import styled from '@emotion/styled'
-import {medium} from '../../styles/mediaqueries'
+import styled from '@emotion/styled';
+import {medium} from '../../styles/mediaqueries';
 
 const Layout = styled.div`
   background-color: ${props => props.backgroundColor};
@@ -9,7 +9,7 @@ const Layout = styled.div`
   grid-column-gap: 1em;
   grid-row-gap: 1em;
   min-height: 100vh;
-`
+`;
 
 const Column = styled.div`
   background-color: ${props => props.backgroundColor};
@@ -19,6 +19,6 @@ const Column = styled.div`
     grid-column: span ${props => props.spanMedium};
   }
   min-height: 100vh;
-`
+`;
 
-export {Column, Layout}
+export {Column, Layout};

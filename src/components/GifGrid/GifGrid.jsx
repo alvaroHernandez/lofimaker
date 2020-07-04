@@ -1,6 +1,6 @@
 /** @jsx jsx */
-import {jsx} from '@emotion/core'
-import React from 'react'
+import {jsx} from '@emotion/core';
+import React from 'react';
 
 const GifGrid = ({gifs, clickHandler}) => {
   return (
@@ -32,7 +32,7 @@ const GifGrid = ({gifs, clickHandler}) => {
         </li>
       ))}
     </ul>
-  )
-}
+  );
+};
 
-export default GifGrid
+export default GifGrid;

@@ -1,7 +1,7 @@
 /** @jsx jsx */
-import {jsx} from '@emotion/core'
-import React from 'react'
-import {darker} from '../../styles/colors'
+import {jsx} from '@emotion/core';
+import React from 'react';
+import {darker} from '../../styles/colors';
 
 const Section = props => {
   return (
@@ -13,7 +13,7 @@ const Section = props => {
         padding: '1em',
       }}
     />
-  )
-}
+  );
+};
 
-export default Section
+export default Section;

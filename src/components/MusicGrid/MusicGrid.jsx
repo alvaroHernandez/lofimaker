@@ -1,9 +1,9 @@
 /** @jsx jsx */
-import {jsx} from '@emotion/core'
-import React from 'react'
+import {jsx} from '@emotion/core';
+import React from 'react';
 
 const MusicGrid = ({tracks, clickHandler}) => {
-  console.log(tracks)
+  console.log(tracks);
   return (
     <ul
       css={{
@@ -52,6 +52,7 @@ const MusicGrid = ({tracks, clickHandler}) => {
             ) : (
               <img
                 css={{
+                  width: '100px',
                   display: 'block',
                 }}
                 src={track.artwork_url}
@@ -68,7 +69,7 @@ const MusicGrid = ({tracks, clickHandler}) => {
         </li>
       ))}
     </ul>
-  )
-}
+  );
+};
 
-export default MusicGrid
+export default MusicGrid;
