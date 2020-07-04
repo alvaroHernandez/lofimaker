@@ -6,9 +6,9 @@ import SoundCloudClient from '../../clients/SoundCloudClient';
 import FreeSoundClient from '../../clients/FreeSoundClient';
 
 function soundClientFactory(type) {
-  if (type === 'sound') {
+  if (type === 'Sound') {
     return new SoundCloudClient();
-  } else if (type === 'effect') {
+  } else if (type === 'Effect') {
     return new FreeSoundClient();
   }
 }

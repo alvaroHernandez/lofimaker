@@ -20,16 +20,17 @@ const TrackControl = styled.div`
   justify-content: center;
 `;
 
-const BeatsCreator = () => {
+const BeatsCreator = ({setCurrentSong}) => {
   const beatsContainer = useRef([]);
   const [currentBeat, setCurrentBeat] = useState(0);
   const [player, setPlayer] = useState();
 
   useEffect(() => {
+    setCurrentSong({title: 'Drum Kit', duration: 10 * 60 * 1000});
     for (let i = 0; i < totalBeats; i++) {
       beatsContainer.current.push({});
     }
-  }, []);
+  }, [setCurrentSong]);
 
   function stop() {
     if (player !== undefined) {
