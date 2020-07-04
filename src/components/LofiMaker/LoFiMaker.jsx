@@ -16,7 +16,6 @@ import TrackContainer from '../TrackContainer/TrackContainer';
 
 const availableTracks = ['Sound', 'Effect', 'Drums', 'Melody', 'Bass'];
 
-
 const LoFiMaker = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [finalImage, setFinalImage] = useState();

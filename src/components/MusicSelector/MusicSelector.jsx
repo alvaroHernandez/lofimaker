@@ -7,11 +7,7 @@ import MusicGrid from '../MusicGrid/MusicGrid';
 import {useAsync} from '../../hooks/useAsync';
 import {Player} from 'tone';
 
-const MusicSelector = ({
-  setPlayer,
-  soundClient,
-  setCurrentSong,
-}) => {
+const MusicSelector = ({setPlayer, soundClient, setCurrentSong}) => {
   const {data, error, run, isLoading, isError, isSuccess} = useAsync();
 
   function search({query}) {

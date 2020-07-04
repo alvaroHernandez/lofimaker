@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import {jsx} from '@emotion/core';
 import React, {useRef} from 'react';
-import { Distortion, EQ3, Reverb } from 'tone';
+import {Distortion, EQ3, Reverb} from 'tone';
 import MusicEffect from '../components/MusicEffect/MusicEffect';
 import {Knob, Arc, Value} from 'rc-knob';
 import {dark, lighter} from '../styles/colors';
