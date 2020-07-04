@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import {jsx} from '@emotion/core';
-import {useState} from 'react';
+import {useRef, useState} from 'react';
 import {Layout, Column} from '../Layout/Column';
 import BeatsCreator from '../BeatsCreator/BeatsCreator';
 
@@ -16,44 +16,25 @@ import AutoFitGrid from '../AutoFitGrid/AutoFitGrid';
 import SoundCloudClient from '../../clients/SoundCloudClient';
 import FreeSoundClient from '../../clients/FreeSoundClient';
 import FinalImageContainer from '../FinalImageContainer/FinalImageContainer';
+import TrackContainer from '../TrackContainer/TrackContainer';
 
 const LoFiMaker = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [finalImage, setFinalImage] = useState();
   const [finalImageFilter, setFinalImageFilter] = useState();
   const [tracks, setTracks] = useState([]);
+  const nextTrackId = useRef(1);
 
   const updateFinalImage = imageSrc => {
     setFinalImage(imageSrc);
   };
 
   const addTrack = type => {
-    switch (type) {
-      case 'sound':
-        setTracks([
-          ...tracks,
-          <Section>
-            <MusicSelector soundClient={new SoundCloudClient()} />
-          </Section>,
-        ]);
-        break;
-      case 'effect':
-        setTracks([
-          ...tracks,
-          <Section>
-            <MusicSelector soundClient={new FreeSoundClient()} />
-          </Section>,
-        ]);
-        break;
-      case 'drum':
-        setTracks([
-          ...tracks,
-          <Section>
-            <BeatsCreator />
-          </Section>,
-        ]);
-        break;
-    }
+    setTracks([
+      ...tracks,
+      <TrackContainer key={nextTrackId.current} type={type} />,
+    ]);
+    nextTrackId.current += 1;
   };
 
   return (
@@ -87,8 +68,8 @@ const LoFiMaker = () => {
               Bass
             </Button>
           </AutoFitGrid>
+          {tracks}
         </Section>
-        {tracks}
         <FinalImageContainer
           finalImage={finalImage}
           finalImageFilter={finalImageFilter}

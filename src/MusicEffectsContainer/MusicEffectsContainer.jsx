@@ -1,13 +1,10 @@
 /** @jsx jsx */
 import {jsx} from '@emotion/core';
 import React, {useRef} from 'react';
-import Tone from '../Tone/Tone';
-import {Distortion, EQ3, Reverb, Volume} from 'tone';
-import Slider from '@reach/slider';
+import { Distortion, EQ3, Reverb } from 'tone';
 import MusicEffect from '../components/MusicEffect/MusicEffect';
-import Switch from '../components/Switch/Switch';
 import {Knob, Arc, Value} from 'rc-knob';
-import {dark, light, lighter} from '../styles/colors';
+import {dark, lighter} from '../styles/colors';
 import Toggle from 'react-toggle';
 import './Knob.css';
 import './Toggle.css';
@@ -37,7 +34,14 @@ const MusicEffectsContainer = ({player}) => {
   }
 
   return (
-    <div css={{display: 'flex', justifyContent: 'center', marginTop: '1em'}}>
+    <div
+      css={{
+        display: 'flex',
+        width: '100%',
+        justifyContent: 'center',
+        marginTop: '1em',
+      }}
+    >
       <MusicEffect name={'Volume'}>
         <Knob
           size={70}

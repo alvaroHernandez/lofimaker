@@ -9,6 +9,7 @@ const MusicEffect = ({children}) => {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        marginLeft: '1em'
       }}
     >
       {children}

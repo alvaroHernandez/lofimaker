@@ -3,7 +3,7 @@ import {jsx} from '@emotion/core';
 import React from 'react';
 import {darker} from '../../styles/colors';
 
-const BoxWithCenteredContent = ({children}) => {
+const BoxWithCenteredContent = props => {
   return (
     <div
       css={{
@@ -14,9 +14,8 @@ const BoxWithCenteredContent = ({children}) => {
         alignItems: 'center',
         justifyContent: 'center',
       }}
-    >
-      {children}
-    </div>
+      {...props}
+    />
   );
 };
 
