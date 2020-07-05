@@ -12,7 +12,7 @@ class FreeSoundClient {
       return {
         id: json.id,
         title: json.description.substring(0, 25) + '...',
-        duration: json.duration,
+        duration: json.duration * 1000,
         stream_url: json.previews['preview-hq-mp3'],
         artwork_url: json.images.waveform_m,
       };

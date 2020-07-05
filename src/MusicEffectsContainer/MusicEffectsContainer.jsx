@@ -67,8 +67,8 @@ const MusicEffectsContainer = ({player}) => {
           onChange={value =>
             sliderChangeHandlerForProperty(player, 'playbackRate', value)
           }
-          min={0.1}
-          max={1}
+          min={0.5}
+          max={2}
           steps={10}
         >
           <Arc arcWidth={11} color={lighter} background={dark} />
@@ -81,13 +81,35 @@ const MusicEffectsContainer = ({player}) => {
           size={70}
           angleOffset={220}
           angleRange={280}
+          min={-1200}
+          max={1200}
+          steps={100}
+          onChange={value =>
+            sliderChangeHandlerForProperty(
+              player,
+              'detune',
+              value,
+            )
+          }
+        >
+          <Arc arcWidth={11} color={lighter} background={dark} />
+          <Value marginBottom={20} className="knob-value" />
+        </Knob>
+        <label>Detune</label>
+
+      </MusicEffect>
+      <MusicEffect>
+        <Knob
+          size={70}
+          angleOffset={220}
+          angleRange={280}
           min={0.001}
           max={10}
           steps={100}
           onChange={value =>
             sliderChangeHandlerForProperty(
               reverberation.current,
-              'reverb',
+              'decay',
               value,
             )
           }

@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import {jsx} from '@emotion/core';
-import {useState} from 'react';
+import {useRef, useState} from 'react';
 import Track from '../Track/Track';
 import Button from '../Button/Button';
 import MusicTrack from '../MusicTrack/MusicTrack';
@@ -11,6 +11,7 @@ const TrackContainer = ({type}) => {
   const [currentSong, setCurrentSong] = useState();
   const [player, setPlayer] = useState();
   const [showTrackSettings, setShowTrackSettings] = useState(true);
+  const deltaPosition = useRef(0);
 
   function toggleShowTrackSettings() {
     setShowTrackSettings(!showTrackSettings);
@@ -36,6 +37,10 @@ const TrackContainer = ({type}) => {
     }
   }
 
+  const handleDrag = (e, ui) => {
+    deltaPosition.current = deltaPosition.current+ui.deltaX;
+  };
+
   return (
     <div css={{marginTop: '1em'}}>
       <div
@@ -50,8 +55,9 @@ const TrackContainer = ({type}) => {
             Settings
           </Button>
         </div>
-        <div>
+        <div css={{border: '0.1px solid #f1f1f4;', position: 'relative', height: '38px' }}>
           <Track
+            handleDrag={handleDrag}
             songName={currentSong ? currentSong.title : ' This track is empty'}
             duration={currentSong ? currentSong.duration : 0}
           />

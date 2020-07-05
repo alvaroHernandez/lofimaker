@@ -6,7 +6,7 @@ import SoundCloudClient from '../../clients/SoundCloudClient';
 import FreeSoundClient from '../../clients/FreeSoundClient';
 import {v4 as uuidv4} from 'uuid';
 import {usePlayers} from '../../contexts/PlayersContext';
-import {Player} from 'tone';
+import {GrainPlayer} from 'tone';
 
 function soundClientFactory(type) {
   if (type === 'Sound') {
@@ -34,11 +34,12 @@ const MusicTrack = ({currentSong, setCurrentSong, type}) => {
     }
 
     setCurrentSong({title, duration});
-    const player = new Player(url, () => {
+    const player = new GrainPlayer(url, () => {
       console.log(player);
       setCurrentPlayer(player);
       addPlayer(trackId.current, player);
     }).toDestination();
+    player.olverlap = 0;
     player.autostart = false;
     player.name = trackId.current;
   }
