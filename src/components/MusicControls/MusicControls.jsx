@@ -1,12 +1,16 @@
 /** @jsx jsx */
 import {jsx} from '@emotion/core';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Button from '../Button/Button';
 import MusicEffectsContainer from '../../MusicEffectsContainer/MusicEffectsContainer';
 import Spinner from '../Spinner/Spinner';
 import BoxWithCenteredContent from '../BoxWithCenteredText/BoxWithCenteredContent';
+import {usePlayers} from '../../contexts/PlayersContext';
 
-const MusicControls = ({currentSong, player}) => {
+const MusicControls = ({player, currentSong}) => {
+  console.log('music');
+  console.log(player);
+
   function play() {
     if (player !== undefined) {
       player.start();

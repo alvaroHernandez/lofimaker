@@ -7,9 +7,8 @@ import MusicTrack from '../MusicTrack/MusicTrack';
 import BeatsCreator from '../BeatsCreator/BeatsCreator';
 
 // eslint-disable-next-line react/prop-types
-const TrackContainer = ({type}) => {
+const TrackContainer = ({id, type}) => {
   const [currentSong, setCurrentSong] = useState();
-  const [player, setPlayer] = useState();
   const [showTrackSettings, setShowTrackSettings] = useState(true);
 
   function toggleShowTrackSettings() {
@@ -22,15 +21,14 @@ const TrackContainer = ({type}) => {
       case 'effect':
         return (
           <MusicTrack
-            player={player}
-            setPlayer={setPlayer}
+            trackId={id}
             currentSong={currentSong}
             setCurrentSong={setCurrentSong}
             type={type}
           />
         );
       case 'drum':
-        return <BeatsCreator />;
+        return <BeatsCreator trackId={id} />;
       default:
         return null;
     }

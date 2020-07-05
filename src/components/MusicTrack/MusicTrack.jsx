@@ -1,9 +1,12 @@
 /* eslint-disable react/prop-types */
-import React, {useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import MusicControls from '../MusicControls/MusicControls';
 import MusicSelector from '../MusicSelector/MusicSelector';
 import SoundCloudClient from '../../clients/SoundCloudClient';
 import FreeSoundClient from '../../clients/FreeSoundClient';
+import {v4 as uuidv4} from 'uuid';
+import {usePlayers} from '../../contexts/PlayersContext';
+import {Player} from 'tone';
 
 function soundClientFactory(type) {
   if (type === 'Sound') {
@@ -13,17 +16,40 @@ function soundClientFactory(type) {
   }
 }
 
-const MusicTrack = ({player, setPlayer, currentSong, setCurrentSong, type}) => {
+const MusicTrack = ({currentSong, setCurrentSong, type}) => {
   const soundClient = useRef(soundClientFactory(type));
+  const trackId = useRef(uuidv4());
+  const {getPlayer, addPlayer} = usePlayers();
+  const [currentPlayer, setCurrentPlayer] = useState();
+
+  useEffect(() => {
+    console.log('useeffect');
+    setCurrentPlayer(getPlayer(trackId));
+  }, []);
+
+  async function handleSelection({title, duration, url}) {
+    if (currentPlayer !== undefined) {
+      currentPlayer.dispose();
+      await setCurrentPlayer();
+    }
+
+    setCurrentSong({title, duration});
+    const player = new Player(url, () => {
+      console.log(player);
+      setCurrentPlayer(player);
+      addPlayer(trackId.current, player);
+    }).toDestination();
+    player.autostart = false;
+    player.name = trackId.current;
+  }
 
   return (
     <>
-      <MusicControls currentSong={currentSong} player={player} />
+      <MusicControls player={currentPlayer} currentSong={currentSong} />
       <div>
         <MusicSelector
           soundClient={soundClient.current}
-          setPlayer={setPlayer}
-          setCurrentSong={setCurrentSong}
+          selectionHandler={handleSelection}
         />
       </div>
     </>

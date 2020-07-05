@@ -13,6 +13,7 @@ import BoxWithCenteredContent from '../BoxWithCenteredText/BoxWithCenteredConten
 import AutoFitGrid from '../AutoFitGrid/AutoFitGrid';
 import FinalImageContainer from '../FinalImageContainer/FinalImageContainer';
 import TrackContainer from '../TrackContainer/TrackContainer';
+import {usePlayers} from '../../contexts/PlayersContext';
 
 const availableTracks = ['Sound', 'Effect', 'Drums', 'Melody', 'Bass'];
 

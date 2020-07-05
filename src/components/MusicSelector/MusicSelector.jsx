@@ -5,22 +5,17 @@ import React from 'react';
 import SimpleForm from '../SimpleForm/SimpleForm';
 import MusicGrid from '../MusicGrid/MusicGrid';
 import {useAsync} from '../../hooks/useAsync';
-import {Player} from 'tone';
 
-const MusicSelector = ({setPlayer, soundClient, setCurrentSong}) => {
+const MusicSelector = ({soundClient, selectionHandler}) => {
   const {data, error, run, isLoading, isError, isSuccess} = useAsync();
 
   function search({query}) {
     run(soundClient.search(query));
   }
 
-  function clickHandler({id, title, duration, streamUrl}) {
-    setCurrentSong({title, duration});
-    soundClient.stream(streamUrl).then(response => {
-      const player = new Player(response, () => {
-        setPlayer(player);
-      }).toDestination();
-      player.autostart = false;
+  function handleClick({id, title, duration, streamUrl}) {
+    soundClient.stream(streamUrl).then(url => {
+      selectionHandler({title, duration, url});
     });
   }
 
@@ -41,7 +36,7 @@ const MusicSelector = ({setPlayer, soundClient, setCurrentSong}) => {
         </div>
       ) : null}
 
-      {isSuccess && <MusicGrid clickHandler={clickHandler} tracks={data} />}
+      {isSuccess && <MusicGrid clickHandler={handleClick} tracks={data} />}
     </div>
   );
 };
