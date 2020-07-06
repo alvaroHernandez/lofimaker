@@ -14,6 +14,7 @@ import AutoFitGrid from '../AutoFitGrid/AutoFitGrid';
 import FinalImageContainer from '../FinalImageContainer/FinalImageContainer';
 import TrackContainer from '../TrackContainer/TrackContainer';
 import {usePlayers} from '../../contexts/PlayersContext';
+import GlobalPlayerControls from "../GlobalPlayerControls/GlobalPlayerControls";
 
 const availableTracks = ['Sound', 'Effect', 'Drums', 'Melody', 'Bass'];
 
@@ -23,8 +24,6 @@ const LoFiMaker = () => {
   const [finalImageFilter, setFinalImageFilter] = useState();
   const [tracks, setTracks] = useState([]);
   const nextTrackId = useRef(1);
-
-  const {playAll, pauseAll} = usePlayers();
 
   const updateFinalImage = imageSrc => {
     setFinalImage(imageSrc);
@@ -63,18 +62,7 @@ const LoFiMaker = () => {
               </Button>
             ))}
           </AutoFitGrid>
-          <BoxWithCenteredContent css={{marginTop: '2em'}}>
-            <Button
-              css={{marginRight: '1em'}}
-              variant={'secondary'}
-              onClick={playAll}
-            >
-              Play All Tracks
-            </Button>
-            <Button variant={'secondary'} onClick={pauseAll}>
-              Pause All Tracks
-            </Button>
-          </BoxWithCenteredContent>
+          <GlobalPlayerControls/>
           {tracks}
         </Section>
         <FinalImageContainer
