@@ -9,7 +9,10 @@ function FinalImageModal({setIsDialogOpen, isDialogOpen, image, imageFilter}) {
       isOpen={isDialogOpen}
       style={{background: 'hsla(0, 0%, 0%, 0.9)'}}
     >
-      <DialogContent style={{background: 'hsla(0, 0%, 0%, 0.9)'}}>
+      <DialogContent
+        aria-label={'lofi preview'}
+        style={{background: 'hsla(0, 0%, 0%, 0.9)'}}
+      >
         <figure className={imageFilter}>
           <img alt={'final cover'} src={image} width={'100%'} />
         </figure>

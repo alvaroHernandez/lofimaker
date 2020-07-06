@@ -24,6 +24,8 @@ const LoFiMaker = () => {
   const [tracks, setTracks] = useState([]);
   const nextTrackId = useRef(1);
 
+  const {playAll, pauseAll} = usePlayers();
+
   const updateFinalImage = imageSrc => {
     setFinalImage(imageSrc);
   };
@@ -61,6 +63,18 @@ const LoFiMaker = () => {
               </Button>
             ))}
           </AutoFitGrid>
+          <BoxWithCenteredContent css={{marginTop: '2em'}}>
+            <Button
+              css={{marginRight: '1em'}}
+              variant={'secondary'}
+              onClick={playAll}
+            >
+              Play All Tracks
+            </Button>
+            <Button variant={'secondary'} onClick={pauseAll}>
+              Pause All Tracks
+            </Button>
+          </BoxWithCenteredContent>
           {tracks}
         </Section>
         <FinalImageContainer

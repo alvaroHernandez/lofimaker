@@ -85,18 +85,13 @@ const MusicEffectsContainer = ({player}) => {
           max={1200}
           steps={100}
           onChange={value =>
-            sliderChangeHandlerForProperty(
-              player,
-              'detune',
-              value,
-            )
+            sliderChangeHandlerForProperty(player, 'detune', value)
           }
         >
           <Arc arcWidth={11} color={lighter} background={dark} />
           <Value marginBottom={20} className="knob-value" />
         </Knob>
         <label>Detune</label>
-
       </MusicEffect>
       <MusicEffect>
         <Knob

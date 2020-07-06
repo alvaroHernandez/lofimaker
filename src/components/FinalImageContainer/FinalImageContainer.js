@@ -12,20 +12,16 @@ const FinalImageContainer = ({
   setIsDialogOpen,
   isDialogOpen,
 }) => {
-  const {players} = usePlayers();
+  const {playAll, stopAll} = usePlayers();
 
   function previewHandler() {
     setIsDialogOpen(true);
-    for (let [, value] of Object.entries(players)) {
-      value.start();
-    }
+    stopAll();
+    playAll();
   }
 
   function closePreviewHandler(value) {
-    setIsDialogOpen(true);
-    for (let [, value] of Object.entries(players)) {
-      value.stop();
-    }
+    stopAll();
     setIsDialogOpen(value);
   }
 

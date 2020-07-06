@@ -4,7 +4,6 @@ import MusicControls from '../MusicControls/MusicControls';
 import MusicSelector from '../MusicSelector/MusicSelector';
 import SoundCloudClient from '../../clients/SoundCloudClient';
 import FreeSoundClient from '../../clients/FreeSoundClient';
-import {v4 as uuidv4} from 'uuid';
 import {usePlayers} from '../../contexts/PlayersContext';
 import {GrainPlayer} from 'tone';
 
@@ -16,14 +15,13 @@ function soundClientFactory(type) {
   }
 }
 
-const MusicTrack = ({currentSong, setCurrentSong, type}) => {
+const MusicTrack = ({trackId, currentSong, setCurrentSong, type}) => {
   const soundClient = useRef(soundClientFactory(type));
-  const trackId = useRef(uuidv4());
+
   const {getPlayer, addPlayer} = usePlayers();
   const [currentPlayer, setCurrentPlayer] = useState();
 
   useEffect(() => {
-    console.log('useeffect');
     setCurrentPlayer(getPlayer(trackId));
   }, []);
 
@@ -35,13 +33,12 @@ const MusicTrack = ({currentSong, setCurrentSong, type}) => {
 
     setCurrentSong({title, duration});
     const player = new GrainPlayer(url, () => {
-      console.log(player);
       setCurrentPlayer(player);
-      addPlayer(trackId.current, player);
+      addPlayer(trackId, player);
     }).toDestination();
     player.olverlap = 0;
     player.autostart = false;
-    player.name = trackId.current;
+    player.name = trackId;
   }
 
   return (

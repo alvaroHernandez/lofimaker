@@ -5,13 +5,16 @@ import Track from '../Track/Track';
 import Button from '../Button/Button';
 import MusicTrack from '../MusicTrack/MusicTrack';
 import BeatsCreator from '../BeatsCreator/BeatsCreator';
+import {usePlayers} from '../../contexts/PlayersContext';
+import {v4 as uuidv4} from 'uuid';
+import {lofiDurationMinutes} from '../../configs/playerConfig';
 
 // eslint-disable-next-line react/prop-types
 const TrackContainer = ({type}) => {
   const [currentSong, setCurrentSong] = useState();
-  const [player, setPlayer] = useState();
   const [showTrackSettings, setShowTrackSettings] = useState(true);
-  const deltaPosition = useRef(0);
+  const trackId = useRef(uuidv4());
+  const {updatePlayerStartingOffset} = usePlayers();
 
   function toggleShowTrackSettings() {
     setShowTrackSettings(!showTrackSettings);
@@ -23,8 +26,7 @@ const TrackContainer = ({type}) => {
       case 'Effect':
         return (
           <MusicTrack
-            player={player}
-            setPlayer={setPlayer}
+            trackId={trackId.current}
             currentSong={currentSong}
             setCurrentSong={setCurrentSong}
             type={type}
@@ -37,8 +39,10 @@ const TrackContainer = ({type}) => {
     }
   }
 
-  const handleDrag = (e, ui) => {
-    deltaPosition.current = deltaPosition.current+ui.deltaX;
+  const onStopDrag = (e, ui) => {
+    const currentTime =
+      (ui.lastX * lofiDurationMinutes * 60) / ui.node.parentNode.clientWidth;
+    updatePlayerStartingOffset(trackId.current, currentTime);
   };
 
   return (
@@ -55,9 +59,15 @@ const TrackContainer = ({type}) => {
             Settings
           </Button>
         </div>
-        <div css={{border: '0.1px solid #f1f1f4;', position: 'relative', height: '38px' }}>
+        <div
+          css={{
+            border: '0.1px solid #f1f1f4;',
+            position: 'relative',
+            height: '38px',
+          }}
+        >
           <Track
-            handleDrag={handleDrag}
+            handleDragStop={onStopDrag}
             songName={currentSong ? currentSong.title : ' This track is empty'}
             duration={currentSong ? currentSong.duration : 0}
           />

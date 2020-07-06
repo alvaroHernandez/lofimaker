@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import {jsx} from '@emotion/core';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import Button from '../Button/Button';
 import MusicEffectsContainer from '../../MusicEffectsContainer/MusicEffectsContainer';
 import Spinner from '../Spinner/Spinner';
@@ -8,39 +8,42 @@ import BoxWithCenteredContent from '../BoxWithCenteredText/BoxWithCenteredConten
 import {usePlayers} from '../../contexts/PlayersContext';
 
 const MusicControls = ({player, currentSong}) => {
-  console.log('music');
-  console.log(player);
+  const {isPlaying} = usePlayers();
 
   function play() {
     if (player !== undefined) {
+      player.unsync();
       player.start();
     }
   }
 
   function stop() {
     if (player !== undefined) {
+      player.unsync();
       player.stop();
     }
   }
 
   return (
-    <BoxWithCenteredContent css={{marginTop: '2em'}}>
+    <BoxWithCenteredContent css={{paddingTop: '2em'}}>
       {currentSong ? (
         <div>
           {player ? (
             [
-              <div css={{display: 'flex', justifyContent: 'center'}}>
-                <Button
-                  css={{margin: '0 1em'}}
-                  variant={'secondary'}
-                  onClick={play}
-                >
-                  Play
-                </Button>
-                <Button variant={'secondary'} onClick={stop}>
-                  Stop
-                </Button>
-              </div>,
+              !isPlaying && (
+                <div css={{display: 'flex', justifyContent: 'center'}}>
+                  <Button
+                    css={{margin: '0 1em'}}
+                    variant={'secondary'}
+                    onClick={play}
+                  >
+                    Play
+                  </Button>
+                  <Button variant={'secondary'} onClick={stop}>
+                    Stop
+                  </Button>
+                </div>
+              ),
               <div>
                 <MusicEffectsContainer player={player} />
               </div>,

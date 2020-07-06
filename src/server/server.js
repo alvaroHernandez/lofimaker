@@ -44,8 +44,7 @@ export const tracks = [
       last_modified: '2015/01/16 09:36:26 +0000',
       uri: 'https://api.soundcloud.com/users/77692493',
       permalink_url: 'http://soundcloud.com/teenage-kicks-1',
-      avatar_url:
-        'https://i1.sndcdn.com/avatars-000068249741-0s087d-large.jpg',
+      avatar_url: 'https://i1.sndcdn.com/avatars-000068249741-0s087d-large.jpg',
     },
     user_uri: 'https://api.soundcloud.com/users/77692493',
     permalink_url:
@@ -117,8 +116,7 @@ export const tracks = [
     user_uri: 'https://api.soundcloud.com/users/9324937',
     permalink_url:
       'https://soundcloud.com/vincentmcgee/i-wanna-be-yours-arctic',
-    artwork_url:
-      'https://i1.sndcdn.com/artworks-000059445013-xkeu19-large.jpg',
+    artwork_url: 'https://i1.sndcdn.com/artworks-000059445013-xkeu19-large.jpg',
     stream_url: 'https://api.soundcloud.com/tracks/114054307/stream',
     download_url: 'https://api.soundcloud.com/tracks/114054307/download',
     waveform_url: 'https://wave.sndcdn.com/uw8o5iydkMyS_m.png',
@@ -179,8 +177,7 @@ export const tracks = [
       last_modified: '2012/04/17 06:15:21 +0000',
       uri: 'https://api.soundcloud.com/users/8107715',
       permalink_url: 'http://soundcloud.com/radioriot',
-      avatar_url:
-        'https://i1.sndcdn.com/avatars-000013612922-plu8qi-large.jpg',
+      avatar_url: 'https://i1.sndcdn.com/avatars-000013612922-plu8qi-large.jpg',
     },
     user_uri: 'https://api.soundcloud.com/users/8107715',
     permalink_url:
@@ -247,14 +244,12 @@ export const tracks = [
       last_modified: '2018/08/08 21:47:39 +0000',
       uri: 'https://api.soundcloud.com/users/6524573',
       permalink_url: 'http://soundcloud.com/arcticmonkeysfrance',
-      avatar_url:
-        'https://i1.sndcdn.com/avatars-000005272878-q14c48-large.jpg',
+      avatar_url: 'https://i1.sndcdn.com/avatars-000005272878-q14c48-large.jpg',
     },
     user_uri: 'https://api.soundcloud.com/users/6524573',
     permalink_url:
       'https://soundcloud.com/arcticmonkeysfrance/arctic-monkeys-feels-like-we-only-go-backwards-tame-impala',
-    artwork_url:
-      'https://i1.sndcdn.com/artworks-000078915035-lyoe7f-large.jpg',
+    artwork_url: 'https://i1.sndcdn.com/artworks-000078915035-lyoe7f-large.jpg',
     stream_url: 'https://api.soundcloud.com/tracks/148666958/stream',
     download_url: 'https://api.soundcloud.com/tracks/148666958/download',
     waveform_url: 'https://wave.sndcdn.com/auaXxVf2rbt4_m.png',
@@ -315,8 +310,7 @@ export const tracks = [
       last_modified: '2016/02/07 00:25:37 +0000',
       uri: 'https://api.soundcloud.com/users/170583384',
       permalink_url: 'http://soundcloud.com/user-502055396',
-      avatar_url:
-        'https://i1.sndcdn.com/avatars-000181631166-2670v2-large.jpg',
+      avatar_url: 'https://i1.sndcdn.com/avatars-000181631166-2670v2-large.jpg',
     },
     user_uri: 'https://api.soundcloud.com/users/170583384',
     permalink_url:
@@ -387,8 +381,7 @@ export const tracks = [
     user_uri: 'https://api.soundcloud.com/users/111759789',
     permalink_url:
       'https://soundcloud.com/articmonkeys-1/arctic-monkeys-fluorescent',
-    artwork_url:
-      'https://i1.sndcdn.com/artworks-000089923476-zi2e1d-large.jpg',
+    artwork_url: 'https://i1.sndcdn.com/artworks-000089923476-zi2e1d-large.jpg',
     stream_url: 'https://api.soundcloud.com/tracks/166007443/stream',
     download_url: 'https://api.soundcloud.com/tracks/166007443/download',
     waveform_url: 'https://wave.sndcdn.com/CMWzT6HpWutx_m.png',
@@ -450,14 +443,12 @@ export const tracks = [
       last_modified: '2015/01/16 09:41:18 +0000',
       uri: 'https://api.soundcloud.com/users/23988245',
       permalink_url: 'http://soundcloud.com/lovejoyband',
-      avatar_url:
-        'https://i1.sndcdn.com/avatars-000049934461-m5hcwy-large.jpg',
+      avatar_url: 'https://i1.sndcdn.com/avatars-000049934461-m5hcwy-large.jpg',
     },
     user_uri: 'https://api.soundcloud.com/users/23988245',
     permalink_url:
       'https://soundcloud.com/lovejoyband/flourescent-adolescent-arctic',
-    artwork_url:
-      'https://i1.sndcdn.com/artworks-000085361674-24powt-large.jpg',
+    artwork_url: 'https://i1.sndcdn.com/artworks-000085361674-24powt-large.jpg',
     stream_url: 'https://api.soundcloud.com/tracks/71947453/stream',
     download_url: 'https://api.soundcloud.com/tracks/71947453/download',
     waveform_url: 'https://wave.sndcdn.com/GpaN9wnceBiP_m.png',
@@ -519,14 +510,11 @@ export const tracks = [
       last_modified: '2019/11/15 11:56:12 +0000',
       uri: 'https://api.soundcloud.com/users/58669269',
       permalink_url: 'http://soundcloud.com/daniiacu',
-      avatar_url:
-        'https://i1.sndcdn.com/avatars-000724143955-ysyl65-large.jpg',
+      avatar_url: 'https://i1.sndcdn.com/avatars-000724143955-ysyl65-large.jpg',
     },
     user_uri: 'https://api.soundcloud.com/users/58669269',
-    permalink_url:
-      'https://soundcloud.com/daniiacu/r-u-mine-arctic-monkeys',
-    artwork_url:
-      'https://i1.sndcdn.com/artworks-000079983387-afqaaz-large.jpg',
+    permalink_url: 'https://soundcloud.com/daniiacu/r-u-mine-arctic-monkeys',
+    artwork_url: 'https://i1.sndcdn.com/artworks-000079983387-afqaaz-large.jpg',
     stream_url: 'https://api.soundcloud.com/tracks/150437073/stream',
     download_url: 'https://api.soundcloud.com/tracks/150437073/download',
     waveform_url: 'https://wave.sndcdn.com/Ott5OwnPh9Ea_m.png',
@@ -587,8 +575,7 @@ export const tracks = [
       last_modified: '2018/01/13 18:55:17 +0000',
       uri: 'https://api.soundcloud.com/users/25189025',
       permalink_url: 'http://soundcloud.com/1stfranco',
-      avatar_url:
-        'https://i1.sndcdn.com/avatars-000023540505-3ctqs7-large.jpg',
+      avatar_url: 'https://i1.sndcdn.com/avatars-000023540505-3ctqs7-large.jpg',
     },
     user_uri: 'https://api.soundcloud.com/users/25189025',
     permalink_url:
