@@ -28,8 +28,9 @@ function PlayersProvider(props) {
     players[trackId].startTime = startTime;
   }
 
-  function playAll() {
+  async function playAll() {
     for (let [, value] of Object.entries(players)) {
+      await value.player.unsync();
       value.player.sync().start(value.startTime);
     }
     Transport.start();
