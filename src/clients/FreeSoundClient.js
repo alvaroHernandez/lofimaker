@@ -10,7 +10,7 @@ class FreeSoundClient {
   }
 
   stream(trackUrl) {
-    return Promise.resolve(trackUrl);
+    return Promise.resolve(trackUrl.replace('http:', 'https:'));
   }
 }
 
