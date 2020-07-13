@@ -24,41 +24,35 @@ const MusicControls = ({player, currentSong}) => {
     }
   }
 
-  return (
-    <BoxWithCenteredContent css={{paddingTop: '2em'}}>
-      {currentSong ? (
-        <div>
-          {player ? (
-            [
-              !isPlaying && (
-                <div css={{display: 'flex', justifyContent: 'center'}}>
-                  <Button
-                    css={{margin: '0 1em'}}
-                    variant={'secondary'}
-                    onClick={play}
-                  >
-                    Play
-                  </Button>
-                  <Button variant={'secondary'} onClick={stop}>
-                    Stop
-                  </Button>
-                </div>
-              ),
-              <div>
-                <MusicEffectsContainer player={player} />
-              </div>,
-            ]
-          ) : (
-            <div>
-              <Spinner />
+  return currentSong ? (
+    <div>
+      {player ? (
+        [
+          !isPlaying && (
+            <div css={{display: 'flex', justifyContent: 'center'}}>
+              <Button
+                css={{margin: '0 1em'}}
+                variant={'primary'}
+                onClick={play}
+              >
+                Play
+              </Button>
+              <Button variant={'primary'} onClick={stop}>
+                Stop
+              </Button>
             </div>
-          )}
-        </div>
+          ),
+          <div>
+            <MusicEffectsContainer player={player} />
+          </div>,
+        ]
       ) : (
-        'Search and select a song...'
+        <div>
+          <Spinner />
+        </div>
       )}
-    </BoxWithCenteredContent>
-  );
+    </div>
+  ) : null;
 };
 
 export default MusicControls;

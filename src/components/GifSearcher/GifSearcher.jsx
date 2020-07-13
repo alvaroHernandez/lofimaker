@@ -27,7 +27,6 @@ const GifSearcher = ({clickHandler}) => {
       <SimpleForm
         onSubmit={handleSearchSubmit}
         buttonText={'Search Gif'}
-        inputText={'search a gif'}
         inputName={'search'}
         isLoading={isLoading}
       />

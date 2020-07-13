@@ -11,10 +11,11 @@ export const SimpleForm = ({
   inputText,
   inputName,
   isLoading,
+  placeholder,
+  buttonVariant,
 }) => {
   function handleSubmit(event) {
     event.preventDefault();
-    console.log(event.target.elements);
     const input = event.target.elements[inputName];
 
     onSubmit({
@@ -27,7 +28,7 @@ export const SimpleForm = ({
       onSubmit={handleSubmit}
       css={{
         display: 'grid',
-        gridTemplateColumns: '10fr 1fr',
+        gridTemplateColumns: '10fr auto',
         gridGap: '0.5em',
         marginBottom: '1em',
       }}
@@ -35,15 +36,18 @@ export const SimpleForm = ({
       <div
         css={{
           display: 'grid',
-          gridTemplateColumns: '1fr 10fr',
+          gridTemplateColumns: inputText ? '1fr 10fr' : '1fr',
           gridGap: '0.5em',
         }}
       >
-        <label htmlFor={inputName}>{inputText}</label>
-        <Input id={inputName} />
+        {inputText && <label htmlFor={inputName}>{inputText}</label>}
+        <Input placeholder={placeholder} id={inputName} />
       </div>
       <div>
-        <Button variant={'secondary'} type="submit">
+        <Button
+          variant={buttonVariant ? buttonVariant : 'secondary'}
+          type="submit"
+        >
           {isLoading ? <Spinner /> : buttonText}
         </Button>
       </div>

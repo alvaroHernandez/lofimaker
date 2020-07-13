@@ -1,4 +1,6 @@
 /* eslint-disable react/prop-types */
+/** @jsx jsx */
+import {jsx} from '@emotion/core';
 import React, {useEffect, useRef, useState} from 'react';
 import MusicControls from '../MusicControls/MusicControls';
 import MusicSelector from '../MusicSelector/MusicSelector';
@@ -42,15 +44,15 @@ const MusicTrack = ({trackId, currentSong, setCurrentSong, type}) => {
   }
 
   return (
-    <>
+    <React.Fragment>
       <MusicControls player={currentPlayer} currentSong={currentSong} />
-      <div>
+      <div css={{marginTop: '1em'}}>
         <MusicSelector
           soundClient={soundClient.current}
           selectionHandler={handleSelection}
         />
       </div>
-    </>
+    </React.Fragment>
   );
 };
 

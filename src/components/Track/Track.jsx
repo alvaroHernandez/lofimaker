@@ -1,6 +1,8 @@
+/** @jsx jsx */
+import {jsx} from '@emotion/core';
 import React, {useEffect, useState} from 'react';
 import styled from '@emotion/styled/macro';
-import {dark} from '../../styles/colors';
+import {dark, darker} from '../../styles/colors';
 import Draggable from 'react-draggable';
 import {lofiDurationMinutes} from '../../configs/playerConfig';
 import {Transport} from 'tone';
@@ -28,11 +30,12 @@ const TrackMusicContainer = styled.div`
 `;
 
 const EmptyTrackMusicContainer = styled(TrackMusicContainer)`
+  background-color: ${'#8EA8C3'};
   width: 100%;
 `;
 
 const NonEmptyTrackMusicContainer = styled(TrackMusicContainer)`
-  background-color: ${dark};
+  background-color: ${'#8ACDEA'};
   width: ${props => props.filledPercentage}%;
 `;
 
@@ -42,11 +45,6 @@ const Track = ({songName, duration, handleDragStop}) => {
   //TODO: this should be done only once for all tracks
   useEffect(() => {
     Transport.scheduleRepeat(time => {
-      console.log('XXXX');
-      console.log(Transport.seconds);
-      console.log((Transport.seconds * 100) / (lofiDurationMinutes * 60));
-      console.log('XXXX');
-
       setCurrentPosition(
         (Transport.seconds * 100) / (lofiDurationMinutes * 60),
       );
@@ -57,12 +55,12 @@ const Track = ({songName, duration, handleDragStop}) => {
   if (duration === 0) {
     return (
       <EmptyTrackMusicContainer>
-        <p>This track is empty</p>
+        <span css={{paddingLeft: '1em'}}>this track is empty, search and choose a sound using input below</span>
       </EmptyTrackMusicContainer>
     );
   } else {
     return (
-      <>
+      <React.Fragment>
         <CurrentPositionMarkers position={currentPosition} />
         <Draggable axis={'x'} bounds={'parent'} onStop={handleDragStop}>
           <NonEmptyTrackMusicContainer
@@ -72,7 +70,7 @@ const Track = ({songName, duration, handleDragStop}) => {
             <p>{songName}</p>
           </NonEmptyTrackMusicContainer>
         </Draggable>
-      </>
+      </React.Fragment>
     );
   }
 };

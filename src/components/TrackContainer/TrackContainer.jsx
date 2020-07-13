@@ -8,7 +8,23 @@ import BeatsCreator from '../BeatsCreator/BeatsCreator';
 import {usePlayers} from '../../contexts/PlayersContext';
 import {v4 as uuidv4} from 'uuid';
 import {lofiDurationMinutes} from '../../configs/playerConfig';
+import styled from '@emotion/styled/macro';
+import {dark, darker} from '../../styles/colors';
+import {GoSettings} from 'react-icons/all';
 
+const StyledTrackContainer = styled.div`
+  //display: 'grid';
+  //grid-template-rows: 1fr 1fr;
+  //grid-template-columns: 1fr;
+  padding: 1em;
+  margin-top: 1em;
+  &:nth-child(even) {
+    background-color: ${dark};
+  }
+  &:nth-child(odd) {
+    background-color: ${dark};
+  }
+`;
 // eslint-disable-next-line react/prop-types
 const TrackContainer = ({type}) => {
   const [currentSong, setCurrentSong] = useState();
@@ -46,22 +62,27 @@ const TrackContainer = ({type}) => {
   };
 
   return (
-    <div css={{marginTop: '1em'}}>
+    <StyledTrackContainer>
       <div
         css={{
           display: 'grid',
-          gridTemplateColumns: '100px auto',
+          gridTemplateColumns: 'auto 1fr',
+          gridColumnGap: '1em',
           alignItems: 'center',
         }}
       >
         <div>
-          <Button variant={'secondary'} onClick={toggleShowTrackSettings}>
-            Settings
+          <Button
+            variant={'primary'}
+            onClick={toggleShowTrackSettings}
+            css={{padding: '10px 10px'}}
+          >
+            <GoSettings size={'1.2em'} />
           </Button>
         </div>
         <div
           css={{
-            border: '0.1px solid #f1f1f4;',
+            backgroundColor: '#8EA8C3',
             position: 'relative',
             height: '38px',
           }}
@@ -73,10 +94,10 @@ const TrackContainer = ({type}) => {
           />
         </div>
       </div>
-      <div css={{display: showTrackSettings ? 'block' : 'none'}}>
+      <div css={{marginTop: '1em', display: showTrackSettings ? 'block' : 'none'}}>
         {trackFactory(type)}
       </div>
-    </div>
+    </StyledTrackContainer>
   );
 };
 

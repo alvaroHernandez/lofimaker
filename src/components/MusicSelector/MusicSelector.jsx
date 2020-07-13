@@ -22,11 +22,12 @@ const MusicSelector = ({soundClient, selectionHandler}) => {
   return (
     <div>
       <SimpleForm
-        inputText={'Song Name'}
         buttonText={'Search'}
         onSubmit={search}
         inputName={'query'}
         isLoading={isLoading}
+        placeholder={'Search here...'}
+        buttonVariant={'primary'}
       />
 
       {isError ? (

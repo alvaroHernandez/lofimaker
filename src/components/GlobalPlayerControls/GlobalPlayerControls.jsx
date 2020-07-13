@@ -5,33 +5,48 @@ import Button from '../Button/Button';
 import BoxWithCenteredContent from '../BoxWithCenteredText/BoxWithCenteredContent';
 
 import {usePlayers} from '../../contexts/PlayersContext';
-
-const GlobalPlayerControls = () => {
+import AutoFitGrid from "../AutoFitGrid/AutoFitGrid";
+const buttonVariant = 'primary';
+const GlobalPlayerControls = ({preview}) => {
   const {playAll, pauseAll, stopAll} = usePlayers();
   return (
-    <BoxWithCenteredContent css={{marginTop: '2em'}}>
+    <AutoFitGrid>
       <Button
         css={{marginRight: '1em'}}
-        variant={'secondary'}
+        variant={buttonVariant}
         onClick={playAll}
       >
         Play All Tracks
       </Button>
       <Button
         css={{marginRight: '1em'}}
-        variant={'secondary'}
+        variant={buttonVariant}
         onClick={pauseAll}
       >
         Pause All Tracks
       </Button>
       <Button
         css={{marginRight: '1em'}}
-        variant={'secondary'}
+        variant={buttonVariant}
         onClick={stopAll}
       >
         Stop All Tracks
       </Button>
-    </BoxWithCenteredContent>
+      <Button
+        css={{marginRight: '1em'}}
+        variant={buttonVariant}
+        onClick={preview}
+      >
+        Preview
+      </Button>
+      <Button
+        css={{marginRight: '1em'}}
+        variant={buttonVariant}
+        onClick={() => {}}
+      >
+        Share
+      </Button>
+    </AutoFitGrid>
   );
 };
 

@@ -6,19 +6,18 @@ const Layout = styled.div`
   color: ${props => props.color};
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  grid-column-gap: 1em;
+  grid-column-gap: 0em;
   grid-row-gap: 1em;
   min-height: 100vh;
 `;
 
 const Column = styled.div`
   background-color: ${props => props.backgroundColor};
-  padding: 10px;
+  padding: 0 0;
   grid-column: span ${props => props.spanSmall};
   ${medium} {
     grid-column: span ${props => props.spanMedium};
   }
-  min-height: 100vh;
 `;
 
 export {Column, Layout};

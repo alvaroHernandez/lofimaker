@@ -4,12 +4,14 @@ import {useState} from 'react';
 import BoxWithCenteredContent from '../BoxWithCenteredText/BoxWithCenteredContent';
 import AutoFitGrid from '../AutoFitGrid/AutoFitGrid';
 import Button from '../Button/Button';
+import Spinner from '../Spinner/Spinner';
 
 const classes = ['normal', 'toaster', 'reyes', 'nashville'];
 
 const ImagePreview = ({
   data,
   isError,
+  isLoading,
   isSuccess,
   updateFinalImage,
   setGlobalFilter,
@@ -20,44 +22,54 @@ const ImagePreview = ({
     setCurrentClass(filter);
     setGlobalFilter(filter);
   }
+  if (isLoading) {
+    return (
+      <BoxWithCenteredContent css={{margin: '0', height: '300px'}}>
+        <Spinner />
+      </BoxWithCenteredContent>
+    );
+  }
 
   if (isError) {
     return (
-      <BoxWithCenteredContent>
+      <BoxWithCenteredContent css={{margin: '0', height: '300px'}}>
         <span>Error Loading Image, try with another URL</span>
       </BoxWithCenteredContent>
     );
   } else if (isSuccess) {
     updateFinalImage(data);
     return (
-      <div>
-        <BoxWithCenteredContent>
-          <figure css={{width: '50%'}} className={currentClass}>
-            <img width={'100%'} src={data} alt={'custom user loaded'} />
+      <div css={{minHeight: '300px'}}>
+        <BoxWithCenteredContent css={{margin: '0'}}>
+          <figure className={currentClass}>
+            <img
+              width={'100%'}
+              src={data}
+              alt={'custom user loaded'}
+            />
           </figure>
         </BoxWithCenteredContent>
-        <BoxWithCenteredContent>
-          <span>You can pick an image filter if you want</span>
-        </BoxWithCenteredContent>
-        <AutoFitGrid>
-          {classes.map(filter => (
-            <Button
-              key={filter}
-              variant={'secondary'}
-              onClick={() => applyFilter(filter)}
-            >
-              {filter}
-            </Button>
-          ))}
-        </AutoFitGrid>
+        <div>
+          <div css={{textAlign: 'center', marginBottom: '0.5em'}}>
+            <span>Pick a filter</span>
+          </div>
+          <div css={{display: 'flex', justifyContent: 'center'}}>
+            {classes.map(filter => (
+              <Button
+                css={{marginRight: '0.5em'}}
+                key={filter}
+                variant={'secondary'}
+                onClick={() => applyFilter(filter)}
+              >
+                {filter}
+              </Button>
+            ))}
+          </div>
+        </div>
       </div>
     );
   } else {
-    return (
-      <BoxWithCenteredContent>
-        <span>First, load an Image choosing an option below</span>;
-      </BoxWithCenteredContent>
-    );
+    return null;
   }
 };
 

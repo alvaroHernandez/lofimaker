@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import {jsx} from '@emotion/core';
-import {useState} from 'react';
+import {useEffect, useCallback, useState} from 'react';
 import SimpleForm from '../SimpleForm/SimpleForm';
 import {Tab, TabList, TabPanel, TabPanels, Tabs} from '@reach/tabs';
 import '@reach/tabs/styles.css';
@@ -8,10 +8,11 @@ import GifSearcher from '../GifSearcher/GifSearcher';
 import {useAsync} from '../../hooks/useAsync';
 import ImagePreview from '../ImagePreview/ImagePreview';
 import * as PropTypes from 'prop-types';
+import defaultImage from '../../assets/images/logo192.png';
 
 const ImageLoader = ({updateFinalImage, setGlobalFilter}) => {
   const {data, run, isLoading, isError, isSuccess} = useAsync();
-  const [imageUrl, setImageUrl] = useState();
+  // const [imageUrl, setImageUrl] = useState();
 
   function loadImageFromUrl(url) {
     return new Promise(function (resolve, reject) {
@@ -22,17 +23,22 @@ const ImageLoader = ({updateFinalImage, setGlobalFilter}) => {
     });
   }
 
-  function loadImage({url}) {
-    if (imageUrl !== url) {
-      setImageUrl(url);
-      run(loadImageFromUrl(url));
-    }
-  }
+  const loadImage = useCallback(
+    img => {
+      run(loadImageFromUrl(img.url));
+    },
+    [run],
+  );
+
+  useEffect(() => {
+    loadImage({url: defaultImage});
+  }, [loadImage]);
 
   return (
     <div>
       <div>
         <ImagePreview
+          isLoading={isLoading}
           data={data}
           isError={isError}
           isSuccess={isSuccess}
@@ -53,7 +59,6 @@ const ImageLoader = ({updateFinalImage, setGlobalFilter}) => {
             <SimpleForm
               onSubmit={loadImage}
               buttonText={'Load Image'}
-              inputText={'load image url'}
               inputName={'url'}
               isLoading={isLoading}
             />

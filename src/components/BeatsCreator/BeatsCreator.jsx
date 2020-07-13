@@ -4,6 +4,7 @@ import Button from '../Button/Button';
 import BoxWithCenteredContent from '../BoxWithCenteredText/BoxWithCenteredContent';
 import {tracks} from '../../assets/sounds/tracks';
 import BeatsCreatorGrid from '../BeatsCreatorGrid/BeatsCreatorGrid';
+import {lofiDurationMinutes} from "../../configs/playerConfig";
 
 const totalBeats = 20;
 
@@ -26,7 +27,7 @@ const BeatsCreator = ({setCurrentSong}) => {
   const [player, setPlayer] = useState();
 
   useEffect(() => {
-    setCurrentSong({title: 'Drum Kit', duration: 10 * 60 * 1000});
+    setCurrentSong({title: 'Drum Kit', duration: lofiDurationMinutes * 60 * 1000});
     for (let i = 0; i < totalBeats; i++) {
       beatsContainer.current.push({});
     }

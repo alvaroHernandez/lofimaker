@@ -4,7 +4,7 @@ import React, {useRef} from 'react';
 import {Distortion, EQ3, Reverb} from 'tone';
 import MusicEffect from '../components/MusicEffect/MusicEffect';
 import {Knob, Arc, Value} from 'rc-knob';
-import {dark, lighter} from '../styles/colors';
+import {dark, darker, lighter} from '../styles/colors';
 import Toggle from 'react-toggle';
 import './Knob.css';
 import './Toggle.css';
@@ -54,7 +54,7 @@ const MusicEffectsContainer = ({player}) => {
           max={15}
           steps={50}
         >
-          <Arc arcWidth={11} color={lighter} background={dark} />
+          <Arc arcWidth={11} color={lighter} background={darker} />
           <Value marginBottom={20} className="knob-value" />
         </Knob>
         <label>Volume</label>
@@ -71,7 +71,7 @@ const MusicEffectsContainer = ({player}) => {
           max={2}
           steps={10}
         >
-          <Arc arcWidth={11} color={lighter} background={dark} />
+          <Arc arcWidth={11} color={lighter} background={darker} />
           <Value marginBottom={20} className="knob-value" />
         </Knob>
         <label>Speed</label>
@@ -88,7 +88,7 @@ const MusicEffectsContainer = ({player}) => {
             sliderChangeHandlerForProperty(player, 'detune', value)
           }
         >
-          <Arc arcWidth={11} color={lighter} background={dark} />
+          <Arc arcWidth={11} color={lighter} background={darker} />
           <Value marginBottom={20} className="knob-value" />
         </Knob>
         <label>Detune</label>
@@ -109,7 +109,7 @@ const MusicEffectsContainer = ({player}) => {
             )
           }
         >
-          <Arc arcWidth={11} color={lighter} background={dark} />
+          <Arc arcWidth={11} color={lighter} background={darker} />
           <Value marginBottom={20} className="knob-value" />
         </Knob>
         <label>Reverb</label>
@@ -140,7 +140,7 @@ const MusicEffectsContainer = ({player}) => {
             )
           }
         >
-          <Arc arcWidth={11} color={lighter} background={dark} />
+          <Arc arcWidth={11} color={lighter} background={darker} />
           <Value marginBottom={20} className="knob-value" />
         </Knob>
         <label>Distortion</label>
@@ -171,7 +171,7 @@ const MusicEffectsContainer = ({player}) => {
               max={18}
               steps={36}
             >
-              <Arc arcWidth={11} color={lighter} background={dark} />
+              <Arc arcWidth={11} color={lighter} background={darker} />
               <Value marginBottom={20} className="knob-value" />
             </Knob>
             <label>Low</label>
@@ -188,7 +188,7 @@ const MusicEffectsContainer = ({player}) => {
               max={18}
               step={36}
             >
-              <Arc arcWidth={11} color={lighter} background={dark} />
+              <Arc arcWidth={11} color={lighter} background={darker} />
               <Value marginBottom={20} className="knob-value" />
             </Knob>
             <label>Mid</label>
@@ -209,7 +209,7 @@ const MusicEffectsContainer = ({player}) => {
               max={18}
               step={36}
             >
-              <Arc arcWidth={11} color={lighter} background={dark} />
+              <Arc arcWidth={11} color={lighter} background={darker} />
               <Value marginBottom={20} className="knob-value" />
             </Knob>
             <label>High</label>
