@@ -5,7 +5,7 @@ import Button from '../Button/Button';
 import BoxWithCenteredContent from '../BoxWithCenteredText/BoxWithCenteredContent';
 
 import {usePlayers} from '../../contexts/PlayersContext';
-import AutoFitGrid from "../AutoFitGrid/AutoFitGrid";
+import AutoFitGrid from '../AutoFitGrid/AutoFitGrid';
 const buttonVariant = 'primary';
 const GlobalPlayerControls = ({preview}) => {
   const {playAll, pauseAll, stopAll} = usePlayers();

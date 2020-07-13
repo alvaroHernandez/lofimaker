@@ -7,7 +7,7 @@ import Spinner from '../Spinner/Spinner';
 import BoxWithCenteredContent from '../BoxWithCenteredText/BoxWithCenteredContent';
 import {usePlayers} from '../../contexts/PlayersContext';
 
-const MusicControls = ({player, currentSong}) => {
+const MusicControls = ({player, currentSong, playRef, stopRef}) => {
   const {isPlaying} = usePlayers();
 
   function play() {
@@ -24,30 +24,24 @@ const MusicControls = ({player, currentSong}) => {
     }
   }
 
+  playRef.current = play;
+  stopRef.current = stop;
+
   return currentSong ? (
     <div>
       {player ? (
-        [
-          !isPlaying && (
-            <div css={{display: 'flex', justifyContent: 'center'}}>
-              <Button
-                css={{margin: '0 1em'}}
-                variant={'primary'}
-                onClick={play}
-              >
-                Play
-              </Button>
-              <Button variant={'primary'} onClick={stop}>
-                Stop
-              </Button>
-            </div>
-          ),
-          <div>
-            <MusicEffectsContainer player={player} />
-          </div>,
-        ]
-      ) : (
         <div>
+          <MusicEffectsContainer player={player} />
+        </div>
+      ) : (
+        <div
+          css={{
+            padding: '1em',
+            display: 'flex',
+            justifyContent: 'center',
+            fontSize: '39px',
+          }}
+        >
           <Spinner />
         </div>
       )}

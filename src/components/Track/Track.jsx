@@ -55,7 +55,9 @@ const Track = ({songName, duration, handleDragStop}) => {
   if (duration === 0) {
     return (
       <EmptyTrackMusicContainer>
-        <span css={{paddingLeft: '1em'}}>this track is empty, search and choose a sound using input below</span>
+        <span css={{paddingLeft: '1em'}}>
+          this track is empty, search and choose a sound using input below
+        </span>
       </EmptyTrackMusicContainer>
     );
   } else {
@@ -67,7 +69,7 @@ const Track = ({songName, duration, handleDragStop}) => {
             filledPercentage={durationPercentage}
             duration={duration}
           >
-            <p>{songName}</p>
+            <span css={{paddingLeft: '1em'}}>{songName}</span>
           </NonEmptyTrackMusicContainer>
         </Draggable>
       </React.Fragment>

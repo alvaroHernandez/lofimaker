@@ -5,7 +5,7 @@ const buttonVariants = {
   primary: {
     background: light,
     color: 'white',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   secondary: {
     background: dark,
@@ -14,7 +14,7 @@ const buttonVariants = {
   tertiary: {
     background: alternative,
     color: light,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   quaternary: {
     background: darker,

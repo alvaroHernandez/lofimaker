@@ -17,7 +17,14 @@ function soundClientFactory(type) {
   }
 }
 
-const MusicTrack = ({trackId, currentSong, setCurrentSong, type}) => {
+const MusicTrack = ({
+  trackId,
+  currentSong,
+  setCurrentSong,
+  type,
+  playRef,
+  stopRef,
+}) => {
   const soundClient = useRef(soundClientFactory(type));
 
   const {getPlayer, addPlayer} = usePlayers();
@@ -45,7 +52,12 @@ const MusicTrack = ({trackId, currentSong, setCurrentSong, type}) => {
 
   return (
     <React.Fragment>
-      <MusicControls player={currentPlayer} currentSong={currentSong} />
+      <MusicControls
+        playRef={playRef}
+        stopRef={stopRef}
+        player={currentPlayer}
+        currentSong={currentSong}
+      />
       <div css={{marginTop: '1em'}}>
         <MusicSelector
           soundClient={soundClient.current}

@@ -8,7 +8,6 @@ import {
   Chorus,
   Distortion,
   EQ3,
-  FrequencyEnvelope,
   Noise,
   PitchShift,
   Player,

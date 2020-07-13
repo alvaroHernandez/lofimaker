@@ -10,8 +10,9 @@ import {v4 as uuidv4} from 'uuid';
 import {lofiDurationMinutes} from '../../configs/playerConfig';
 import styled from '@emotion/styled/macro';
 import {dark, darker} from '../../styles/colors';
-import {GoSettings} from 'react-icons/all';
-
+import {GoSettings} from 'react-icons/go';
+import {BsPlayFill} from 'react-icons/bs';
+import {BsFillStopFill} from 'react-icons/bs';
 const StyledTrackContainer = styled.div`
   //display: 'grid';
   //grid-template-rows: 1fr 1fr;
@@ -31,6 +32,8 @@ const TrackContainer = ({type}) => {
   const [showTrackSettings, setShowTrackSettings] = useState(true);
   const trackId = useRef(uuidv4());
   const {updatePlayerStartingOffset} = usePlayers();
+  const play = useRef();
+  const stop = useRef();
 
   function toggleShowTrackSettings() {
     setShowTrackSettings(!showTrackSettings);
@@ -42,6 +45,8 @@ const TrackContainer = ({type}) => {
       case 'Effect':
         return (
           <MusicTrack
+            playRef={play}
+            stopRef={stop}
             trackId={trackId.current}
             currentSong={currentSong}
             setCurrentSong={setCurrentSong}
@@ -49,7 +54,13 @@ const TrackContainer = ({type}) => {
           />
         );
       case 'Drums':
-        return <BeatsCreator setCurrentSong={setCurrentSong} />;
+        return (
+          <BeatsCreator
+            playRef={play}
+            stopRef={stop}
+            setCurrentSong={setCurrentSong}
+          />
+        );
       default:
         return null;
     }
@@ -67,7 +78,7 @@ const TrackContainer = ({type}) => {
         css={{
           display: 'grid',
           gridTemplateColumns: 'auto 1fr',
-          gridColumnGap: '1em',
+          gridColumnGap: '0.2em',
           alignItems: 'center',
         }}
       >
@@ -75,9 +86,23 @@ const TrackContainer = ({type}) => {
           <Button
             variant={'primary'}
             onClick={toggleShowTrackSettings}
-            css={{padding: '10px 10px'}}
+            css={{padding: '9px 9px', marginRight: '0.2em'}}
           >
             <GoSettings size={'1.2em'} />
+          </Button>
+          <Button
+            variant={'primary'}
+            onClick={play.current}
+            css={{padding: '9px 9px', marginRight: '0.2em'}}
+          >
+            <BsPlayFill size={'1.2em'} />
+          </Button>
+          <Button
+            variant={'primary'}
+            onClick={stop.current}
+            css={{padding: '9px 9px', marginRight: '0.2em'}}
+          >
+            <BsFillStopFill size={'1.2em'} />
           </Button>
         </div>
         <div
@@ -94,7 +119,9 @@ const TrackContainer = ({type}) => {
           />
         </div>
       </div>
-      <div css={{marginTop: '1em', display: showTrackSettings ? 'block' : 'none'}}>
+      <div
+        css={{marginTop: '1em', display: showTrackSettings ? 'block' : 'none'}}
+      >
         {trackFactory(type)}
       </div>
     </StyledTrackContainer>

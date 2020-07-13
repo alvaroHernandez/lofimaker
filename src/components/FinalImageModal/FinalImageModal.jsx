@@ -7,7 +7,7 @@ function FinalImageModal({setIsDialogOpen, isDialogOpen, image, imageFilter}) {
       onDismiss={() => setIsDialogOpen(false)}
       aria-label="welcome dialog"
       isOpen={isDialogOpen}
-      style={{background: 'hsla(0, 0%, 0%, 0.9)'}}
+      style={{zIndex: '1', background: 'hsla(0, 0%, 0%, 0.9)'}}
     >
       <DialogContent
         aria-label={'lofi preview'}

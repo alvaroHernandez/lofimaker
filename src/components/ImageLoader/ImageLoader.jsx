@@ -2,13 +2,33 @@
 import {jsx} from '@emotion/core';
 import {useEffect, useCallback, useState} from 'react';
 import SimpleForm from '../SimpleForm/SimpleForm';
-import {Tab, TabList, TabPanel, TabPanels, Tabs} from '@reach/tabs';
+import {
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+  useTabsContext,
+} from '@reach/tabs';
 import '@reach/tabs/styles.css';
 import GifSearcher from '../GifSearcher/GifSearcher';
 import {useAsync} from '../../hooks/useAsync';
 import ImagePreview from '../ImagePreview/ImagePreview';
 import * as PropTypes from 'prop-types';
 import defaultImage from '../../assets/images/logo192.png';
+import {dark, light, lighter, darker, ultraDark} from '../../styles/colors';
+
+function CustomTab({index, ...props}) {
+  const {selectedIndex, focusedIndex} = useTabsContext();
+  return (
+    <Tab
+      style={{
+        backgroundColor: `${selectedIndex === index ? dark : darker}`,
+      }}
+      {...props}
+    />
+  );
+}
 
 const ImageLoader = ({updateFinalImage, setGlobalFilter}) => {
   const {data, run, isLoading, isError, isSuccess} = useAsync();
@@ -47,9 +67,13 @@ const ImageLoader = ({updateFinalImage, setGlobalFilter}) => {
         />
       </div>
       <Tabs>
-        <TabList>
-          <Tab>Search a Gif</Tab>
-          <Tab>Load Image from URL</Tab>
+        <TabList css={{backgroundColor: darker, borderBottom: '1px solid'}}>
+          <CustomTab index={0} css={{backgroundColor: darker}}>
+            Search a Gif
+          </CustomTab>
+          <CustomTab index={1} css={{backgroundColor: darker}}>
+            Load Image from URL
+          </CustomTab>
         </TabList>
         <TabPanels css={{padding: '1em'}}>
           <TabPanel>

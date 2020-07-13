@@ -42,16 +42,12 @@ const ImagePreview = ({
       <div css={{minHeight: '300px'}}>
         <BoxWithCenteredContent css={{margin: '0'}}>
           <figure className={currentClass}>
-            <img
-              width={'100%'}
-              src={data}
-              alt={'custom user loaded'}
-            />
+            <img width={'100%'} src={data} alt={'custom user loaded'} />
           </figure>
         </BoxWithCenteredContent>
         <div>
           <div css={{textAlign: 'center', marginBottom: '0.5em'}}>
-            <span>Pick a filter</span>
+            <span>pick a filter: </span>
           </div>
           <div css={{display: 'flex', justifyContent: 'center'}}>
             {classes.map(filter => (
