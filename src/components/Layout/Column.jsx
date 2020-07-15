@@ -1,5 +1,6 @@
-import styled from '@emotion/styled';
+import styled from '@emotion/styled/macro';
 import {medium} from '../../styles/mediaqueries';
+import {darker} from '../../styles/colors';
 
 const Layout = styled.div`
   background-color: ${props => props.backgroundColor};
@@ -20,4 +21,15 @@ const Column = styled.div`
   }
 `;
 
-export {Column, Layout};
+const Section = styled.div`
+  margin-top: 1em;
+  background-color: ${props => props.backgroundColor};
+  padding: 1em;
+`;
+
+const ToggleVisible = styled.div`
+  margin-top: 1em;
+  display: ${props => (props.show ? 'block' : 'none')};
+`;
+
+export {Column, Layout, Section, ToggleVisible};

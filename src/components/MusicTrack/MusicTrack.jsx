@@ -22,8 +22,6 @@ const MusicTrack = ({
   currentSong,
   setCurrentSong,
   type,
-  playRef,
-  stopRef,
 }) => {
   const soundClient = useRef(soundClientFactory(type));
 
@@ -53,8 +51,6 @@ const MusicTrack = ({
   return (
     <React.Fragment>
       <MusicControls
-        playRef={playRef}
-        stopRef={stopRef}
         player={currentPlayer}
         currentSong={currentSong}
       />

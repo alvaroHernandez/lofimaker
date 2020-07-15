@@ -16,6 +16,7 @@ Make and share your own Lo-fi creations!
 - [ ] Preview should control beats player
 - [ ] play individual track should move playing indicator
 - [x] Add sidebar
+- [ ] make music controls responsive
 
 #### Enhancements
 - [ ] Move and repeat drums (sync track view with duration)

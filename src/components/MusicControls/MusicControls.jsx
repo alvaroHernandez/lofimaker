@@ -1,31 +1,10 @@
 /** @jsx jsx */
 import {jsx} from '@emotion/core';
 import React from 'react';
-import Button from '../Button/Button';
 import MusicEffectsContainer from '../../MusicEffectsContainer/MusicEffectsContainer';
 import Spinner from '../Spinner/Spinner';
-import BoxWithCenteredContent from '../BoxWithCenteredText/BoxWithCenteredContent';
-import {usePlayers} from '../../contexts/PlayersContext';
 
-const MusicControls = ({player, currentSong, playRef, stopRef}) => {
-  const {isPlaying} = usePlayers();
-
-  function play() {
-    if (player !== undefined) {
-      player.unsync();
-      player.start();
-    }
-  }
-
-  function stop() {
-    if (player !== undefined) {
-      player.unsync();
-      player.stop();
-    }
-  }
-
-  playRef.current = play;
-  stopRef.current = stop;
+const MusicControls = ({player, currentSong}) => {
 
   return currentSong ? (
     <div>

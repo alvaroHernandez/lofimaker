@@ -2,7 +2,6 @@
 import {jsx} from '@emotion/core';
 import React from 'react';
 import Button from '../Button/Button';
-import BoxWithCenteredContent from '../BoxWithCenteredText/BoxWithCenteredContent';
 
 import {usePlayers} from '../../contexts/PlayersContext';
 import AutoFitGrid from '../AutoFitGrid/AutoFitGrid';

@@ -3,7 +3,7 @@ import {jsx} from '@emotion/core';
 import React from 'react';
 import {darker} from '../../styles/colors';
 
-const Section = props => {
+const Section2 = props => {
   return (
     <div
       {...props}
@@ -16,4 +16,4 @@ const Section = props => {
   );
 };
 
-export default Section;
+export default Section2;
