@@ -17,6 +17,9 @@ Make and share your own Lo-fi creations!
 - [ ] play individual track should move playing indicator
 - [x] Add sidebar
 - [ ] make music controls responsive
+- [] change length of song to at least Daft punk random acess memories vandeway edit
+- [] Check why I'm getting so little results with sound cloud api
+
 
 #### Enhancements
 - [ ] Move and repeat drums (sync track view with duration)

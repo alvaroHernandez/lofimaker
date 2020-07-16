@@ -2,7 +2,7 @@
 import {jsx} from '@emotion/core';
 import React, {useEffect, useState} from 'react';
 import styled from '@emotion/styled/macro';
-import {dark, darker} from '../../styles/colors';
+import {alternative, dark, darker} from '../../styles/colors';
 import Draggable from 'react-draggable';
 import {lofiDurationMinutes} from '../../configs/playerConfig';
 import {Transport} from 'tone';
@@ -30,12 +30,12 @@ const TrackMusicContainer = styled.div`
 `;
 
 const EmptyTrackMusicContainer = styled(TrackMusicContainer)`
-  background-color: ${'#8EA8C3'};
+  background-color: ${alternative};
   width: 100%;
 `;
 
 const NonEmptyTrackMusicContainer = styled(TrackMusicContainer)`
-  background-color: ${'#8ACDEA'};
+  background-color: ${alternative};
   width: ${props => props.filledPercentage}%;
 `;
 

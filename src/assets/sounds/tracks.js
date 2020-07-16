@@ -25,3 +25,12 @@ export const tracks = {
     sound: rimshot,
   },
 };
+
+export const tracks2 = {
+  kick: kick,
+  snare: snare,
+  hihat: hihat,
+  clap: clap,
+  openhihat: openhihat,
+  rimshot: rimshot,
+};

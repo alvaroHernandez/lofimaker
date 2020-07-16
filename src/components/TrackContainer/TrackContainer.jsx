@@ -14,6 +14,7 @@ import {GoSettings} from 'react-icons/go';
 import {BsPlayFill} from 'react-icons/bs';
 import {BsFillStopFill} from 'react-icons/bs';
 import {ToggleVisible} from '../Layout/Column';
+import ToneBeatsCreator from "../BeatsCreator/ToneBeatsCreator";
 
 const StyledTrackContainer = styled.div`
   padding: 1em;
@@ -77,7 +78,7 @@ const TrackContainer = ({type}) => {
           />
         );
       case 'Drums':
-        return <BeatsCreator setCurrentSong={setCurrentSong} />;
+        return <ToneBeatsCreator setCurrentSong={setCurrentSong} />;
       default:
         return null;
     }

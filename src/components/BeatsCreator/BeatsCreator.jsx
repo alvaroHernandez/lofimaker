@@ -5,6 +5,7 @@ import BoxWithCenteredContent from '../BoxWithCenteredText/BoxWithCenteredConten
 import {tracks} from '../../assets/sounds/tracks';
 import BeatsCreatorGrid from '../BeatsCreatorGrid/BeatsCreatorGrid';
 import {lofiDurationMinutes} from '../../configs/playerConfig';
+import * as Tone from "tone";
 
 const totalBeats = 20;
 
@@ -25,6 +26,7 @@ const BeatsCreator = ({setCurrentSong, playRef, stopRef}) => {
   const beatsContainer = useRef([]);
   const [currentBeat, setCurrentBeat] = useState(0);
   const player = useRef(null);
+
 
   useEffect(() => {
     setCurrentSong({
@@ -62,9 +64,6 @@ const BeatsCreator = ({setCurrentSong, playRef, stopRef}) => {
       setCurrentBeat(beat);
     }, 100);
   }
-
-  playRef.current = play;
-  stopRef.current = stop;
 
   const toggleBeat = (trackName, beatIndex) => {
     if (beatsContainer.current[beatIndex][trackName] === undefined) {
