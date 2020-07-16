@@ -11,10 +11,9 @@ import {lofiDurationMinutes} from '../../configs/playerConfig';
 import styled from '@emotion/styled/macro';
 import {dark} from '../../styles/colors';
 import {GoSettings} from 'react-icons/go';
-import {BsPlayFill} from 'react-icons/bs';
-import {BsFillStopFill} from 'react-icons/bs';
+import {GoMute, GoUnmute} from 'react-icons/go';
 import {ToggleVisible} from '../Layout/Column';
-import ToneBeatsCreator from "../BeatsCreator/ToneBeatsCreator";
+import ToneBeatsCreator from '../BeatsCreator/ToneBeatsCreator';
 
 const StyledTrackContainer = styled.div`
   padding: 1em;
@@ -43,22 +42,18 @@ const TrackContainer = ({type}) => {
   const [showTrackSettings, setShowTrackSettings] = useState(true);
   const trackId = useRef(uuidv4());
 
-  const {getPlayer, updatePlayerStartingOffset} = usePlayers();
+  const [isMuted, setIsMuted] = useState(false);
 
-  function play() {
-    const player = getPlayer(trackId.current);
-    if (player !== undefined) {
-      player.unsync();
-      player.start();
-    }
+  const {updatePlayerStartingOffset, unmute, mute} = usePlayers();
+
+  function unmuteHandler() {
+    setIsMuted(false);
+    unmute(trackId.current);
   }
 
-  function stop() {
-    const player = getPlayer(trackId.current);
-    if (player !== undefined) {
-      player.unsync();
-      player.stop();
-    }
+  function muteHandler() {
+    setIsMuted(true);
+    mute(trackId.current);
   }
 
   function toggleShowTrackSettings() {
@@ -78,7 +73,12 @@ const TrackContainer = ({type}) => {
           />
         );
       case 'Drums':
-        return <ToneBeatsCreator setCurrentSong={setCurrentSong} />;
+        return (
+          <ToneBeatsCreator
+            trackId={trackId.current}
+            setCurrentSong={setCurrentSong}
+          />
+        );
       default:
         return null;
     }
@@ -97,11 +97,11 @@ const TrackContainer = ({type}) => {
           <TrackControlButton onClick={toggleShowTrackSettings}>
             <GoSettings size={'1.2em'} />
           </TrackControlButton>
-          <TrackControlButton onClick={play}>
-            <BsPlayFill size={'1.2em'} />
+          <TrackControlButton disabled={!isMuted} onClick={unmuteHandler}>
+            <GoUnmute size={'1.2em'} />
           </TrackControlButton>
-          <TrackControlButton onClick={stop}>
-            <BsFillStopFill size={'1.2em'} />
+          <TrackControlButton disabled={isMuted} onClick={muteHandler}>
+            <GoMute size={'1.2em'} />
           </TrackControlButton>
         </div>
         <div

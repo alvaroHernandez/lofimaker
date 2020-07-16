@@ -1,13 +1,15 @@
 /* eslint-disable react/prop-types */
 /** @jsx jsx */
 import {jsx} from '@emotion/core';
-import React, {useEffect, useRef, useState} from 'react';
-import MusicControls from '../MusicControls/MusicControls';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import MusicSelector from '../MusicSelector/MusicSelector';
 import SoundCloudClient from '../../clients/SoundCloudClient';
 import FreeSoundClient from '../../clients/FreeSoundClient';
 import {usePlayers} from '../../contexts/PlayersContext';
 import {GrainPlayer} from 'tone';
+import {MusicTrackPlayer} from '../../contexts/TrackPlayer';
+import MusicEffectsContainer from '../../MusicEffectsContainer/MusicEffectsContainer';
+import Spinner from '../Spinner/Spinner';
 
 function soundClientFactory(type) {
   if (type === 'Sound') {
@@ -17,49 +19,73 @@ function soundClientFactory(type) {
   }
 }
 
-const MusicTrack = ({
-  trackId,
-  currentSong,
-  setCurrentSong,
-  type,
-}) => {
+const MusicTrack = ({trackId, currentSong, setCurrentSong, type}) => {
   const soundClient = useRef(soundClientFactory(type));
 
-  const {getPlayer, addPlayer} = usePlayers();
+  const {getPlayer, addPlayer, stopAll} = usePlayers();
   const [currentPlayer, setCurrentPlayer] = useState();
+  const [isLoading, setIsLoading] = useState();
 
   useEffect(() => {
     setCurrentPlayer(getPlayer(trackId));
-  }, []);
+  }, [getPlayer, trackId]);
 
   async function handleSelection({title, duration, url}) {
+    stopAll();
+    setIsLoading(true);
     if (currentPlayer !== undefined) {
       currentPlayer.dispose();
       await setCurrentPlayer();
     }
 
     setCurrentSong({title, duration});
-    const player = new GrainPlayer(url, () => {
-      setCurrentPlayer(player);
-      addPlayer(trackId, player);
-    }).toDestination();
-    player.olverlap = 0;
-    player.autostart = false;
-    player.name = trackId;
+    const player = new MusicTrackPlayer(
+      new GrainPlayer(url, () => {
+        addPlayer(trackId, player);
+        setIsLoading(false);
+        setCurrentPlayer(player);
+        player.sync().start();
+      }),
+      trackId,
+    );
   }
+  const musicSelector = useMemo(
+    () => (
+      <MusicSelector
+        soundClient={soundClient.current}
+        selectionHandler={handleSelection}
+      />
+    ),
+
+    [handleSelection],
+  );
+
+  const musicEffectContainer = useMemo(
+    () => <MusicEffectsContainer player={currentPlayer?.player} />,
+    [currentPlayer],
+  );
 
   return (
     <React.Fragment>
-      <MusicControls
-        player={currentPlayer}
-        currentSong={currentSong}
-      />
-      <div css={{marginTop: '1em'}}>
-        <MusicSelector
-          soundClient={soundClient.current}
-          selectionHandler={handleSelection}
-        />
-      </div>
+      {currentSong && (
+        <div>
+          {!isLoading ? (
+            <div>{musicEffectContainer}</div>
+          ) : (
+            <div
+              css={{
+                padding: '1em',
+                display: 'flex',
+                justifyContent: 'center',
+                fontSize: '39px',
+              }}
+            >
+              <Spinner />
+            </div>
+          )}
+        </div>
+      )}
+      <div css={{marginTop: '1em'}}>{musicSelector}</div>
     </React.Fragment>
   );
 };

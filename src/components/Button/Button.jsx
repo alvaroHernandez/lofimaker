@@ -1,11 +1,14 @@
 import styled from '@emotion/styled/macro';
-import {alternative, dark, darker, light, lighter} from '../../styles/colors';
+import {alternative, dark, darker, light, lighter, ultraDark} from '../../styles/colors';
 
 const buttonVariants = {
   primary: {
     background: light,
     color: 'white',
     fontWeight: 'bold',
+    '&:disabled': {
+      opacity: 0.5,
+    },
   },
   secondary: {
     background: dark,

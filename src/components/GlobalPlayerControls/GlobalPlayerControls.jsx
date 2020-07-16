@@ -1,15 +1,18 @@
 /** @jsx jsx */
 import {jsx} from '@emotion/core';
 import React from 'react';
+import {ultraDark} from '../../styles/colors';
 import Button from '../Button/Button';
-
-import {usePlayers} from '../../contexts/PlayersContext';
 import AutoFitGrid from '../AutoFitGrid/AutoFitGrid';
+import {usePlayers} from '../../contexts/PlayersContext';
+
 const buttonVariant = 'primary';
-const GlobalPlayerControls = ({preview}) => {
+
+const GlobalPlayerControls = () => {
   const {playAll, pauseAll, stopAll} = usePlayers();
+
   return (
-    <AutoFitGrid>
+    <AutoFitGrid css={{backgroundColor: ultraDark, marginTop: '1em'}}>
       <Button
         css={{marginRight: '1em'}}
         variant={buttonVariant}
@@ -30,20 +33,6 @@ const GlobalPlayerControls = ({preview}) => {
         onClick={stopAll}
       >
         Stop All Tracks
-      </Button>
-      <Button
-        css={{marginRight: '1em'}}
-        variant={buttonVariant}
-        onClick={preview}
-      >
-        Preview
-      </Button>
-      <Button
-        css={{marginRight: '1em'}}
-        variant={buttonVariant}
-        onClick={() => {}}
-      >
-        Share
       </Button>
     </AutoFitGrid>
   );

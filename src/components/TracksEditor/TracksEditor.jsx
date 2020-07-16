@@ -6,6 +6,8 @@ import Button from '../Button/Button';
 import BoxWithCenteredContent from '../BoxWithCenteredText/BoxWithCenteredContent';
 import TrackContainer from '../TrackContainer/TrackContainer';
 import styled from '@emotion/styled/macro';
+import {usePlayers} from '../../contexts/PlayersContext';
+import GlobalPlayerControls from '../GlobalPlayerControls/GlobalPlayerControls';
 
 const IndividualTrackEditor = styled.div`
   display: grid;
@@ -17,14 +19,17 @@ const tracksTypes = ['Sound', 'Effect', 'Drums', 'Melody', 'Bass'];
 const TracksEditor = () => {
   const [tracks, setTracks] = useState([]);
   const nextTrackId = useRef(1);
+  const {stopAll} = usePlayers();
 
   const addTrack = type => {
+    stopAll();
     setTracks([
       ...tracks,
       <TrackContainer key={nextTrackId.current} type={type} />,
     ]);
     nextTrackId.current += 1;
   };
+
   return (
     <React.Fragment>
       <AutoFitGrid>
@@ -38,6 +43,7 @@ const TracksEditor = () => {
           </Button>
         ))}
       </AutoFitGrid>
+      <GlobalPlayerControls />
       {tracks.length > 0 ? (
         <IndividualTrackEditor>{tracks}</IndividualTrackEditor>
       ) : (

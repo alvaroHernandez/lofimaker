@@ -10,7 +10,7 @@ import '@reach/tabs/styles.css';
 import {Section} from '../Layout/Column';
 import FinalImageContainer from '../FinalImageContainer/FinalImageContainer';
 import {usePlayers} from '../../contexts/PlayersContext';
-import GlobalPlayerControls from '../GlobalPlayerControls/GlobalPlayerControls';
+import ExportControls from '../ExportControls/ExportControls';
 import styled from '@emotion/styled/macro';
 import TracksEditor from '../TracksEditor/TracksEditor';
 
@@ -48,7 +48,7 @@ const LoFiMaker = () => {
       </Column>
       <Column backgroundColor={ultraDark} spanSmall={11} spanMedium={9}>
         <HeaderSection>
-          <GlobalPlayerControls preview={previewHandler} />
+          <ExportControls preview={previewHandler} />
         </HeaderSection>
         <Section>
           <TracksEditor />

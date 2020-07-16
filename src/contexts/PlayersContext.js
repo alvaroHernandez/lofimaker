@@ -1,64 +1,85 @@
 /** @jsx jsx */
 import {jsx} from '@emotion/core';
-import React from 'react';
+import React, {useCallback} from 'react';
 import {Transport} from 'tone';
 
 const PlayersContext = React.createContext();
 PlayersContext.displayName = 'PlayersContext';
 
 function PlayersProvider(props) {
-  const [players, setPlayers] = React.useState({});
+  const players = React.useRef({});
   const [isPlaying, setIsPlaying] = React.useState(false);
 
-  function getPlayer(trackId) {
-    if (players[trackId] !== undefined) {
-      return players[trackId].player;
+  const getPlayer = useCallback(trackId => {
+    if (players.current[trackId] !== undefined) {
+      return players.current[trackId].player;
     }
-  }
+  }, []);
 
-  function addPlayer(trackId, player) {
-    if (players[trackId] !== undefined) {
-      players[trackId].player.dispose();
+  const unmute = useCallback(
+    trackId => {
+      const player = getPlayer(trackId);
+      if (player !== undefined) {
+        player.unmute();
+      }
+    },
+    [getPlayer],
+  );
+
+  const mute = useCallback(
+    trackId => {
+      const player = getPlayer(trackId);
+      if (player !== undefined) {
+        player.mute();
+      }
+    },
+    [getPlayer],
+  );
+
+  const addPlayer = useCallback((trackId, player) => {
+    if (players.current[trackId] !== undefined) {
+      players.current[trackId].player.dispose();
     }
-    const np = {...players, [trackId]: {player, startTime: 0}};
-    setPlayers(np);
-  }
+    const np = {...players.current, [trackId]: {player, startTime: 0}};
+    players.current = np;
+  }, []);
 
-  function updatePlayerStartingOffset(trackId, startTime) {
-    players[trackId].startTime = startTime;
-  }
+  const updatePlayerStartingOffset = useCallback((trackId, startTime) => {
+    players.current[trackId].startTime = startTime;
+  }, []);
 
-  async function playAll() {
-    for (let [, value] of Object.entries(players)) {
+  const playAll = useCallback(async () => {
+    for (let [, value] of Object.entries(players.current)) {
       await value.player.unsync();
-      value.player.sync().start(value.startTime);
+      value.player.sync(value.startTime);
     }
     Transport.start();
     setIsPlaying(true);
-  }
+  }, []);
 
-  function pauseAll() {
-    for (let [, value] of Object.entries(players)) {
-      value.player.unsync();
-    }
-
+  const pauseAll = useCallback(() => {
     Transport.pause();
     setIsPlaying(false);
-  }
+  }, []);
 
-  function stopAll() {
+  const stopAll = useCallback(() => {
+    for (let [, value] of Object.entries(players.current)) {
+      value.player.unsync();
+    }
     Transport.stop();
     setIsPlaying(false);
-  }
+  }, []);
 
   const value = {
-    players,
+    player: players.current,
     addPlayer,
     getPlayer,
     updatePlayerStartingOffset,
     playAll,
     stopAll,
     pauseAll,
+    unmute,
+    mute,
     isPlaying,
   };
   return <PlayersContext.Provider value={value} {...props} />;

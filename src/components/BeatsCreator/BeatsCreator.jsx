@@ -39,7 +39,6 @@ const BeatsCreator = ({setCurrentSong, playRef, stopRef}) => {
   }, [setCurrentSong]);
 
   function stop() {
-    debugger;
     if (player.current !== null) {
       clearInterval(player.current);
       player.current = null;
