@@ -46,13 +46,10 @@ function PlayersProvider(props) {
 
   const updatePlayerStartingOffset = useCallback((trackId, startTime) => {
     players.current[trackId].startTime = startTime;
+    players.current[trackId].player.sync(startTime);
   }, []);
 
   const playAll = useCallback(async () => {
-    for (let [, value] of Object.entries(players.current)) {
-      await value.player.unsync();
-      value.player.sync(value.startTime);
-    }
     Transport.start();
     setIsPlaying(true);
   }, []);
@@ -63,9 +60,6 @@ function PlayersProvider(props) {
   }, []);
 
   const stopAll = useCallback(() => {
-    for (let [, value] of Object.entries(players.current)) {
-      value.player.unsync();
-    }
     Transport.stop();
     setIsPlaying(false);
   }, []);
