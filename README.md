@@ -20,7 +20,8 @@ Make and share your own Lo-fi creations!
 
 
 #### Enhancements
-- [] change length of default song to at least Daft punk random acess memories vandeway edit
+- [ ] More music effects
+- [ ] change length of default song to at least Daft punk random acess memories vandeway edit
 - [ ] Move this list to open issues
 - [ ] Move and repeat drums (sync track view with duration)
 - [ ] Change total duration

@@ -14,9 +14,11 @@ const MusicSelector = ({soundClient, selectionHandler}) => {
   }
 
   function handleClick({id, title, duration, streamUrl}) {
-    soundClient.stream(streamUrl).then(url => {
-      selectionHandler({title, duration, url});
-    });
+    selectionHandler(() =>
+      soundClient.stream(streamUrl).then(url => {
+        return {title, duration, url};
+      }),
+    );
   }
 
   return (

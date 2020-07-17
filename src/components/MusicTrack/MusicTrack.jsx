@@ -30,9 +30,10 @@ const MusicTrack = ({trackId, currentSong, setCurrentSong, type}) => {
     setCurrentPlayer(getPlayer(trackId));
   }, [getPlayer, trackId]);
 
-  async function handleSelection({title, duration, url}) {
-    stopAll();
+  async function handleSelection(promise) {
     setIsLoading(true);
+    const {title, duration, url} = await promise();
+    stopAll();
     if (currentPlayer !== undefined) {
       currentPlayer.dispose();
       await setCurrentPlayer();
