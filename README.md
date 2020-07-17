@@ -5,23 +5,23 @@ Make and share your own Lo-fi creations!
 ## Todos
 
 #### MVP
-- [ ] Refactor
-- [ ] improve music controls to use/show default values
+- [ ] improve music controls: better resolution and use/show default values
 - [ ] save and gallery
-- [ ] Move this list to open issues
 - [ ] add loop
+- [ ] Refactor
 - [ ] longer songs should be trimmed
 - [ ] enable changing duration, or trimming
 - [ ] change speed should change duration
-- [ ] Preview should control beats player
-- [ ] play individual track should move playing indicator
+- [x] Preview should control beats player
 - [x] Add sidebar
+- [ ] add global tracks slider player control
 - [ ] make music controls responsive
-- [] change length of song to at least Daft punk random acess memories vandeway edit
-- [] Check why I'm getting so little results with sound cloud api
+- [ ] Check why I'm getting so little results with sound cloud api
 
 
 #### Enhancements
+- [] change length of default song to at least Daft punk random acess memories vandeway edit
+- [ ] Move this list to open issues
 - [ ] Move and repeat drums (sync track view with duration)
 - [ ] Change total duration
 - [ ] add lofi overlay gif,
