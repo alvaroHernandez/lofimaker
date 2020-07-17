@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import {jsx} from '@emotion/core';
 import React, {useCallback} from 'react';
-import {Transport} from 'tone';
+import {Transport, context} from 'tone';
 
 const PlayersContext = React.createContext();
 PlayersContext.displayName = 'PlayersContext';
@@ -50,6 +50,9 @@ function PlayersProvider(props) {
   }, []);
 
   const playAll = useCallback(async () => {
+    if (context.state !== 'running') {
+      await context.resume();
+    }
     Transport.start();
     setIsPlaying(true);
   }, []);

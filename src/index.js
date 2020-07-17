@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import * as Server from './server/server';
-(new AudioContext()).resume();
 
 ReactDOM.render(
   <React.StrictMode>

@@ -21,8 +21,8 @@ const TracksEditor = () => {
   const nextTrackId = useRef(1);
   const {stopAll} = usePlayers();
 
-  const addTrack = type => {
-    stopAll();
+  const addTrack = async type => {
+    await stopAll();
     setTracks([
       ...tracks,
       <TrackContainer key={nextTrackId.current} type={type} />,
