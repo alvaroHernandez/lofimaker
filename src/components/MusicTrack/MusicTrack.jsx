@@ -70,7 +70,7 @@ const MusicTrack = ({trackId, currentSong, setCurrentSong, type}) => {
     <React.Fragment>
       {currentSong && (
         <div>
-          {!isLoading ? (
+          {!isLoading && currentPlayer ? (
             <div>{musicEffectContainer}</div>
           ) : (
             <div

@@ -1,10 +1,10 @@
 /** @jsx jsx */
 import {jsx} from '@emotion/core';
-import React, {useEffect, useRef} from 'react';
+import React, {useRef} from 'react';
 import {Distortion, EQ3, Reverb} from 'tone';
 import MusicEffect from '../components/MusicEffect/MusicEffect';
-import {Knob, Arc, Value} from 'rc-knob';
-import {dark, darker, lighter} from '../styles/colors';
+import {Knob, Arc, Value} from './rc-knob';
+import {darker, lighter} from '../styles/colors';
 import Toggle from 'react-toggle';
 import './Knob.css';
 import './Toggle.css';
@@ -42,8 +42,9 @@ const MusicEffectsContainer = ({player}) => {
         marginTop: '1em',
       }}
     >
-      <MusicEffect name={'Volume'}>
+      <MusicEffect name={'Amplify'}>
         <Knob
+          value={0}
           size={70}
           angleOffset={220}
           angleRange={280}
@@ -52,49 +53,50 @@ const MusicEffectsContainer = ({player}) => {
           }
           min={-35}
           max={15}
-          steps={50}
         >
           <Arc arcWidth={11} color={lighter} background={darker} />
-          <Value marginBottom={20} className="knob-value" />
+          <Value decimalPlace={1} marginBottom={20} className="knob-value" />
         </Knob>
         <label>Volume</label>
       </MusicEffect>
       <MusicEffect name={'Speed'}>
         <Knob
+          value={player?.playbackRate}
           size={70}
           angleOffset={220}
           angleRange={280}
           onChange={value =>
             sliderChangeHandlerForProperty(player, 'playbackRate', value)
           }
-          min={0.5}
+          min={0.8}
           max={2}
-          steps={10}
+          steps={200}
         >
           <Arc arcWidth={11} color={lighter} background={darker} />
-          <Value marginBottom={20} className="knob-value" />
+          <Value decimalPlace={1} marginBottom={20} className="knob-value" />
         </Knob>
         <label>Speed</label>
       </MusicEffect>
       <MusicEffect>
         <Knob
+          value={player?.detune}
           size={70}
           angleOffset={220}
           angleRange={280}
           min={-1200}
           max={1200}
-          steps={100}
           onChange={value =>
             sliderChangeHandlerForProperty(player, 'detune', value)
           }
         >
           <Arc arcWidth={11} color={lighter} background={darker} />
-          <Value marginBottom={20} className="knob-value" />
+          <Value decimalPlace={0} marginBottom={20} className="knob-value" />
         </Knob>
         <label>Detune</label>
       </MusicEffect>
       <MusicEffect>
         <Knob
+          value={reverberation.current.decay}
           size={70}
           angleOffset={220}
           angleRange={280}
@@ -110,7 +112,7 @@ const MusicEffectsContainer = ({player}) => {
           }
         >
           <Arc arcWidth={11} color={lighter} background={darker} />
-          <Value marginBottom={20} className="knob-value" />
+          <Value decimalPlace={1} marginBottom={20} className="knob-value" />
         </Knob>
         <label>Reverb</label>
         <label
@@ -126,11 +128,12 @@ const MusicEffectsContainer = ({player}) => {
       </MusicEffect>
       <MusicEffect>
         <Knob
+          value={distortion.current.distortion}
           size={70}
           angleOffset={220}
           angleRange={280}
           min={0.001}
-          max={3}
+          max={2}
           steps={100}
           onChange={value =>
             sliderChangeHandlerForProperty(
@@ -141,7 +144,7 @@ const MusicEffectsContainer = ({player}) => {
           }
         >
           <Arc arcWidth={11} color={lighter} background={darker} />
-          <Value marginBottom={20} className="knob-value" />
+          <Value decimalPlace={1} marginBottom={20} className="knob-value" />
         </Knob>
         <label>Distortion</label>
         <label
@@ -161,6 +164,7 @@ const MusicEffectsContainer = ({player}) => {
         <div css={{display: 'inline-flex'}}>
           <MusicEffect>
             <Knob
+              value={equalizer.current.low.value}
               size={70}
               angleOffset={220}
               angleRange={280}
@@ -172,12 +176,13 @@ const MusicEffectsContainer = ({player}) => {
               steps={36}
             >
               <Arc arcWidth={11} color={lighter} background={darker} />
-              <Value marginBottom={20} className="knob-value" />
+              <Value decimalPlace={1} marginBottom={20} className="knob-value" />
             </Knob>
             <label>Low</label>
           </MusicEffect>
           <MusicEffect>
             <Knob
+              value={equalizer.current.mid.value}
               size={70}
               angleOffset={220}
               angleRange={280}
@@ -189,12 +194,13 @@ const MusicEffectsContainer = ({player}) => {
               step={36}
             >
               <Arc arcWidth={11} color={lighter} background={darker} />
-              <Value marginBottom={20} className="knob-value" />
+              <Value decimalPlace={1} marginBottom={20} className="knob-value" />
             </Knob>
             <label>Mid</label>
           </MusicEffect>
           <MusicEffect>
             <Knob
+              value={equalizer.current.high.value}
               size={70}
               angleOffset={220}
               angleRange={280}
@@ -210,7 +216,7 @@ const MusicEffectsContainer = ({player}) => {
               step={36}
             >
               <Arc arcWidth={11} color={lighter} background={darker} />
-              <Value marginBottom={20} className="knob-value" />
+              <Value decimalPlace={1} marginBottom={20} className="knob-value" />
             </Knob>
             <label>High</label>
           </MusicEffect>

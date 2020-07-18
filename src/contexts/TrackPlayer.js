@@ -6,9 +6,10 @@ class MusicTrackPlayer {
   constructor(grainPlayer, trackId) {
     this.player = grainPlayer;
     this.player.toDestination();
-    this.player.olverlap = 0;
     this.player.autostart = false;
     this.player.name = trackId;
+    this.player.olverlap = 0;
+    this.player.grainSize = 0.1;
   }
 
   dispose() {
