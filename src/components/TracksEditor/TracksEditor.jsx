@@ -14,7 +14,7 @@ const IndividualTrackEditor = styled.div`
   grid-template-columns: 1fr;
 `;
 
-const tracksTypes = ['Sound', 'Effect', 'Drums', 'Melody', 'Bass'];
+const tracksTypes = ['Sound', 'Effect', 'Drums'];
 
 const TracksEditor = () => {
   const [tracks, setTracks] = useState([]);
@@ -39,7 +39,7 @@ const TracksEditor = () => {
             variant={'secondary'}
             onClick={() => addTrack(type)}
           >
-            Add {type}
+            Add {type} Track
           </Button>
         ))}
       </AutoFitGrid>

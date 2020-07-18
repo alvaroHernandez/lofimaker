@@ -5,7 +5,7 @@ Make and share your own Lo-fi creations!
 ## Todos
 
 #### MVP
-- [ ] improve music controls: better resolution and use/show default values
+- [x] improve music controls: better resolution and use/show default values
 - [ ] save and gallery
 - [ ] add loop
 - [ ] Refactor
