@@ -57,7 +57,7 @@ const MusicEffectsContainer = ({player}) => {
           <Arc arcWidth={11} color={lighter} background={darker} />
           <Value decimalPlace={1} marginBottom={20} className="knob-value" />
         </Knob>
-        <label>Volume</label>
+        <label>Amplify</label>
       </MusicEffect>
       <MusicEffect name={'Speed'}>
         <Knob

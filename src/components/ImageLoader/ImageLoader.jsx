@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import {jsx} from '@emotion/core';
-import {useEffect, useCallback, useState} from 'react';
+import {useEffect, useCallback} from 'react';
 import SimpleForm from '../SimpleForm/SimpleForm';
 import {
   Tab,
@@ -16,10 +16,10 @@ import {useAsync} from '../../hooks/useAsync';
 import ImagePreview from '../ImagePreview/ImagePreview';
 import * as PropTypes from 'prop-types';
 import defaultImage from '../../assets/images/logo192.png';
-import {dark, light, lighter, darker, ultraDark} from '../../styles/colors';
+import {dark, darker} from '../../styles/colors';
 
 function CustomTab({index, ...props}) {
-  const {selectedIndex, focusedIndex} = useTabsContext();
+  const {selectedIndex} = useTabsContext();
   return (
     <Tab
       style={{
@@ -32,7 +32,6 @@ function CustomTab({index, ...props}) {
 
 const ImageLoader = ({updateFinalImage, setGlobalFilter}) => {
   const {data, run, isLoading, isError, isSuccess} = useAsync();
-  // const [imageUrl, setImageUrl] = useState();
 
   function loadImageFromUrl(url) {
     return new Promise(function (resolve, reject) {

@@ -3,7 +3,6 @@ import {jsx} from '@emotion/core';
 import React from 'react';
 
 const MusicGrid = ({tracks, clickHandler}) => {
-  console.log(tracks);
   return (
     <ul
       css={{
@@ -18,6 +17,7 @@ const MusicGrid = ({tracks, clickHandler}) => {
     >
       {tracks.map(track => (
         <li
+          key={track.id}
           id={track.id}
           onClick={() =>
             clickHandler({

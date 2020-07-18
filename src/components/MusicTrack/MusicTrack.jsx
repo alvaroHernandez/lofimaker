@@ -19,46 +19,45 @@ function soundClientFactory(type) {
   }
 }
 
-const MusicTrack = ({trackId, currentSong, setCurrentSong, type}) => {
+const MusicTrack = ({trackId, updateCurrentPlayer, type}) => {
   const soundClient = useRef(soundClientFactory(type));
 
-  const {getPlayer, addPlayer, stopAll} = usePlayers();
+  const {addPlayer, stopAll} = usePlayers();
   const [currentPlayer, setCurrentPlayer] = useState();
-  const [isLoading, setIsLoading] = useState();
+  const [loadingState, setLoadingState] = useState('idle');
 
-  useEffect(() => {
-    setCurrentPlayer(getPlayer(trackId));
-  }, [getPlayer, trackId]);
-
-  async function handleSelection(promise) {
-    setIsLoading(true);
-    const {title, duration, url} = await promise();
+  async function createPlayer(getMusicInformation) {
+    setLoadingState('loading');
+    const {title, duration, url} = await getMusicInformation();
     stopAll();
     if (currentPlayer !== undefined) {
       currentPlayer.dispose();
-      await setCurrentPlayer();
     }
 
-    setCurrentSong({title, duration});
     const player = new MusicTrackPlayer(
       new GrainPlayer(url, () => {
+        //TODO: move to MusicTrackPlayer and create my own hooks to update ui players accordingly inside that class
         addPlayer(trackId, player);
-        setIsLoading(false);
         setCurrentPlayer(player);
+        updateCurrentPlayer(player);
         player.sync().start();
+        setLoadingState('done');
       }),
       trackId,
+      title,
+      duration,
     );
   }
+
   const musicSelector = useMemo(
     () => (
       <MusicSelector
         soundClient={soundClient.current}
-        selectionHandler={handleSelection}
+        selectionHandler={createPlayer}
       />
     ),
 
-    [handleSelection],
+    [createPlayer],
   );
 
   const musicEffectContainer = useMemo(
@@ -68,9 +67,9 @@ const MusicTrack = ({trackId, currentSong, setCurrentSong, type}) => {
 
   return (
     <React.Fragment>
-      {currentSong && (
+      {loadingState !== 'idle' && (
         <div>
-          {!isLoading && currentPlayer ? (
+          {loadingState === 'done' && currentPlayer ? (
             <div>{musicEffectContainer}</div>
           ) : (
             <div

@@ -1,10 +1,9 @@
 /** @jsx jsx */
 import {jsx} from '@emotion/core';
-import {useCallback, useMemo, useRef, useState} from 'react';
+import {useRef, useState} from 'react';
 import Track from '../Track/Track';
 import Button from '../Button/Button';
 import MusicTrack from '../MusicTrack/MusicTrack';
-import BeatsCreator from '../BeatsCreator/BeatsCreator';
 import {usePlayers} from '../../contexts/PlayersContext';
 import {v4 as uuidv4} from 'uuid';
 import {lofiDurationMinutes} from '../../configs/playerConfig';
@@ -18,12 +17,7 @@ import ToneBeatsCreator from '../BeatsCreator/ToneBeatsCreator';
 const StyledTrackContainer = styled.div`
   padding: 1em;
   margin-top: 1em;
-  &:nth-child(even) {
-    background-color: ${dark};
-  }
-  &:nth-child(odd) {
-    background-color: ${dark};
-  }
+  background-color: ${dark};
 `;
 const TrackControl = styled.div`
   display: grid;
@@ -38,13 +32,13 @@ const TrackControlButton = styled(Button)`
 `;
 
 const TrackContainer = ({type}) => {
-  const [currentSong, setCurrentSong] = useState();
+  const [currentPlayer, setCurrentPlayer] = useState();
   const [showTrackSettings, setShowTrackSettings] = useState(true);
   const trackId = useRef(uuidv4());
 
   const [isMuted, setIsMuted] = useState(false);
 
-  const {updatePlayerStartingOffset, unmute, mute} = usePlayers();
+  const {unmute, mute} = usePlayers();
 
   function unmuteHandler() {
     setIsMuted(false);
@@ -67,8 +61,7 @@ const TrackContainer = ({type}) => {
         return (
           <MusicTrack
             trackId={trackId.current}
-            currentSong={currentSong}
-            setCurrentSong={setCurrentSong}
+            updateCurrentPlayer={setCurrentPlayer}
             type={type}
           />
         );
@@ -76,7 +69,7 @@ const TrackContainer = ({type}) => {
         return (
           <ToneBeatsCreator
             trackId={trackId.current}
-            setCurrentSong={setCurrentSong}
+            updateCurrentPlayer={setCurrentPlayer}
           />
         );
       default:
@@ -85,9 +78,9 @@ const TrackContainer = ({type}) => {
   }
 
   const onStopDrag = (e, ui) => {
-    const currentTime =
+    const selectedTime =
       (ui.lastX * lofiDurationMinutes * 60) / ui.node.parentNode.clientWidth;
-    updatePlayerStartingOffset(trackId.current, currentTime);
+    currentPlayer.updatePlayerStartingOffset(selectedTime);
   };
 
   return (
@@ -113,8 +106,10 @@ const TrackContainer = ({type}) => {
         >
           <Track
             handleDragStop={onStopDrag}
-            songName={currentSong ? currentSong.title : ' This track is empty'}
-            duration={currentSong ? currentSong.duration : 0}
+            songName={
+              currentPlayer ? currentPlayer.title : ' This track is empty'
+            }
+            duration={currentPlayer ? currentPlayer.duration : 0}
           />
         </div>
       </TrackControl>

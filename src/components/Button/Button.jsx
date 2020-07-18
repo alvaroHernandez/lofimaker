@@ -1,5 +1,5 @@
 import styled from '@emotion/styled/macro';
-import {alternative, dark, darker, light, lighter, ultraDark} from '../../styles/colors';
+import {alternative, dark, darker, light} from '../../styles/colors';
 
 const buttonVariants = {
   primary: {

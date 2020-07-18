@@ -53,6 +53,7 @@ function PlayersProvider(props) {
     if (context.state !== 'running') {
       await context.resume();
     }
+    debugger
     Transport.start();
     setIsPlaying(true);
   }, []);
@@ -71,7 +72,7 @@ function PlayersProvider(props) {
     player: players.current,
     addPlayer,
     getPlayer,
-    updatePlayerStartingOffset,
+    // updatePlayerStartingOffset,
     playAll,
     stopAll,
     pauseAll,

@@ -3,8 +3,13 @@ import {Player, Transport} from 'tone';
 import {tracks} from '../assets/sounds/tracks';
 
 class MusicTrackPlayer {
-  constructor(grainPlayer, trackId) {
+  constructor(grainPlayer, trackId, title, duration) {
     this.player = grainPlayer;
+    this.trackId = trackId;
+    this.title = title;
+    this.duration = duration;
+    this.startTime = 0;
+
     this.player.toDestination();
     this.player.autostart = false;
     this.player.name = trackId;
@@ -34,12 +39,18 @@ class MusicTrackPlayer {
     this.player.unsync();
     return this.player;
   }
+
+  updatePlayerStartingOffset(startTime) {
+    this.startTime = startTime;
+    this.player.unsync();
+    this.player.sync().start(startTime);
+  }
 }
 
 export {MusicTrackPlayer};
 
 class SequencePlayer {
-  constructor(sequence, trackId) {
+  constructor(sequence, trackId, title, duration) {
     this.players = {};
     Object.entries(tracks).map(([key, value]) => {
       const newPlayer = new Player(value.sound);
@@ -47,6 +58,11 @@ class SequencePlayer {
       newPlayer.autostart = false;
       this.players = {...this.players, [key]: newPlayer};
     });
+
+    this.title = title;
+    this.duration = duration;
+    this.trackId = trackId;
+    this.startTime = 0;
 
     this.sequence = sequence;
     this.sequence.start(Transport.seconds);
@@ -77,6 +93,12 @@ class SequencePlayer {
   unsync() {
     this.sequence.stop(0);
     return this;
+  }
+
+  updatePlayerStartingOffset(startTime) {
+    this.startTime = startTime;
+    this.sequence.stop();
+    this.sequence.start(startTime);
   }
 
   getPlayer(trackName) {
