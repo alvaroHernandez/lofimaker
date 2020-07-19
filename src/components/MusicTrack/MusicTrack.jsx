@@ -26,6 +26,11 @@ const MusicTrack = ({trackId, updateCurrentPlayer, type}) => {
   const [currentPlayer, setCurrentPlayer] = useState();
   const [loadingState, setLoadingState] = useState('idle');
 
+  const updateDuration = playbackRate => {
+    currentPlayer.duration = currentPlayer.originalDuration/ playbackRate;
+    updateCurrentPlayer(currentPlayer);
+  };
+
   async function createPlayer(getMusicInformation) {
     setLoadingState('loading');
     const {title, duration, url} = await getMusicInformation();
@@ -47,6 +52,7 @@ const MusicTrack = ({trackId, updateCurrentPlayer, type}) => {
       title,
       duration,
     );
+    // updateDuration(duration,1);
   }
 
   const musicSelector = useMemo(
@@ -61,7 +67,7 @@ const MusicTrack = ({trackId, updateCurrentPlayer, type}) => {
   );
 
   const musicEffectContainer = useMemo(
-    () => <MusicEffectsContainer player={currentPlayer?.player} />,
+    () => <MusicEffectsContainer player={currentPlayer?.player} updateDuration={updateDuration} />,
     [currentPlayer],
   );
 

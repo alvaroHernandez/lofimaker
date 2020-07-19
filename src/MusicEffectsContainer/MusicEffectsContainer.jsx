@@ -9,13 +9,17 @@ import Toggle from 'react-toggle';
 import './Knob.css';
 import './Toggle.css';
 
-const MusicEffectsContainer = ({player}) => {
+const MusicEffectsContainer = ({player, updateDuration}) => {
   const reverberation = useRef(new Reverb().toDestination());
   const distortion = useRef(new Distortion().toDestination());
   const equalizer = useRef(new EQ3().toDestination());
 
   function sliderChangeHandlerForProperty(effect, property, value) {
     effect[property] = value;
+    if (property === 'playbackRate') {
+      console.log("dur " + value);
+      updateDuration(value);
+    }
   }
 
   function sliderChangeHandlerForParameter(effect, property, value) {
@@ -176,7 +180,11 @@ const MusicEffectsContainer = ({player}) => {
               steps={36}
             >
               <Arc arcWidth={11} color={lighter} background={darker} />
-              <Value decimalPlace={1} marginBottom={20} className="knob-value" />
+              <Value
+                decimalPlace={1}
+                marginBottom={20}
+                className="knob-value"
+              />
             </Knob>
             <label>Low</label>
           </MusicEffect>
@@ -194,7 +202,11 @@ const MusicEffectsContainer = ({player}) => {
               step={36}
             >
               <Arc arcWidth={11} color={lighter} background={darker} />
-              <Value decimalPlace={1} marginBottom={20} className="knob-value" />
+              <Value
+                decimalPlace={1}
+                marginBottom={20}
+                className="knob-value"
+              />
             </Knob>
             <label>Mid</label>
           </MusicEffect>
@@ -216,7 +228,11 @@ const MusicEffectsContainer = ({player}) => {
               step={36}
             >
               <Arc arcWidth={11} color={lighter} background={darker} />
-              <Value decimalPlace={1} marginBottom={20} className="knob-value" />
+              <Value
+                decimalPlace={1}
+                marginBottom={20}
+                className="knob-value"
+              />
             </Knob>
             <label>High</label>
           </MusicEffect>

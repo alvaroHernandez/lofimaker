@@ -14,13 +14,19 @@ const StyledBeatsCreatorGrid = styled.div`
   grid-template-areas: 'trackInstrument trackBeats';
 `;
 
-const BeatsCreatorGrid = ({tracks, totalBeats, toggleBeat, highlightedColumn}) => {
+const BeatsCreatorGrid = ({
+  tracks,
+  totalBeats,
+  toggleBeat,
+  highlightedColumn,
+}) => {
   function renderBeats(trackName, totalMeasures) {
     const beatsSquares = [];
     for (let i = 0; i < totalMeasures; i++) {
       beatsSquares.push(
         <Beat
           isHighlighted={i === highlightedColumn}
+          addMoreMargin={(i + 1) % 4 === 0}
           key={`trackName-${i}`}
           trackName={trackName}
           beatIndex={i}

@@ -8,6 +8,7 @@ class MusicTrackPlayer {
     this.trackId = trackId;
     this.title = title;
     this.duration = duration;
+    this.originalDuration = duration;
     this.startTime = 0;
 
     this.player.toDestination();
@@ -50,6 +51,19 @@ class MusicTrackPlayer {
 export {MusicTrackPlayer};
 
 class SequencePlayer {
+  updatePlaybackRate(playbackRate){
+    this.sequence.playbackRate = playbackRate;
+  }
+
+  updateDuration(duration){
+    this.duration = duration;
+  }
+
+  updateLoop(loop){
+    this.sequence.stop();
+    this.sequence.loop = loop;
+    this.sequence.start(Transport.seconds);
+  }
   constructor(sequence, trackId, title, duration) {
     this.players = {};
     Object.entries(tracks).map(([key, value]) => {

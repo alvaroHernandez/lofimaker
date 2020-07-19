@@ -35,6 +35,7 @@ const TrackContainer = ({type}) => {
   const [currentPlayer, setCurrentPlayer] = useState();
   const [showTrackSettings, setShowTrackSettings] = useState(true);
   const trackId = useRef(uuidv4());
+  const [trackDuration, setTrackDuration] = useState(0);
 
   const [isMuted, setIsMuted] = useState(false);
 
@@ -54,6 +55,11 @@ const TrackContainer = ({type}) => {
     setShowTrackSettings(!showTrackSettings);
   }
 
+  function updateCurrentPlayer(player){
+    setCurrentPlayer(player);
+    setTrackDuration(player.duration);
+  }
+
   function trackFactory(type) {
     switch (type) {
       case 'Sound':
@@ -61,7 +67,7 @@ const TrackContainer = ({type}) => {
         return (
           <MusicTrack
             trackId={trackId.current}
-            updateCurrentPlayer={setCurrentPlayer}
+            updateCurrentPlayer={updateCurrentPlayer}
             type={type}
           />
         );
@@ -69,7 +75,7 @@ const TrackContainer = ({type}) => {
         return (
           <ToneBeatsCreator
             trackId={trackId.current}
-            updateCurrentPlayer={setCurrentPlayer}
+            updateCurrentPlayer={updateCurrentPlayer}
           />
         );
       default:
@@ -109,7 +115,7 @@ const TrackContainer = ({type}) => {
             songName={
               currentPlayer ? currentPlayer.title : ' This track is empty'
             }
-            duration={currentPlayer ? currentPlayer.duration : 0}
+            duration={currentPlayer ? trackDuration : 0}
           />
         </div>
       </TrackControl>

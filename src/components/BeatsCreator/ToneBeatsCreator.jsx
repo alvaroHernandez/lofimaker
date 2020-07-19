@@ -1,44 +1,93 @@
-import React, {useEffect, useRef, useState} from 'react';
+/** @jsx jsx */
+import {jsx} from '@emotion/core';
+import React, {
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 import {tracks} from '../../assets/sounds/tracks';
-import {Sequence, Transport, Time} from 'tone';
+import {Sequence, Transport} from 'tone';
 import BeatsCreatorGrid from '../BeatsCreatorGrid/BeatsCreatorGrid';
-import styled from '@emotion/styled/macro';
-import {lofiDurationMinutes} from '../../configs/playerConfig';
 import {usePlayers} from '../../contexts/PlayersContext';
 import {SequencePlayer} from '../../contexts/TrackPlayer';
+import BeatsCreatorEffects from '../BeatsCreatorEffects/BeatsCreatorEffects';
 
-const totalBeats = 30;
-const beatColumnsIdicators = Array.from(Array(totalBeats).keys());
+const totalBeats = 28;
+
+const initNewSequence = (setCurrentBeat, timeBetweenBeats, beatsRef) => {
+  const beatColumnsIndicators = Array.from(Array(totalBeats).keys());
+  return new Sequence(
+    function (time, col) {
+      setCurrentBeat(col);
+      for (let [, value] of Object.entries(beatsRef.current[col])) {
+        if (value !== undefined) value.start(time);
+      }
+    },
+    beatColumnsIndicators,
+    timeBetweenBeats,
+  );
+};
 
 const ToneBeatsCreator = ({updateCurrentPlayer, trackId}) => {
-  const [currentBeat, setCurrentBeat] = useState(-1);
-
-  const beatsContainer = useRef([]);
-  const {addPlayer} = usePlayers();
-  const sequence = useRef();
+  const [bpm, setBpm] = useState(120);
+  const [loops, setLoops] = useState(1);
   const [currentPlayer, setCurrentPlayer] = useState();
+  const {addPlayer, stopAll} = usePlayers();
+
+  const playbackRate = bpm / 120;
+  const sequenceDuration = (totalBeats * 60) / (bpm * 4);
+
+  const [currentBeat, setCurrentBeat] = useState(-1);
+  const beatsContainer = useRef([]);
+
+  const updateBpm = async value => {
+    await setBpm(value);
+    currentPlayer.updatePlaybackRate(playbackRate);
+  };
+
+  const updateLoops = async value => {
+    if (Transport.state !== 'stopped') {
+      stopAll();
+    }
+    await setLoops(value);
+    currentPlayer.updateLoop(value);
+  };
 
   useEffect(() => {
-    for (let i = 0; i < totalBeats; i++) {
-      beatsContainer.current.push({});
+    if (beatsContainer.current.length === 0) {
+      for (let i = 0; i < totalBeats; i++) {
+        beatsContainer.current.push({});
+      }
     }
-
-    sequence.current = new Sequence(
-      function (time, col) {
-        setCurrentBeat(col);
-        for (let [, value] of Object.entries(beatsContainer.current[col])) {
-          value.start(time);
-        }
-      },
-      beatColumnsIdicators,
-      '20n',
-    );
-    const sequenceDuration = Time('20n').toMilliseconds() * totalBeats;
-    const sequencePlayer = new SequencePlayer(sequence.current,trackId,'Drum Kit',sequenceDuration);
-    addPlayer(trackId, sequencePlayer);
-    setCurrentPlayer(sequencePlayer);
-    updateCurrentPlayer(sequencePlayer);
   }, []);
+
+  useLayoutEffect(() => {
+    if (!currentPlayer) {
+      const timeBetweenBeats = sequenceDuration / totalBeats;
+      const sequencePlayer = new SequencePlayer(
+        initNewSequence(setCurrentBeat, timeBetweenBeats, beatsContainer),
+        trackId,
+        'Drum Kit',
+        loops * sequenceDuration * 1000,
+      );
+      setCurrentPlayer(sequencePlayer);
+      addPlayer(trackId, sequencePlayer);
+      sequencePlayer.duration = loops * sequenceDuration * 1000;
+      updateCurrentPlayer(sequencePlayer);
+    } else {
+      currentPlayer.updateDuration(loops * sequenceDuration * 1000);
+      updateCurrentPlayer(currentPlayer);
+    }
+  }, [
+    addPlayer,
+    currentPlayer,
+    loops,
+    sequenceDuration,
+    setCurrentPlayer,
+    trackId,
+    updateCurrentPlayer,
+  ]);
 
   const toggleBeat = (trackName, beatIndex) => {
     if (beatsContainer.current[beatIndex][trackName] === undefined) {
@@ -52,6 +101,23 @@ const ToneBeatsCreator = ({updateCurrentPlayer, trackId}) => {
 
   return (
     <div>
+      bpm: {Math.round(bpm)}
+      <div
+        css={{
+          display: 'flex',
+          width: '100%',
+          justifyContent: 'center',
+          marginTop: '1em',
+          marginBottom: '1em',
+        }}
+      >
+        <BeatsCreatorEffects
+          bpm={bpm}
+          loops={loops}
+          updateBpm={updateBpm}
+          updateLoops={updateLoops}
+        />
+      </div>
       <BeatsCreatorGrid
         highlightedColumn={currentBeat}
         totalBeats={totalBeats}
