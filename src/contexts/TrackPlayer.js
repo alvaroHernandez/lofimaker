@@ -3,13 +3,14 @@ import {Player, Transport} from 'tone';
 import {tracks} from '../assets/sounds/tracks';
 
 class MusicTrackPlayer {
-  constructor(grainPlayer, trackId, title, duration) {
+  constructor(grainPlayer, trackId, title, duration, onload) {
     this.player = grainPlayer;
     this.trackId = trackId;
     this.title = title;
     this.duration = duration;
     this.originalDuration = duration;
     this.startTime = 0;
+    this.onload = () => onload(this);
 
     this.player.toDestination();
     this.player.autostart = false;
@@ -19,6 +20,7 @@ class MusicTrackPlayer {
   }
 
   dispose() {
+    this.onload = () => {};
     this.player.dispose();
   }
 
@@ -51,17 +53,17 @@ class MusicTrackPlayer {
 export {MusicTrackPlayer};
 
 class SequencePlayer {
-  updatePlaybackRate(playbackRate){
+  updatePlaybackRate(playbackRate) {
     this.sequence.stop();
     this.sequence.playbackRate = playbackRate;
     this.sequence.start(Transport.seconds);
   }
 
-  updateDuration(duration){
+  updateDuration(duration) {
     this.duration = duration;
   }
 
-  updateLoop(loop){
+  updateLoop(loop) {
     this.sequence.stop();
     this.sequence.loop = loop;
     this.sequence.start(Transport.seconds);

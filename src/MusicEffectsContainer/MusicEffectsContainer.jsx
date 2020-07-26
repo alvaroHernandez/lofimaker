@@ -17,7 +17,6 @@ const MusicEffectsContainer = ({player, updateDuration}) => {
   function sliderChangeHandlerForProperty(effect, property, value) {
     effect[property] = value;
     if (property === 'playbackRate') {
-      console.log("dur " + value);
       updateDuration(value);
     }
   }

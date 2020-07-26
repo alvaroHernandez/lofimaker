@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 /** @jsx jsx */
 import {jsx} from '@emotion/core';
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import MusicSelector from '../MusicSelector/MusicSelector';
 import SoundCloudClient from '../../clients/SoundCloudClient';
 import FreeSoundClient from '../../clients/FreeSoundClient';
@@ -10,6 +10,7 @@ import {GrainPlayer} from 'tone';
 import {MusicTrackPlayer} from '../../contexts/TrackPlayer';
 import MusicEffectsContainer from '../../MusicEffectsContainer/MusicEffectsContainer';
 import Spinner from '../Spinner/Spinner';
+import BoxWithCenteredContent from '../BoxWithCenteredText/BoxWithCenteredContent';
 
 function soundClientFactory(type) {
   if (type === 'Sound') {
@@ -26,34 +27,61 @@ const MusicTrack = ({trackId, updateCurrentPlayer, type}) => {
   const [currentPlayer, setCurrentPlayer] = useState();
   const [loadingState, setLoadingState] = useState('idle');
 
-  const updateDuration = playbackRate => {
-    currentPlayer.duration = currentPlayer.originalDuration/ playbackRate;
-    updateCurrentPlayer(currentPlayer);
-  };
+  const updateDuration = useCallback(
+    () => playbackRate => {
+      currentPlayer.duration = currentPlayer.originalDuration / playbackRate;
+      updateCurrentPlayer(currentPlayer);
+    },
+    [currentPlayer, updateCurrentPlayer],
+  );
 
-  async function createPlayer(getMusicInformation) {
-    setLoadingState('loading');
-    const {title, duration, url} = await getMusicInformation();
-    stopAll();
-    if (currentPlayer !== undefined) {
-      currentPlayer.dispose();
+  const onloadPlayer = (player, oldPlayer) => {
+    if (oldPlayer !== undefined) {
+      oldPlayer.dispose();
     }
 
-    const player = new MusicTrackPlayer(
-      new GrainPlayer(url, () => {
-        //TODO: move to MusicTrackPlayer and create my own hooks to update ui players accordingly inside that class
+    player.sync().start();
+    setLoadingState('done');
+  };
+
+  const createPlayer = useCallback(
+    async getMusicInformation => {
+      try {
+        setLoadingState('loading');
+        const oldPlayer = currentPlayer;
+
+        const {title, duration, url} = await getMusicInformation();
+        stopAll();
+
+        const player = new MusicTrackPlayer(
+          new GrainPlayer({
+            url: url,
+            onerror: e => {
+              // eslint-disable-next-line no-console
+              console.log('error loading buffer for player ' + e);
+            },
+            onload: () => {
+              player.onload();
+            },
+          }),
+          trackId,
+          title,
+          duration,
+          newPlayer => {
+            onloadPlayer(newPlayer, oldPlayer);
+          },
+        );
         addPlayer(trackId, player);
-        setCurrentPlayer(player);
+        await setCurrentPlayer(player);
         updateCurrentPlayer(player);
-        player.sync().start();
-        setLoadingState('done');
-      }),
-      trackId,
-      title,
-      duration,
-    );
-    // updateDuration(duration,1);
-  }
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.log('error loading player ' + e);
+        setLoadingState('error');
+      }
+    },
+    [addPlayer, currentPlayer, stopAll, trackId, updateCurrentPlayer],
+  );
 
   const musicSelector = useMemo(
     () => (
@@ -67,30 +95,39 @@ const MusicTrack = ({trackId, updateCurrentPlayer, type}) => {
   );
 
   const musicEffectContainer = useMemo(
-    () => <MusicEffectsContainer player={currentPlayer?.player} updateDuration={updateDuration} />,
-    [currentPlayer],
+    () => (
+      <MusicEffectsContainer
+        player={currentPlayer?.player}
+        updateDuration={updateDuration}
+      />
+    ),
+    [currentPlayer, updateDuration],
   );
 
   return (
     <React.Fragment>
-      {loadingState !== 'idle' && (
-        <div>
-          {loadingState === 'done' && currentPlayer ? (
-            <div>{musicEffectContainer}</div>
-          ) : (
-            <div
-              css={{
-                padding: '1em',
-                display: 'flex',
-                justifyContent: 'center',
-                fontSize: '39px',
-              }}
-            >
-              <Spinner />
-            </div>
-          )}
-        </div>
-      )}
+      <div>
+        {loadingState === 'loading' && (
+          <div
+            css={{
+              padding: '1em',
+              display: 'flex',
+              justifyContent: 'center',
+              fontSize: '39px',
+            }}
+          >
+            <Spinner />
+          </div>
+        )}
+        {loadingState === 'error' && (
+          <BoxWithCenteredContent>
+            <text>Error</text>
+          </BoxWithCenteredContent>
+        )}
+        {loadingState === 'done' && currentPlayer && (
+          <div>{musicEffectContainer}</div>
+        )}
+      </div>
       <div css={{marginTop: '1em'}}>{musicSelector}</div>
     </React.Fragment>
   );

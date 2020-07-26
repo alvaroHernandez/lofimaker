@@ -1,7 +1,8 @@
 /** @jsx jsx */
 import {jsx} from '@emotion/core';
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {Transport, context} from 'tone';
+import {lofiDurationMinutes} from '../configs/playerConfig';
 
 const PlayersContext = React.createContext();
 PlayersContext.displayName = 'PlayersContext';
@@ -9,6 +10,16 @@ PlayersContext.displayName = 'PlayersContext';
 function PlayersProvider(props) {
   const players = React.useRef({});
   const [isPlaying, setIsPlaying] = React.useState(false);
+
+  useEffect(() => {
+    Transport.on('stop', () => {
+      setIsPlaying(false);
+    });
+
+    Transport.on('pause', () => {
+      setIsPlaying(false);
+    });
+  }, []);
 
   const getPlayer = useCallback(trackId => {
     if (players.current[trackId] !== undefined) {
@@ -54,17 +65,16 @@ function PlayersProvider(props) {
       await context.resume();
     }
     Transport.start();
+    Transport.stop(`+${lofiDurationMinutes * 60}`);
     setIsPlaying(true);
   }, []);
 
   const pauseAll = useCallback(() => {
     Transport.pause();
-    setIsPlaying(false);
   }, []);
 
   const stopAll = useCallback(() => {
     Transport.stop();
-    setIsPlaying(false);
   }, []);
 
   const value = {

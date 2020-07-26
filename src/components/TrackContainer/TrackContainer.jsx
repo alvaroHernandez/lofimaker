@@ -60,7 +60,9 @@ const TrackContainer = ({type}) => {
       setCurrentPlayer(player);
     }
 
-    setTrackDuration(player.duration);
+    setTrackDuration(
+      Math.min(player.duration, lofiDurationMinutes * 60 * 1000),
+    );
   }
 
   function trackFactory(type) {
