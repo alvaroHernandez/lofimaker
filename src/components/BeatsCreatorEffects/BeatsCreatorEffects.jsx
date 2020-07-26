@@ -34,18 +34,23 @@ const BeatsCreatorEffects = ({bpm, loops, updateBpm, updateLoops}) => {
       </MusicEffect>
       <MusicEffect name={'loops'}>
         <Knob
-          value={loops}
+          value={loops === true ? 0 : loops}
           size={70}
           angleOffset={220}
           angleRange={280}
           onChange={attemptToUpdateLoops}
-          min={1}
+          min={0}
           max={totalAvailableLoops}
           steps={totalAvailableLoops - 1}
           snap={true}
         >
           <Arc arcWidth={11} color={lighter} background={darker} />
-          <Value decimalPlace={0} marginBottom={20} className="knob-value" />
+          <Value
+            fixedText={loops === true ? '∞' : null}
+            decimalPlace={0}
+            marginBottom={20}
+            className="knob-value"
+          />
         </Knob>
         <label>Loops</label>
       </MusicEffect>

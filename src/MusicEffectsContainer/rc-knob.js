@@ -671,7 +671,8 @@ var Value = function Value(_ref) {
     decimalPlace = _ref$decimalPlace === void 0 ? 0 : _ref$decimalPlace,
     className = _ref.className,
     _ref$marginBottom = _ref.marginBottom,
-    marginBottom = _ref$marginBottom === void 0 ? 0 : _ref$marginBottom;
+    marginBottom = _ref$marginBottom === void 0 ? 0 : _ref$marginBottom,
+    renderValue = _ref.fixedText ? _ref.fixedText :  value.toFixed(decimalPlace);
   return value == null
     ? null
     : React__default.createElement(
@@ -685,7 +686,8 @@ var Value = function Value(_ref) {
           className: className,
           y: size - marginBottom,
         },
-        value.toFixed(decimalPlace),
+      renderValue
+        ,
       );
 };
 

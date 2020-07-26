@@ -1,17 +1,13 @@
 /** @jsx jsx */
 import {jsx} from '@emotion/core';
-import React, {
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
 import {tracks} from '../../assets/sounds/tracks';
 import {Sequence, Transport} from 'tone';
 import BeatsCreatorGrid from '../BeatsCreatorGrid/BeatsCreatorGrid';
 import {usePlayers} from '../../contexts/PlayersContext';
 import {SequencePlayer} from '../../contexts/TrackPlayer';
 import BeatsCreatorEffects from '../BeatsCreatorEffects/BeatsCreatorEffects';
+import {lofiDurationMinutes} from '../../configs/playerConfig';
 
 const totalBeats = 28;
 
@@ -31,7 +27,7 @@ const initNewSequence = (setCurrentBeat, timeBetweenBeats, beatsRef) => {
 
 const ToneBeatsCreator = ({updateCurrentPlayer, trackId}) => {
   const [bpm, setBpm] = useState(120);
-  const [loops, setLoops] = useState(1);
+  const [loops, setLoops] = useState(true);
   const [currentPlayer, setCurrentPlayer] = useState();
   const {addPlayer, stopAll} = usePlayers();
 
@@ -42,16 +38,25 @@ const ToneBeatsCreator = ({updateCurrentPlayer, trackId}) => {
   const beatsContainer = useRef([]);
 
   const updateBpm = async value => {
+    if (Transport.state !== 'stopped') {
+      stopAll();
+    }
     await setBpm(value);
     currentPlayer.updatePlaybackRate(playbackRate);
   };
 
   const updateLoops = async value => {
-    if (Transport.state !== 'stopped') {
-      stopAll();
+    if (value !== loops) {
+      if (Transport.state !== 'stopped') {
+        stopAll();
+      }
+      if (value === 0) {
+        value = true;
+      }
+      console.log(value);
+      await setLoops(value);
+      currentPlayer.updateLoop(value);
     }
-    await setLoops(value);
-    currentPlayer.updateLoop(value);
   };
 
   useEffect(() => {
@@ -73,10 +78,17 @@ const ToneBeatsCreator = ({updateCurrentPlayer, trackId}) => {
       );
       setCurrentPlayer(sequencePlayer);
       addPlayer(trackId, sequencePlayer);
-      sequencePlayer.duration = loops * sequenceDuration * 1000;
+      sequencePlayer.duration =
+        loops === 0
+          ? lofiDurationMinutes * 60 * 1000
+          : loops * sequenceDuration * 1000;
       updateCurrentPlayer(sequencePlayer);
     } else {
-      currentPlayer.updateDuration(loops * sequenceDuration * 1000);
+      currentPlayer.updateDuration(
+        loops === true
+          ? lofiDurationMinutes * 60 * 1000
+          : loops * sequenceDuration * 1000,
+      );
       updateCurrentPlayer(currentPlayer);
     }
   }, [

@@ -52,7 +52,9 @@ export {MusicTrackPlayer};
 
 class SequencePlayer {
   updatePlaybackRate(playbackRate){
+    this.sequence.stop();
     this.sequence.playbackRate = playbackRate;
+    this.sequence.start(Transport.seconds);
   }
 
   updateDuration(duration){
@@ -64,6 +66,7 @@ class SequencePlayer {
     this.sequence.loop = loop;
     this.sequence.start(Transport.seconds);
   }
+
   constructor(sequence, trackId, title, duration) {
     this.players = {};
     Object.entries(tracks).map(([key, value]) => {

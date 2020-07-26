@@ -55,8 +55,11 @@ const TrackContainer = ({type}) => {
     setShowTrackSettings(!showTrackSettings);
   }
 
-  function updateCurrentPlayer(player){
-    setCurrentPlayer(player);
+  function updateCurrentPlayer(player) {
+    if (player !== currentPlayer) {
+      setCurrentPlayer(player);
+    }
+
     setTrackDuration(player.duration);
   }
 
