@@ -8,7 +8,7 @@ Make and share your own Lo-fi creations!
 - [x] improve music controls: better resolution and use/show default values
 - [ ] save and gallery
 - [x] add loop to drums kit
-- [ ] Check why I'm getting so little results with sound cloud api
+- [x] Check why I'm getting so little results with sound cloud api
 - [x] longer songs should be trimmed
 - [x] change speed should change duration
 - [x] Preview should control beats player

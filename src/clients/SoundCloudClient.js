@@ -11,6 +11,7 @@ class SoundCloudClient {
   search(query) {
     return this.client
       .get('/tracks', {
+        limit: 36,
         q: query,
       })
       .then(function (tracks) {
