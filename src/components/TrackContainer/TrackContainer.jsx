@@ -9,10 +9,10 @@ import {v4 as uuidv4} from 'uuid';
 import {lofiDurationMinutes} from '../../configs/playerConfig';
 import styled from '@emotion/styled/macro';
 import {dark} from '../../styles/colors';
-import {GoSettings} from 'react-icons/go';
 import {GoMute, GoUnmute} from 'react-icons/go';
 import {ToggleVisible} from '../Layout/Column';
 import ToneBeatsCreator from '../BeatsCreator/ToneBeatsCreator';
+import {IoIosArrowDropdownCircle, IoIosArrowDropupCircle} from 'react-icons/io';
 
 const StyledTrackContainer = styled.div`
   padding: 1em;
@@ -99,7 +99,11 @@ const TrackContainer = ({type}) => {
       <TrackControl>
         <div>
           <TrackControlButton onClick={toggleShowTrackSettings}>
-            <GoSettings size={'1.2em'} />
+            {showTrackSettings ? (
+              <IoIosArrowDropupCircle size={'1.2em'} />
+            ) : (
+              <IoIosArrowDropdownCircle size={'1.2em'} />
+            )}
           </TrackControlButton>
           <TrackControlButton disabled={!isMuted} onClick={unmuteHandler}>
             <GoUnmute size={'1.2em'} />

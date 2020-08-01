@@ -43,6 +43,7 @@ const MusicEffectsContainer = ({player, updateDuration}) => {
         width: '100%',
         justifyContent: 'center',
         marginTop: '1em',
+        overflow: 'scroll',
       }}
     >
       <MusicEffect name={'Amplify'}>

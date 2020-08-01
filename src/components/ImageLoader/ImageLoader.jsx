@@ -20,6 +20,7 @@ import {dark, darker} from '../../styles/colors';
 import Button from '../Button/Button';
 import BoxWithCenteredContent from '../BoxWithCenteredText/BoxWithCenteredContent';
 import {GoLink} from 'react-icons/go';
+import {ShowOnMedium} from '../Layout/Column';
 
 function CustomTab({index, ...props}) {
   const {selectedIndex} = useTabsContext();
@@ -76,13 +77,15 @@ const ImageLoader = ({updateFinalImage, setGlobalFilter}) => {
           updateFinalImage={updateFinalImage}
         />
       </div>
-      <BoxWithCenteredContent>
-        <Button onClick={hideImagePicker}>
-          {showImagePicker ? 'Hide Image Picker' : 'Show Image Picker'}
-        </Button>
-      </BoxWithCenteredContent>
+      <ShowOnMedium>
+        <BoxWithCenteredContent>
+          <Button css={{width: '100%'}} onClick={hideImagePicker}>
+            {showImagePicker ? 'Hide Image Picker' : 'Show Image Picker'}
+          </Button>
+        </BoxWithCenteredContent>
+      </ShowOnMedium>
       {showImagePicker && (
-        <Tabs>
+        <Tabs css={{marginTop: '1em'}}>
           <TabList css={{backgroundColor: darker}}>
             <CustomTab index={0} css={{backgroundColor: darker}}>
               Search a Gif

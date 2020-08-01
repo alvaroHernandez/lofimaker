@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import {jsx} from '@emotion/core';
 import {Fragment, useState} from 'react';
-import {Layout, Column} from '../Layout/Column';
+import {Layout, Column, HeaderSection} from '../Layout/Column';
 
 import ImageLoader from '../ImageLoader/ImageLoader';
 import {dark, darker, ultraDark} from '../../styles/colors';
@@ -11,14 +11,8 @@ import {Section} from '../Layout/Column';
 import FinalImageContainer from '../FinalImageContainer/FinalImageContainer';
 import {usePlayers} from '../../contexts/PlayersContext';
 import ExportControls from '../ExportControls/ExportControls';
-import styled from '@emotion/styled/macro';
 import TracksEditor from '../TracksEditor/TracksEditor';
-
-const HeaderSection = styled(Section)`
-  padding: 0.7em;
-  margin-top: 0;
-  background-color: ${dark};
-`;
+import GlobalPlayerControls from '../GlobalPlayerControls/GlobalPlayerControls';
 
 const LoFiMaker = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -44,12 +38,17 @@ const LoFiMaker = () => {
       </HeaderSection>
       <Layout color={'white'} backgroundColor={dark}>
         <Column backgroundColor={darker} back spanSmall={12} spanMedium={3}>
-          <ImageLoader
-            setGlobalFilter={setFinalImageFilter}
-            updateFinalImage={updateFinalImage}
-          />
+          <Section>
+            <ImageLoader
+              setGlobalFilter={setFinalImageFilter}
+              updateFinalImage={updateFinalImage}
+            />
+          </Section>
         </Column>
         <Column backgroundColor={ultraDark} spanSmall={12} spanMedium={9}>
+          <Section>
+            <GlobalPlayerControls />
+          </Section>
           <Section>
             <TracksEditor />
           </Section>

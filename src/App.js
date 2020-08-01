@@ -5,7 +5,7 @@ import {PlayersProvider} from './contexts/PlayersContext';
 function App() {
   return (
     <PlayersProvider>
-      <LoFiMaker />;
+      <LoFiMaker />
     </PlayersProvider>
   );
 }

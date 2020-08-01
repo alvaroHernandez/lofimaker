@@ -7,7 +7,6 @@ import BoxWithCenteredContent from '../BoxWithCenteredText/BoxWithCenteredConten
 import TrackContainer from '../TrackContainer/TrackContainer';
 import styled from '@emotion/styled/macro';
 import {usePlayers} from '../../contexts/PlayersContext';
-import GlobalPlayerControls from '../GlobalPlayerControls/GlobalPlayerControls';
 
 const IndividualTrackEditor = styled.div`
   display: grid;
@@ -32,7 +31,7 @@ const TracksEditor = () => {
 
   return (
     <React.Fragment>
-      <AutoFitGrid>
+      <AutoFitGrid min={'80px'}>
         {tracksTypes.map(type => (
           <Button
             key={type}
@@ -43,9 +42,8 @@ const TracksEditor = () => {
           </Button>
         ))}
       </AutoFitGrid>
-      <GlobalPlayerControls />
       {tracks.length > 0 ? (
-        <IndividualTrackEditor>{tracks}</IndividualTrackEditor>
+        tracks
       ) : (
         <BoxWithCenteredContent css={{height: '100vh'}}>
           Start Adding a Track using buttons above

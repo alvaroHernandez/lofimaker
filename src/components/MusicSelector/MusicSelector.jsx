@@ -25,7 +25,7 @@ const MusicSelector = ({soundClient, selectionHandler}) => {
   return (
     <div>
       <SimpleForm
-        buttonText={GoSearch}
+        buttonText={<GoSearch/>}
         onSubmit={search}
         inputName={'query'}
         isLoading={isLoading}

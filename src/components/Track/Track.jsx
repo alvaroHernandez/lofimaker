@@ -39,13 +39,20 @@ const NonEmptyTrackMusicContainer = styled(TrackMusicContainer)`
   width: ${props => props.filledPercentage}%;
 `;
 
+const ResponsiveText = styled.text`
+  padding-left: 1em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
 const Track = ({songName, duration, handleDragStop}) => {
   const [currentPosition, setCurrentPosition] = useState();
 
   //TODO: this should be done only once for all tracks
   useEffect(() => {
     Transport.scheduleRepeat(time => {
-      console.log('executing..')
+      console.log('executing..');
       setCurrentPosition(
         (Transport.seconds * 100) / (lofiDurationMinutes * 60),
       );
@@ -56,9 +63,9 @@ const Track = ({songName, duration, handleDragStop}) => {
   if (duration === 0) {
     return (
       <EmptyTrackMusicContainer>
-        <span css={{paddingLeft: '1em'}}>
-          this track is empty, search and choose a sound using input below
-        </span>
+        <ResponsiveText>
+          empty track, search and choose a sound using input below
+        </ResponsiveText>
       </EmptyTrackMusicContainer>
     );
   } else {
@@ -70,7 +77,7 @@ const Track = ({songName, duration, handleDragStop}) => {
             filledPercentage={durationPercentage}
             duration={duration}
           >
-            <span css={{paddingLeft: '1em'}}>{songName}</span>
+            <ResponsiveText>{songName}</ResponsiveText>
           </NonEmptyTrackMusicContainer>
         </Draggable>
       </React.Fragment>
