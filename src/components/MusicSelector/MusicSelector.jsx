@@ -5,6 +5,7 @@ import React from 'react';
 import SimpleForm from '../SimpleForm/SimpleForm';
 import MusicGrid from '../MusicGrid/MusicGrid';
 import {useAsync} from '../../hooks/useAsync';
+import {GoSearch} from 'react-icons/go';
 
 const MusicSelector = ({soundClient, selectionHandler}) => {
   const {data, error, run, isLoading, isError, isSuccess} = useAsync();
@@ -24,7 +25,7 @@ const MusicSelector = ({soundClient, selectionHandler}) => {
   return (
     <div>
       <SimpleForm
-        buttonText={'Search'}
+        buttonText={GoSearch}
         onSubmit={search}
         inputName={'query'}
         isLoading={isLoading}

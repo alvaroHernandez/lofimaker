@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import {jsx} from '@emotion/core';
-import {useState} from 'react';
+import {Fragment, useState} from 'react';
 import {Layout, Column} from '../Layout/Column';
 
 import ImageLoader from '../ImageLoader/ImageLoader';
@@ -15,6 +15,7 @@ import styled from '@emotion/styled/macro';
 import TracksEditor from '../TracksEditor/TracksEditor';
 
 const HeaderSection = styled(Section)`
+  padding: 0.7em;
   margin-top: 0;
   background-color: ${dark};
 `;
@@ -37,30 +38,30 @@ const LoFiMaker = () => {
   }
 
   return (
-    <Layout color={'white'} backgroundColor={dark}>
-      <Column backgroundColor={darker} back spanSmall={12} spanMedium={3}>
-        <Section>
+    <Fragment>
+      <HeaderSection>
+        <ExportControls preview={previewHandler} />
+      </HeaderSection>
+      <Layout color={'white'} backgroundColor={dark}>
+        <Column backgroundColor={darker} back spanSmall={12} spanMedium={3}>
           <ImageLoader
             setGlobalFilter={setFinalImageFilter}
             updateFinalImage={updateFinalImage}
           />
-        </Section>
-      </Column>
-      <Column backgroundColor={ultraDark} spanSmall={11} spanMedium={9}>
-        <HeaderSection>
-          <ExportControls preview={previewHandler} />
-        </HeaderSection>
-        <Section>
-          <TracksEditor />
-        </Section>
-        <FinalImageContainer
-          finalImage={finalImage}
-          finalImageFilter={finalImageFilter}
-          isDialogOpen={isDialogOpen}
-          setIsDialogOpen={setIsDialogOpen}
-        />
-      </Column>
-    </Layout>
+        </Column>
+        <Column backgroundColor={ultraDark} spanSmall={12} spanMedium={9}>
+          <Section>
+            <TracksEditor />
+          </Section>
+          <FinalImageContainer
+            finalImage={finalImage}
+            finalImageFilter={finalImageFilter}
+            isDialogOpen={isDialogOpen}
+            setIsDialogOpen={setIsDialogOpen}
+          />
+        </Column>
+      </Layout>
+    </Fragment>
   );
 };
 

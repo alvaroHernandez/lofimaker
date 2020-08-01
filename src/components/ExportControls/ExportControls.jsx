@@ -7,16 +7,14 @@ import AutoFitGrid from '../AutoFitGrid/AutoFitGrid';
 const buttonVariant = 'primary';
 const ExportControls = ({preview}) => {
   return (
-    <AutoFitGrid>
+    <AutoFitGrid min={'100px'}>
       <Button
-        css={{marginRight: '1em'}}
         variant={buttonVariant}
         onClick={preview}
       >
         Preview
       </Button>
       <Button
-        css={{marginRight: '1em'}}
         variant={buttonVariant}
         onClick={() => {}}
       >

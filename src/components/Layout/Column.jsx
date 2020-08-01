@@ -8,7 +8,7 @@ const Layout = styled.div`
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   grid-column-gap: 0em;
-  grid-row-gap: 1em;
+  grid-row-gap: 0em;
   min-height: 100vh;
 `;
 

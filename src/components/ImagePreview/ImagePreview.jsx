@@ -39,7 +39,7 @@ const ImagePreview = ({
   } else if (isSuccess) {
     updateFinalImage(data);
     return (
-      <div css={{minHeight: '300px'}}>
+      <div>
         <BoxWithCenteredContent css={{margin: '0'}}>
           <figure className={currentClass}>
             <img width={'100%'} src={data} alt={'custom user loaded'} />

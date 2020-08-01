@@ -6,7 +6,7 @@ const BoxWithCenteredContent = props => {
   return (
     <div
       css={{
-        margin: '0.5em 0 1em',
+        margin: '0.5em 0 0.5em',
         width: '100%',
         display: 'flex',
         alignItems: 'center',

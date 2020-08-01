@@ -4,6 +4,8 @@ import * as React from 'react';
 import Button from '../Button/Button';
 import Input from '../Input/Input';
 import Spinner from '../Spinner/Spinner';
+import PropTypes from 'prop-types';
+import {GoSearch} from 'react-icons/go';
 
 export const SimpleForm = ({
   onSubmit,
@@ -53,6 +55,16 @@ export const SimpleForm = ({
       </div>
     </form>
   );
+};
+
+SimpleForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  buttonText: PropTypes.element.isRequired,
+  inputText: PropTypes.string.isRequired,
+  inputName: PropTypes.string.isRequired,
+  isLoading: PropTypes.func.isRequired,
+  placeholder: PropTypes.func.isRequired,
+  buttonVariant: PropTypes.func.isRequired,
 };
 
 export default SimpleForm;

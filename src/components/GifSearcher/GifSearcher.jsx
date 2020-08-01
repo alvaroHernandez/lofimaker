@@ -4,6 +4,7 @@ import {searchGif} from '../../clients/searchGif';
 import {dark} from '../../styles/colors';
 import {useAsync} from '../../hooks/useAsync';
 import GifGrid from '../GifGrid/GifGrid';
+import {GoSearch} from 'react-icons/go';
 
 const GifSearcher = ({clickHandler}) => {
   const {data, error, run, isLoading, isError, isSuccess} = useAsync();
@@ -25,8 +26,9 @@ const GifSearcher = ({clickHandler}) => {
   return (
     <div>
       <SimpleForm
+        placeholder={'search a gif here...'}
         onSubmit={handleSearchSubmit}
-        buttonText={'Search Gif'}
+        buttonText={<GoSearch />}
         inputName={'search'}
         isLoading={isLoading}
       />
