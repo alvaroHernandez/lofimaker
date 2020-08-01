@@ -762,7 +762,7 @@ var Knob = function Knob(_ref2) {
       'aria-valuetext': ariaValueText,
       'aria-labelledby': ariaLabelledBy,
       onKeyDown: onKeyDown,
-      onWheel: () => {},
+      onWheel: onScroll,
       className: className,
     },
     React__default.createElement(
