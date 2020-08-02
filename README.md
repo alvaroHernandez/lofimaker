@@ -15,13 +15,16 @@ Make and share your own Lo-fi creations!
 - [x] Add sidebar
 - [ ] Refactor
 - [ ] add global tracks slider player control
-- [ ] make it responsive
-    - [ ] make music controls responsive
-    - [ ] Add "hide" to gif results   
-
+- [x] make it responsive
+    - [x] make music controls responsive
+    - [x] Add "hide" to gif results   
+- [ ] check if sounds are actually lofi style (add some?)
+- [ ] change beats tracks text for icons
 
 
 #### Enhancements
+- [ ] Responsive improvements
+    - [ ] increase button size 
 - [ ] add loop music and sound effects
 - [ ] More music effects
 - [ ] change length of default song to at least Daft punk random acess memories vandeway edit
