@@ -114,22 +114,12 @@ const ToneBeatsCreator = ({updateCurrentPlayer, trackId}) => {
   return (
     <div>
       bpm: {Math.round(bpm)}
-      <div
-        css={{
-          display: 'flex',
-          width: '100%',
-          justifyContent: 'center',
-          marginTop: '1em',
-          marginBottom: '1em',
-        }}
-      >
-        <BeatsCreatorEffects
-          bpm={bpm}
-          loops={loops}
-          updateBpm={updateBpm}
-          updateLoops={updateLoops}
-        />
-      </div>
+      <BeatsCreatorEffects
+        bpm={bpm}
+        loops={loops}
+        updateBpm={updateBpm}
+        updateLoops={updateLoops}
+      />
       <BeatsCreatorGrid
         highlightedColumn={currentBeat}
         totalBeats={totalBeats}

@@ -52,7 +52,6 @@ const Track = ({songName, duration, handleDragStop}) => {
   //TODO: this should be done only once for all tracks
   useEffect(() => {
     Transport.scheduleRepeat(time => {
-      console.log('executing..');
       setCurrentPosition(
         (Transport.seconds * 100) / (lofiDurationMinutes * 60),
       );

@@ -10,6 +10,7 @@ import Toggle from 'react-toggle';
 import './Knob.css';
 import './Toggle.css';
 import {medium} from '../styles/mediaqueries';
+import EffectsControlsContainer from '../components/EffectsControlsContainer/EffectsControlsContainer';
 const knobSize = 90;
 const arcSize = 29;
 const MusicEffectsContainer = ({player, updateDuration}) => {
@@ -41,19 +42,7 @@ const MusicEffectsContainer = ({player, updateDuration}) => {
   }
 
   return (
-    <div
-      ref={containerRef}
-      css={{
-        display: 'flex',
-        width: '100%',
-        marginTop: '1em',
-        overflow: 'scroll',
-        paddingBottom: '1em',
-        [medium]: {
-          paddingBottom: '0',
-        },
-      }}
-    >
+    <EffectsControlsContainer containerRef={containerRef}>
       <MusicEffect name={'Amplify'}>
         <Knob
           scrollParent={containerRef}
@@ -264,7 +253,7 @@ const MusicEffectsContainer = ({player, updateDuration}) => {
           />
         </label>
       </div>
-    </div>
+    </EffectsControlsContainer>
   );
 };
 
