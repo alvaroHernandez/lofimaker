@@ -235,7 +235,9 @@ var handleEventListener = function handleEventListener(_ref) {
     isActive = _ref.isActive;
   return function () {
     var onMove = function onMove(_ref2) {
-      _ref2.preventDefault();
+      if (_ref2 instanceof TouchEvent) {
+        _ref2 = _ref2.touches[0];
+      }
       var pageX = _ref2.pageX + _ref.scrollParent.current.scrollLeft,
         pageY = _ref2.pageY;
       return dispatch({
@@ -253,7 +255,7 @@ var handleEventListener = function handleEventListener(_ref) {
 
     if (isActive) {
       window.addEventListener('touchmove', preventDefault, {
-        passive: false
+        passive: false,
       });
       addEventToBody('mousemove', onMove);
       addEventToBody('touchmove', onMove);
@@ -358,14 +360,14 @@ var useUpdate = function (_ref3) {
   var svg = React.useRef();
   var container = React.useRef();
 
-
   var _useReducer = React.useReducer(reducer(onChange), {
       isActive: false,
       min: min,
       max: max,
       angleOffset: angleOffset,
       angleRange: angleRange,
-      percentage: initialValue !== undefined ? (initialValue - min) / (max - min) : 0,
+      percentage:
+        initialValue !== undefined ? (initialValue - min) / (max - min) : 0,
       value: initialValue || 0,
       svg: svg,
       container: container,
@@ -683,7 +685,7 @@ var Value = function Value(_ref) {
     className = _ref.className,
     _ref$marginBottom = _ref.marginBottom,
     marginBottom = _ref$marginBottom === void 0 ? 0 : _ref$marginBottom,
-    renderValue = _ref.fixedText ? _ref.fixedText :  value.toFixed(decimalPlace);
+    renderValue = _ref.fixedText ? _ref.fixedText : value.toFixed(decimalPlace);
   return value == null
     ? null
     : React__default.createElement(
@@ -697,8 +699,7 @@ var Value = function Value(_ref) {
           className: className,
           y: size - marginBottom,
         },
-      renderValue
-        ,
+        renderValue,
       );
 };
 
@@ -776,7 +777,7 @@ var Knob = function Knob(_ref2) {
       'aria-labelledby': ariaLabelledBy,
       onKeyDown: onKeyDown,
       // onDrag: onScroll,
-      onWheel: ()=>{},
+      onWheel: () => {},
       className: className,
     },
     React__default.createElement(
