@@ -106,28 +106,24 @@ const MusicTrack = ({trackId, updateCurrentPlayer, type}) => {
 
   return (
     <React.Fragment>
-      <div>
-        {loadingState === 'loading' && (
-          <div
-            css={{
-              padding: '1em',
-              display: 'flex',
-              justifyContent: 'center',
-              fontSize: '39px',
-            }}
-          >
-            <Spinner />
-          </div>
-        )}
-        {loadingState === 'error' && (
-          <BoxWithCenteredContent>
-            <text>Error</text>
-          </BoxWithCenteredContent>
-        )}
-        {loadingState === 'done' && currentPlayer && (
-          <div>{musicEffectContainer}</div>
-        )}
-      </div>
+      {loadingState === 'loading' && (
+        <div
+          css={{
+            padding: '1em',
+            display: 'flex',
+            justifyContent: 'center',
+            fontSize: '39px',
+          }}
+        >
+          <Spinner />
+        </div>
+      )}
+      {loadingState === 'error' && (
+        <BoxWithCenteredContent>
+          <text>Error</text>
+        </BoxWithCenteredContent>
+      )}
+      {loadingState === 'done' && currentPlayer && musicEffectContainer}
       <div css={{marginTop: '1em'}}>{musicSelector}</div>
     </React.Fragment>
   );

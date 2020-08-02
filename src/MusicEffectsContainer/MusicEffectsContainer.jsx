@@ -1,15 +1,19 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 /** @jsx jsx */
 import {jsx} from '@emotion/core';
 import React, {useRef} from 'react';
 import {Distortion, EQ3, Reverb} from 'tone';
 import MusicEffect from '../components/MusicEffect/MusicEffect';
-import {Knob, Arc, Value} from './rc-knob';
+import {Scale, Knob, Arc, Value} from './rc-knob';
 import {darker, lighter} from '../styles/colors';
 import Toggle from 'react-toggle';
 import './Knob.css';
 import './Toggle.css';
-
+import {medium} from '../styles/mediaqueries';
+const knobSize = 90;
+const arcSize = 29;
 const MusicEffectsContainer = ({player, updateDuration}) => {
+  const containerRef = useRef();
   const reverberation = useRef(new Reverb().toDestination());
   const distortion = useRef(new Distortion().toDestination());
   const equalizer = useRef(new EQ3().toDestination());
@@ -38,18 +42,23 @@ const MusicEffectsContainer = ({player, updateDuration}) => {
 
   return (
     <div
+      ref={containerRef}
       css={{
         display: 'flex',
         width: '100%',
-        justifyContent: 'center',
         marginTop: '1em',
         overflow: 'scroll',
+        paddingBottom: '1em',
+        [medium]: {
+          paddingBottom: '0',
+        },
       }}
     >
       <MusicEffect name={'Amplify'}>
         <Knob
+          scrollParent={containerRef}
           value={0}
-          size={70}
+          size={knobSize}
           angleOffset={220}
           angleRange={280}
           onChange={value =>
@@ -58,15 +67,16 @@ const MusicEffectsContainer = ({player, updateDuration}) => {
           min={-35}
           max={15}
         >
-          <Arc arcWidth={11} color={lighter} background={darker} />
+          <Arc arcWidth={arcSize} color={lighter} background={darker} />
           <Value decimalPlace={1} marginBottom={20} className="knob-value" />
         </Knob>
         <label>Amplify</label>
       </MusicEffect>
       <MusicEffect name={'Speed'}>
         <Knob
+          scrollParent={containerRef}
           value={player?.playbackRate}
-          size={70}
+          size={knobSize}
           angleOffset={220}
           angleRange={280}
           onChange={value =>
@@ -76,15 +86,16 @@ const MusicEffectsContainer = ({player, updateDuration}) => {
           max={2}
           steps={200}
         >
-          <Arc arcWidth={11} color={lighter} background={darker} />
+          <Arc arcWidth={arcSize} color={lighter} background={darker} />
           <Value decimalPlace={1} marginBottom={20} className="knob-value" />
         </Knob>
         <label>Speed</label>
       </MusicEffect>
       <MusicEffect>
         <Knob
+          scrollParent={containerRef}
           value={player?.detune}
-          size={70}
+          size={knobSize}
           angleOffset={220}
           angleRange={280}
           min={-1200}
@@ -93,15 +104,16 @@ const MusicEffectsContainer = ({player, updateDuration}) => {
             sliderChangeHandlerForProperty(player, 'detune', value)
           }
         >
-          <Arc arcWidth={11} color={lighter} background={darker} />
+          <Arc arcWidth={arcSize} color={lighter} background={darker} />
           <Value decimalPlace={0} marginBottom={20} className="knob-value" />
         </Knob>
         <label>Detune</label>
       </MusicEffect>
       <MusicEffect>
         <Knob
+          scrollParent={containerRef}
           value={reverberation.current.decay}
-          size={70}
+          size={knobSize}
           angleOffset={220}
           angleRange={280}
           min={0.001}
@@ -115,7 +127,7 @@ const MusicEffectsContainer = ({player, updateDuration}) => {
             )
           }
         >
-          <Arc arcWidth={11} color={lighter} background={darker} />
+          <Arc arcWidth={arcSize} color={lighter} background={darker} />
           <Value decimalPlace={1} marginBottom={20} className="knob-value" />
         </Knob>
         <label>Reverb</label>
@@ -132,8 +144,9 @@ const MusicEffectsContainer = ({player, updateDuration}) => {
       </MusicEffect>
       <MusicEffect>
         <Knob
+          scrollParent={containerRef}
           value={distortion.current.distortion}
-          size={70}
+          size={knobSize}
           angleOffset={220}
           angleRange={280}
           min={0.001}
@@ -147,7 +160,7 @@ const MusicEffectsContainer = ({player, updateDuration}) => {
             )
           }
         >
-          <Arc arcWidth={11} color={lighter} background={darker} />
+          <Arc arcWidth={arcSize} color={lighter} background={darker} />
           <Value decimalPlace={1} marginBottom={20} className="knob-value" />
         </Knob>
         <label>Distortion</label>
@@ -168,8 +181,9 @@ const MusicEffectsContainer = ({player, updateDuration}) => {
         <div css={{display: 'inline-flex'}}>
           <MusicEffect>
             <Knob
+              scrollParent={containerRef}
               value={equalizer.current.low.value}
-              size={70}
+              size={knobSize}
               angleOffset={220}
               angleRange={280}
               onChange={value =>
@@ -179,7 +193,7 @@ const MusicEffectsContainer = ({player, updateDuration}) => {
               max={18}
               steps={36}
             >
-              <Arc arcWidth={11} color={lighter} background={darker} />
+              <Arc arcWidth={arcSize} color={lighter} background={darker} />
               <Value
                 decimalPlace={1}
                 marginBottom={20}
@@ -190,8 +204,9 @@ const MusicEffectsContainer = ({player, updateDuration}) => {
           </MusicEffect>
           <MusicEffect>
             <Knob
+              scrollParent={containerRef}
               value={equalizer.current.mid.value}
-              size={70}
+              size={knobSize}
               angleOffset={220}
               angleRange={280}
               onChange={value =>
@@ -201,7 +216,7 @@ const MusicEffectsContainer = ({player, updateDuration}) => {
               max={18}
               step={36}
             >
-              <Arc arcWidth={11} color={lighter} background={darker} />
+              <Arc arcWidth={arcSize} color={lighter} background={darker} />
               <Value
                 decimalPlace={1}
                 marginBottom={20}
@@ -212,8 +227,9 @@ const MusicEffectsContainer = ({player, updateDuration}) => {
           </MusicEffect>
           <MusicEffect>
             <Knob
+              scrollParent={containerRef}
               value={equalizer.current.high.value}
-              size={70}
+              size={knobSize}
               angleOffset={220}
               angleRange={280}
               onChange={value =>
@@ -227,7 +243,7 @@ const MusicEffectsContainer = ({player, updateDuration}) => {
               max={18}
               step={36}
             >
-              <Arc arcWidth={11} color={lighter} background={darker} />
+              <Arc arcWidth={arcSize} color={lighter} background={darker} />
               <Value
                 decimalPlace={1}
                 marginBottom={20}

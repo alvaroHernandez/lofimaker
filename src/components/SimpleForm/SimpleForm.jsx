@@ -5,7 +5,6 @@ import Button from '../Button/Button';
 import Input from '../Input/Input';
 import Spinner from '../Spinner/Spinner';
 import PropTypes from 'prop-types';
-import {GoSearch} from 'react-icons/go';
 
 export const SimpleForm = ({
   onSubmit,

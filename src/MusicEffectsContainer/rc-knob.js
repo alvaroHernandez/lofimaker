@@ -229,12 +229,14 @@ var removeEventFromBody = function removeEventFromBody(name, fn) {
   return document.body.removeEventListener(name, fn);
 };
 
+const preventDefault = e => e.preventDefault();
 var handleEventListener = function handleEventListener(_ref) {
   var dispatch = _ref.dispatch,
     isActive = _ref.isActive;
   return function () {
     var onMove = function onMove(_ref2) {
-      var pageX = _ref2.pageX,
+      _ref2.preventDefault();
+      var pageX = _ref2.pageX + _ref.scrollParent.current.scrollLeft,
         pageY = _ref2.pageY;
       return dispatch({
         pageX: pageX,
@@ -250,11 +252,19 @@ var handleEventListener = function handleEventListener(_ref) {
     };
 
     if (isActive) {
+      window.addEventListener('touchmove', preventDefault, {
+        passive: false
+      });
       addEventToBody('mousemove', onMove);
+      addEventToBody('touchmove', onMove);
       addEventToBody('mouseup', onStop);
+      addEventToBody('touchend', onStop);
       return function () {
+        window.removeEventListener('touchmove', preventDefault);
         removeEventFromBody('mousemove', onMove);
+        removeEventFromBody('touchmove', onMove);
         removeEventFromBody('mouseup', onStop);
+        removeEventFromBody('touchend', onStop);
       };
     }
   };
@@ -373,6 +383,7 @@ var useUpdate = function (_ref3) {
     handleEventListener({
       dispatch: dispatch,
       isActive: isActive,
+      scrollParent: _ref3.scrollParent,
     }),
     [isActive],
   );
@@ -726,7 +737,8 @@ var Knob = function Knob(_ref2) {
     snap = _ref2$snap === void 0 ? false : _ref2$snap,
     ariaValueText = _ref2.ariaValueText,
     ariaLabelledBy = _ref2.ariaLabelledBy,
-    className = _ref2.className;
+    className = _ref2.className,
+    scrollParent = _ref2.scrollParent;
 
   var _useUpdate = useUpdate({
       min: min,
@@ -737,6 +749,7 @@ var Knob = function Knob(_ref2) {
       size: size,
       steps: stepsToSnapTo(steps, snap),
       onChange: onChange,
+      scrollParent: scrollParent,
     }),
     percentage = _useUpdate.percentage,
     value = _useUpdate.value,
@@ -762,13 +775,15 @@ var Knob = function Knob(_ref2) {
       'aria-valuetext': ariaValueText,
       'aria-labelledby': ariaLabelledBy,
       onKeyDown: onKeyDown,
-      onWheel: onScroll,
+      // onDrag: onScroll,
+      onWheel: ()=>{},
       className: className,
     },
     React__default.createElement(
       'svg',
       {
         onMouseDown: onStart,
+        onTouchStart: onStart,
         width: size,
         height: size,
         ref: svg,

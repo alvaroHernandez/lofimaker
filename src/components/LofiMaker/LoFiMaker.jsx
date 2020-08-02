@@ -2,7 +2,6 @@
 import {jsx} from '@emotion/core';
 import {Fragment, useState} from 'react';
 import {Layout, Column, HeaderSection} from '../Layout/Column';
-
 import ImageLoader from '../ImageLoader/ImageLoader';
 import {dark, darker, ultraDark} from '../../styles/colors';
 import '@reach/tabs/styles.css';
