@@ -37,6 +37,8 @@ const TrackContainer = ({type}) => {
   const trackId = useRef(uuidv4());
   const [trackDuration, setTrackDuration] = useState(0);
 
+  const containerRef = useRef();
+
   const [isMuted, setIsMuted] = useState(false);
 
   const {unmute, mute} = usePlayers();
@@ -71,6 +73,7 @@ const TrackContainer = ({type}) => {
       case 'Effect':
         return (
           <MusicTrack
+            refToScroll={containerRef}
             trackId={trackId.current}
             updateCurrentPlayer={updateCurrentPlayer}
             type={type}
@@ -95,7 +98,7 @@ const TrackContainer = ({type}) => {
   };
 
   return (
-    <StyledTrackContainer>
+    <StyledTrackContainer ref={containerRef}>
       <TrackControl>
         <div>
           <TrackControlButton onClick={toggleShowTrackSettings}>

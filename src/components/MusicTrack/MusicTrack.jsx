@@ -11,6 +11,7 @@ import {MusicTrackPlayer} from '../../contexts/TrackPlayer';
 import MusicEffectsContainer from '../../MusicEffectsContainer/MusicEffectsContainer';
 import Spinner from '../Spinner/Spinner';
 import BoxWithCenteredContent from '../BoxWithCenteredText/BoxWithCenteredContent';
+import {scrollToRef} from "../../utils/scrollToRef";
 
 function soundClientFactory(type) {
   if (type === 'Sound') {
@@ -20,7 +21,7 @@ function soundClientFactory(type) {
   }
 }
 
-const MusicTrack = ({trackId, updateCurrentPlayer, type}) => {
+const MusicTrack = ({trackId, updateCurrentPlayer, type, refToScroll}) => {
   const soundClient = useRef(soundClientFactory(type));
 
   const {addPlayer, stopAll} = usePlayers();
@@ -46,6 +47,8 @@ const MusicTrack = ({trackId, updateCurrentPlayer, type}) => {
 
   const createPlayer = useCallback(
     async getMusicInformation => {
+      scrollToRef(refToScroll);
+
       try {
         setLoadingState('loading');
         const oldPlayer = currentPlayer;
@@ -105,7 +108,7 @@ const MusicTrack = ({trackId, updateCurrentPlayer, type}) => {
   );
 
   return (
-    <React.Fragment>
+    <div>
       {loadingState === 'loading' && (
         <div
           css={{
@@ -125,7 +128,7 @@ const MusicTrack = ({trackId, updateCurrentPlayer, type}) => {
       )}
       {loadingState === 'done' && currentPlayer && musicEffectContainer}
       <div css={{marginTop: '1em'}}>{musicSelector}</div>
-    </React.Fragment>
+    </div>
   );
 };
 
