@@ -19,7 +19,7 @@
     "react-dom": "^16.13.1",
     "react-draggable": "^4.4.3",
     "react-icons": "^3.10.0",
-    "react-scripts": "3.4.1",
+    "react-scripts": "3.4.2",
     "react-toggle": "^4.1.1",
     "soundcloud": "^3.3.2",
     "tone": "^14.7.12",
