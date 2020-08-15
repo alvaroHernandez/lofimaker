@@ -73,6 +73,7 @@ const MusicTrack = ({trackId, updateCurrentPlayer, type, refToScroll}) => {
           newPlayer => {
             onloadPlayer(newPlayer, oldPlayer);
           },
+          url,
         );
         addPlayer(trackId, player);
         await setCurrentPlayer(player);
@@ -100,7 +101,7 @@ const MusicTrack = ({trackId, updateCurrentPlayer, type, refToScroll}) => {
   const musicEffectContainer = useMemo(
     () => (
       <MusicEffectsContainer
-        player={currentPlayer?.player}
+        player={currentPlayer}
         updateDuration={updateDuration}
       />
     ),

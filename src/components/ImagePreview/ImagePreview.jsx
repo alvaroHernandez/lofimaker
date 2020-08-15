@@ -5,6 +5,7 @@ import BoxWithCenteredContent from '../BoxWithCenteredText/BoxWithCenteredConten
 import AutoFitGrid from '../AutoFitGrid/AutoFitGrid';
 import Button from '../Button/Button';
 import Spinner from '../Spinner/Spinner';
+import {useImage} from '../../contexts/ImageContext';
 
 const classes = ['normal', 'toaster', 'reyes', 'nashville'];
 
@@ -17,9 +18,11 @@ const ImagePreview = ({
   setGlobalFilter,
 }) => {
   const [currentClass, setCurrentClass] = useState('');
+  const {setFilter} = useImage();
 
   function applyFilter(filter) {
     setCurrentClass(filter);
+    setFilter(filter);
     setGlobalFilter(filter);
   }
   if (isLoading) {

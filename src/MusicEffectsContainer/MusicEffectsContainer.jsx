@@ -1,26 +1,38 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /** @jsx jsx */
 import {jsx} from '@emotion/core';
-import React, {useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {Distortion, EQ3, Reverb} from 'tone';
 import MusicEffect from '../components/MusicEffect/MusicEffect';
-import {Scale, Knob, Arc, Value} from './rc-knob';
+import { Knob, Arc, Value} from './rc-knob';
 import {darker, lighter} from '../styles/colors';
 import Toggle from 'react-toggle';
 import './Knob.css';
 import './Toggle.css';
-import {medium} from '../styles/mediaqueries';
 import EffectsControlsContainer from '../components/EffectsControlsContainer/EffectsControlsContainer';
 const knobSize = 90;
 const arcSize = 29;
+
 const MusicEffectsContainer = ({player, updateDuration}) => {
+  const tonePlayer = player?.player;
   const containerRef = useRef();
   const reverberation = useRef(new Reverb().toDestination());
   const distortion = useRef(new Distortion().toDestination());
   const equalizer = useRef(new EQ3().toDestination());
 
+  useEffect(() => {
+    if (player !== undefined) {
+      player.effects.decay = reverberation.current.decay;
+      player.effects.distortion = distortion.current.distortion;
+      player.effects.low = equalizer.current.low.value;
+      player.effects.mid = equalizer.current.mid.value;
+      player.effects.high = equalizer.current.high.value;
+    }
+  }, [player]);
+
   function sliderChangeHandlerForProperty(effect, property, value) {
     effect[property] = value;
+    player.effects[property] = value;
     if (property === 'playbackRate') {
       updateDuration(value);
     }
@@ -28,16 +40,19 @@ const MusicEffectsContainer = ({player, updateDuration}) => {
 
   function sliderChangeHandlerForParameter(effect, property, value) {
     effect[property].value = value;
+    player.effects[property] = value;
   }
 
   function toggleEffect(effect, e) {
-    if (player === undefined) {
+    if (tonePlayer === undefined) {
       return;
     }
     if (e.target.checked) {
-      player.connect(effect);
+      tonePlayer.connect(effect);
+      player.effectsToggles[effect] = true;
     } else {
-      player.disconnect(effect);
+      tonePlayer.disconnect(effect);
+      player.effectsToggles[effect] = false;
     }
   }
 
@@ -51,7 +66,7 @@ const MusicEffectsContainer = ({player, updateDuration}) => {
           angleOffset={220}
           angleRange={280}
           onChange={value =>
-            sliderChangeHandlerForParameter(player, 'volume', value)
+            sliderChangeHandlerForParameter(tonePlayer, 'volume', value)
           }
           min={-35}
           max={15}
@@ -64,12 +79,12 @@ const MusicEffectsContainer = ({player, updateDuration}) => {
       <MusicEffect name={'Speed'}>
         <Knob
           scrollParent={containerRef}
-          value={player?.playbackRate}
+          value={tonePlayer?.playbackRate}
           size={knobSize}
           angleOffset={220}
           angleRange={280}
           onChange={value =>
-            sliderChangeHandlerForProperty(player, 'playbackRate', value)
+            sliderChangeHandlerForProperty(tonePlayer, 'playbackRate', value)
           }
           min={0.8}
           max={2}
@@ -83,14 +98,14 @@ const MusicEffectsContainer = ({player, updateDuration}) => {
       <MusicEffect>
         <Knob
           scrollParent={containerRef}
-          value={player?.detune}
+          value={tonePlayer?.detune}
           size={knobSize}
           angleOffset={220}
           angleRange={280}
           min={-1200}
           max={1200}
           onChange={value =>
-            sliderChangeHandlerForProperty(player, 'detune', value)
+            sliderChangeHandlerForProperty(tonePlayer, 'detune', value)
           }
         >
           <Arc arcWidth={arcSize} color={lighter} background={darker} />

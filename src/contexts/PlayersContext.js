@@ -51,7 +51,7 @@ function PlayersProvider(props) {
     if (players.current[trackId] !== undefined) {
       players.current[trackId].player.dispose();
     }
-    const np = {...players.current, [trackId]: {player, startTime: 0}};
+    const np = {...players.current, [trackId]: {player}};
     players.current = np;
   }, []);
 
@@ -77,6 +77,12 @@ function PlayersProvider(props) {
     Transport.stop();
   }, []);
 
+  const serialize = useCallback(() => {
+    return Object.values(players.current).map(player =>
+      player.player.serialize(),
+    );
+  }, []);
+
   const value = {
     player: players.current,
     addPlayer,
@@ -87,6 +93,7 @@ function PlayersProvider(props) {
     unmute,
     mute,
     isPlaying,
+    serialize,
   };
   return <PlayersContext.Provider value={value} {...props} />;
 }

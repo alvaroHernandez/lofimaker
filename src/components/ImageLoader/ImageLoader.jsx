@@ -21,6 +21,7 @@ import Button from '../Button/Button';
 import BoxWithCenteredContent from '../BoxWithCenteredText/BoxWithCenteredContent';
 import {GoLink} from 'react-icons/go';
 import {ShowOnMedium} from '../Layout/Column';
+import {useImage} from '../../contexts/ImageContext';
 
 function CustomTab({index, ...props}) {
   const {selectedIndex} = useTabsContext();
@@ -37,6 +38,7 @@ function CustomTab({index, ...props}) {
 const scrollToTop = () => window.scrollTo(0, 0);
 
 const ImageLoader = ({updateFinalImage, setGlobalFilter}) => {
+  const {setImage} = useImage();
   const {data, run, isLoading, isError, isSuccess} = useAsync();
   const [showImagePicker, setShowImagePicker] = useState(true);
 
@@ -50,6 +52,7 @@ const ImageLoader = ({updateFinalImage, setGlobalFilter}) => {
       image.addEventListener('load', () => resolve(url));
       image.addEventListener('error', () => reject('Error loading image'));
       image.src = url;
+      setImage(url);
       scrollToTop();
     });
   }

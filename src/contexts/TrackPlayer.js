@@ -3,14 +3,45 @@ import {Player, Transport} from 'tone';
 import {tracks} from '../assets/sounds/tracks';
 
 class MusicTrackPlayer {
-  constructor(grainPlayer, trackId, title, duration, onload) {
+  constructor(
+    grainPlayer,
+    trackId,
+    title,
+    duration,
+    onload,
+    url,
+    startTime = 0,
+    effects,
+    effectsToggles,
+  ) {
     this.player = grainPlayer;
     this.trackId = trackId;
     this.title = title;
     this.duration = duration;
     this.originalDuration = duration;
-    this.startTime = 0;
+    this.startTime = startTime;
     this.onload = () => onload(this);
+    this.url = url;
+
+    this.effectsToggles = {};
+    this.effects = {};
+
+    if (effects) {
+      Object.entries(effects).forEach(([k, v]) => (this.effects[k] = v));
+      grainPlayer.detune = this.effects.detune;
+      grainPlayer.playbackRate = this.effects.playbackRate;
+      grainPlayer.volume.value = this.effects.volume;
+    } else {
+      this.effects.detune = grainPlayer.detune;
+      this.effects.playbackRate = grainPlayer.playbackRate;
+      this.effects.volume = grainPlayer.volume.value;
+    }
+
+    if (effectsToggles) {
+      Object.entries(effectsToggles).forEach(
+        ([k, v]) => (this.effectsToggles[k] = v),
+      );
+    }
 
     this.player.toDestination();
     this.player.autostart = false;
@@ -47,6 +78,18 @@ class MusicTrackPlayer {
     this.startTime = startTime;
     this.player.unsync();
     this.player.sync().start(startTime);
+  }
+  serialize() {
+    return {
+      trackId: this.trackId,
+      title: this.title,
+      duration: this.duration,
+      originalDuration: this.originalDuration,
+      startTime: this.startTime,
+      url: this.url,
+      effects: this.effects,
+      effectsToggles: this.effectsToggles,
+    };
   }
 }
 
