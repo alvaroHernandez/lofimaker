@@ -77,6 +77,11 @@ function PlayersProvider(props) {
     Transport.stop();
   }, []);
 
+  const disposeAll = useCallback(() => {
+    Object.values(players.current).forEach(player => player.player.dispose() );
+    players.current = {};
+  }, []);
+
   const serialize = useCallback(() => {
     return Object.values(players.current).map(player =>
       player.player.serialize(),
@@ -94,6 +99,7 @@ function PlayersProvider(props) {
     mute,
     isPlaying,
     serialize,
+    disposeAll
   };
   return <PlayersContext.Provider value={value} {...props} />;
 }

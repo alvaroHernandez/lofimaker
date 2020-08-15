@@ -15,21 +15,21 @@ const serializedLofi3 =
 
 const serializedLofi =
   '{"players":[{"trackId":"c349cec0-c3f7-4d37-8cf6-dfb4e2bd227f","title":"Determination - Undertale Parody (Parody Of Irresistible - Fall Out Boy) (1)","duration":191155,"originalDuration":191155,"startTime":2.4376731301939056,"url":"https://api.soundcloud.com/tracks/284650298/stream?client_id=b8f06bbb8e4e9e201f9e6e46001c3acb","effects":{"detune":464.9666806762566,"playbackRate":1.2526556654692362,"volume":6.801002996424089,"decay":4.22195609480703,"distortion":0.9197551606586913,"low":4.4774343201801585,"mid":7.932759972942037,"high":5.29533323559124},"effectsToggles":{"EQ3":true,"Distortion":true,"Reverb":true}},{"trackId":"419b38f2-164a-42c5-966e-21675b0e5bc3","title":"Heavy Rain","duration":103468,"originalDuration":103468,"startTime":10.193905817174516,"url":"https://freesound.org/data/previews/243/243627_3509815-hq.mp3","effects":{"detune":-665.9312929934754,"playbackRate":1.5138502193303343,"volume":5.662391063814546,"decay":3.8180703276365713,"distortion":0.17548439150544373,"low":-6.09247851819285,"mid":-7.239848460945458,"high":-8.245754126473566},"effectsToggles":{}}],"image":{"url":"https://media1.giphy.com/media/U2nN0ridM4lXy/giphy.gif?cid=d7cbe08ayqmjschuxpnknhkbag4cbg6pg8hyhwm0pm1z9t3v&rid=giphy.gif","filter":"toaster"}}';
-const deserializedLofi = JSON.parse(serializedLofi);
+// const deserializedLofi = JSON.parse(serializedLofi);
 
-const onloadPlayer = (player) => {
-  Object.entries(player.effectsToggles).forEach(([k,isOn]) => {
-    if(k === 'Reverb' && isOn){
+const onloadPlayer = player => {
+  Object.entries(player.effectsToggles).forEach(([k, isOn]) => {
+    if (k === 'Reverb' && isOn) {
       const reverberation = new Reverb().toDestination();
       reverberation.decay = player.effects.decay;
       player.player.connect(reverberation);
     }
-    if(k === 'Distortion' && isOn){
+    if (k === 'Distortion' && isOn) {
       const distortion = new Distortion().toDestination();
       distortion.distortion = player.effects.distortion;
       player.player.connect(distortion);
     }
-    if(k === 'EQ3'&& isOn){
+    if (k === 'EQ3' && isOn) {
       const equalizer = new EQ3().toDestination();
       equalizer.low.value = player.effects.low;
       equalizer.mid.value = player.effects.mid;
@@ -48,18 +48,17 @@ const onloadPlayer = (player) => {
   // equalizer.mid.value = player.effects.mid;
   // equalizer.high.value = player.effects.high;
 
-
   //disponse old players
   // if (oldPlayer !== undefined) {
   //   oldPlayer.dispose();
   // }
-debugger
+  // debugger;
   player.sync(player.startTime).start();
   //increment loaded players to track if all are loaded
 };
 
 const loadPlayer = playerData => {
-  debugger
+  // debugger;
   const player = new MusicTrackPlayer(
     new GrainPlayer({
       url: playerData.url,
@@ -78,17 +77,20 @@ const loadPlayer = playerData => {
     playerData.url,
     playerData.startTime,
     playerData.effects,
-    playerData.effectsToggles
+    playerData.effectsToggles,
   );
   return player;
 };
 
-const LoFiLoader = () => {
-  const {addPlayer, stopAll, playAll} = usePlayers();
+const useLoFiLoader = () => {
+  const {addPlayer, stopAll, playAll, disposeAll} = usePlayers();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const {data: imageData, run, isLoading, isError, isSuccess} = useAsync();
+  const [ filter, setFilter]  = useState();
 
-  function loadLofi() {
+  async function loadLofi(deserializedLofi) {
+    await disposeAll();
+    setFilter(deserializedLofi.image.filter);
     loadImage(deserializedLofi.image.url);
     deserializedLofi.players
       .map(loadPlayer)
@@ -114,17 +116,13 @@ const LoFiLoader = () => {
     [run],
   );
 
-  return (
-    <div>
-      <Button onClick={loadLofi} />
-      <FinalImageContainer
-        finalImage={imageData}
-        finalImageFilter={deserializedLofi.image.filter}
-        isDialogOpen={isDialogOpen}
-        setIsDialogOpen={setIsDialogOpen}
-      />
-    </div>
-  );
+  return {
+    imageData,
+    filter,
+    isDialogOpen,
+    setIsDialogOpen,
+    loadLofi,
+  };
 };
 
-export default LoFiLoader;
+export default useLoFiLoader;

@@ -4,6 +4,8 @@ import {PlayersProvider} from './contexts/PlayersContext';
 import {ImageProvider} from './contexts/ImageContext';
 import {Switch, Route, BrowserRouter as Router} from 'react-router-dom';
 import LoFiLoader from './components/LoFiLoader/LoFiLoader';
+import AutoFitGrid from "./components/AutoFitGrid/AutoFitGrid";
+import Gallery from "./components/Gallery/Gallery";
 
 function App() {
   return (
@@ -16,8 +18,11 @@ function App() {
             </PlayersProvider>
           </ImageProvider>
         </Route>
+
         <Route exact path="/gallery">
-          <div>Work in Progress...</div>
+          <PlayersProvider>
+              <Gallery/>
+          </PlayersProvider>
         </Route>
       </Switch>
     </Router>
