@@ -13,7 +13,7 @@ Make and share your own Lo-fi creations!
 - [x] change speed should change duration
 - [x] Preview should control beats player
 - [x] Add sidebar
-- [ ] Refactor
+- [x] Refactor
 - [ ] add global tracks slider player control
 - [x] make it responsive
     - [x] make music controls responsive
@@ -26,10 +26,11 @@ Make and share your own Lo-fi creations!
 - [ ] improve preview to make it really full screen
 
 #### Enhancements
+- [ ] more refactor, specially in players, throw in some design patterns please!
 - [ ] add some tests
 - [ ] migrate to typescript
 - [ ] Responsive improvements
-    - [ ] increase button size 
+    - [ ] increase buttons size 
 - [ ] add loop music and sound effects
 - [ ] More music effects
 - [ ] change length of default song to at least Daft punk random acess memories vandeway edit
