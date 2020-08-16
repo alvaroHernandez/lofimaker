@@ -1,41 +1,43 @@
 /** @jsx jsx */
 import {jsx} from '@emotion/core';
-import React from 'react';
+import React, {Fragment, useState} from 'react';
 import Button from '../Button/Button';
 import {useHistory} from 'react-router-dom';
 
 import AutoFitGrid from '../AutoFitGrid/AutoFitGrid';
-import {usePlayers} from '../../contexts/PlayersContext';
-import {useImage} from '../../contexts/ImageContext';
-import {save} from '../../clients/LofiClient';
+import SaveLoFiModal from '../SaveLoFiModal/SaveLoFiModal';
 const buttonVariant = 'primary';
 const ExportControls = ({preview}) => {
   const history = useHistory();
-  const {serialize} = usePlayers();
-  const {getImage, getFilter} = useImage();
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const logSerialized = async () => {
-    const result = {
-      players: serialize(),
-      image: {url: getImage(), filter: getFilter()},
-    };
-    console.debug(JSON.stringify(result));
-    console.debug((result));
-    await save(result);
+  const openSaveLoFiModal = () => {
+    setIsDialogOpen(true);
   };
 
   return (
-    <AutoFitGrid min={'100px'}>
-      <Button variant={buttonVariant} onClick={preview}>
-        Preview
-      </Button>
-      <Button variant={buttonVariant} onClick={logSerialized}>
-        Share
-      </Button>
-      <Button variant={buttonVariant} onClick={() => history.push('/gallery')}>
-        Gallery
-      </Button>
-    </AutoFitGrid>
+    <Fragment>
+      <AutoFitGrid min={'100px'}>
+        <Button variant={buttonVariant} onClick={preview}>
+          Preview
+        </Button>
+        <Button variant={buttonVariant} onClick={openSaveLoFiModal}>
+          Share
+        </Button>
+        <Button
+          variant={buttonVariant}
+          onClick={() => history.push('/gallery')}
+        >
+          Gallery
+        </Button>
+      </AutoFitGrid>
+      {isDialogOpen && (
+        <SaveLoFiModal
+          setIsDialogOpen={setIsDialogOpen}
+          isDialogOpen={isDialogOpen}
+        />
+      )}
+    </Fragment>
   );
 };
 

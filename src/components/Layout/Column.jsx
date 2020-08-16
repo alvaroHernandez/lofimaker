@@ -22,6 +22,7 @@ const Column = styled.div`
 `;
 
 const Section = styled.div`
+  color: #fff;
   margin-top: 0.2em;
   background-color: ${props => props.backgroundColor};
   padding: 0.2em 1em;

@@ -6,8 +6,19 @@ import {getAll} from '../../clients/LofiClient';
 import useLoFiLoader from '../LoFiLoader/LoFiLoader';
 import FinalImageContainer from '../FinalImageContainer/FinalImageContainer';
 import {Column, HeaderSection, Layout} from '../Layout/Column';
-import {dark, darker} from '../../styles/colors';
+import {dark, darker, light, lighter} from '../../styles/colors';
 import GalleryControls from '../GalleryControls/GalleryControls';
+import styled from '@emotion/styled/macro';
+
+const ButtonContainer = styled.div({
+  opacity: '0',
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  '-ms-transform': 'translate(-50%, -50%)',
+  'text-align': 'center',
+});
 
 const Gallery = () => {
   const {data: lofis, run} = useAsync({data: []});
@@ -46,7 +57,17 @@ const Gallery = () => {
             }}
           >
             {lofis.map(lofi => (
-              <li key={lofi.id} onClick={() => clickHandler(lofi)}>
+              <li
+                css={{
+                  position: 'relative',
+                  width: '100%',
+                  background: '#212529',
+                  '&:hover': {
+                    'img:nth-child(1)': {opacity: '0.3'},
+                    'div:nth-child(2)': {opacity: 1},
+                  },
+                }}
+              >
                 <img
                   key={lofi.id}
                   alt={'lofi cover'}
@@ -55,9 +76,55 @@ const Gallery = () => {
                     objectFit: 'cover',
                     width: '100%',
                     height: '100%',
+                    '&:hover': {opacity: '0.3'},
                   }}
                   src={lofi.image.url}
                 />
+                <ButtonContainer>
+                  <button
+                    css={{
+                      border: 0,
+                      fontSize: '3em',
+                      background: '#fff0f000',
+                      color: light,
+                      '&:hover': {
+                        color: lighter,
+                      },
+                    }}
+                    onClick={() => clickHandler(lofi)}
+                  >
+                    Play!
+                  </button>
+                </ButtonContainer>
+                <div
+                  css={{
+                    background: 'rgb(41 37 34 / 72%)',
+                    position: 'absolute',
+                    bottom: '-10px',
+                    marginBottom: '10px',
+                    padding: '10px',
+                    width: '100%',
+                    boxSizing: 'border-box',
+                    color: lighter,
+                  }}
+                >
+                  <span
+                    css={{
+                      display: 'block',
+                    }}
+                  >
+                    {lofi.name}
+                  </span>
+                  <span
+                    css={{
+                      fontSize: '13px',
+                      display: 'block',
+                      color: light,
+                    }}
+                  >
+                    by {lofi.author}
+                  </span>
+                </div>
               </li>
             ))}
           </ul>
