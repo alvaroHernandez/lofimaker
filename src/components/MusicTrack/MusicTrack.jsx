@@ -62,6 +62,7 @@ const MusicTrack = ({trackId, updateCurrentPlayer, type, refToScroll}) => {
             onerror: e => {
               // eslint-disable-next-line no-console
               console.log('error loading buffer for player ' + e);
+              setLoadingState('error');
             },
             onload: () => {
               player.onload();
@@ -124,7 +125,7 @@ const MusicTrack = ({trackId, updateCurrentPlayer, type, refToScroll}) => {
       )}
       {loadingState === 'error' && (
         <BoxWithCenteredContent>
-          <text>Error</text>
+          <text>Error loading sound, please try again.</text>
         </BoxWithCenteredContent>
       )}
       {loadingState === 'done' && currentPlayer && musicEffectContainer}

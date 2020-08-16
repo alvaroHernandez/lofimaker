@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import {jsx} from '@emotion/core';
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback} from 'react';
 import {Transport, context} from 'tone';
 import {lofiDurationMinutes} from '../configs/playerConfig';
 

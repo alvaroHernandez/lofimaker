@@ -5,13 +5,7 @@ import AutoFitGrid from '../AutoFitGrid/AutoFitGrid';
 import Button from '../Button/Button';
 import BoxWithCenteredContent from '../BoxWithCenteredText/BoxWithCenteredContent';
 import TrackContainer from '../TrackContainer/TrackContainer';
-import styled from '@emotion/styled/macro';
 import {usePlayers} from '../../contexts/PlayersContext';
-
-const IndividualTrackEditor = styled.div`
-  display: grid;
-  grid-template-columns: 1fr;
-`;
 
 const tracksTypes = ['Sound', 'Effect', 'Drums'];
 

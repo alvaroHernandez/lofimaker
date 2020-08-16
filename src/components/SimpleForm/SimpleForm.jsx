@@ -59,11 +59,11 @@ export const SimpleForm = ({
 SimpleForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   buttonText: PropTypes.element.isRequired,
-  inputText: PropTypes.string.isRequired,
+  inputText: PropTypes.string,
   inputName: PropTypes.string.isRequired,
-  isLoading: PropTypes.func.isRequired,
-  placeholder: PropTypes.func.isRequired,
-  buttonVariant: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  placeholder: PropTypes.string.isRequired,
+  buttonVariant: PropTypes.string,
 };
 
 export default SimpleForm;

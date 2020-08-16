@@ -18,9 +18,11 @@ function App() {
         </Route>
 
         <Route exact path="/gallery">
-          <PlayersProvider>
-            <Gallery />
-          </PlayersProvider>
+          <ImageProvider>
+            <PlayersProvider>
+              <Gallery />
+            </PlayersProvider>
+          </ImageProvider>
         </Route>
       </Switch>
     </Router>

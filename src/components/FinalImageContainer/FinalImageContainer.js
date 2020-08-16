@@ -30,7 +30,7 @@ FinalImageContainer.propTypes = {
   finalImage: PropTypes.string,
   finalImageFilter: PropTypes.string,
   isDialogOpen: PropTypes.bool,
-  setIsDialogOpen: PropTypes.bool,
+  setIsDialogOpen: PropTypes.func,
 };
 
 export default FinalImageContainer;

@@ -12,7 +12,7 @@ const EffectsControlsContainer = ({children, containerRef}) => {
         display: 'flex',
         marginTop: '1em',
         paddingBottom: '1em',
-        overflow: 'scroll',
+        overflow: 'auto',
         [medium]: {
           placeContent: 'center',
           paddingBottom: '0',

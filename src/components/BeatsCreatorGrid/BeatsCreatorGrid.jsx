@@ -8,6 +8,7 @@ import Beat from '../Beat/Beat';
 const separation = '0.5em';
 
 const StyledBeatsCreatorGrid = styled.div`
+  margin-top: 1em;
   display: grid;
   grid-gap: ${separation};
   grid-template-columns: 1fr 10fr;
