@@ -1,48 +1,53 @@
 /** @jsx jsx */
 import {jsx} from '@emotion/core';
-import React from 'react';
-import {ultraDark} from '../../styles/colors';
-import Button from '../Button/Button';
+import React, {useEffect} from 'react';
+import {IconButton} from '../Button/Button';
 import AutoFitGrid from '../AutoFitGrid/AutoFitGrid';
 import {usePlayers} from '../../contexts/PlayersContext';
-import {FaPlayCircle} from 'react-icons/fa';
-import {FaPauseCircle} from 'react-icons/fa';
-import {FaStopCircle} from 'react-icons/fa';
+import {FaPlayCircle, FaPauseCircle, FaStopCircle} from 'react-icons/fa';
+import {Transport} from 'tone';
 
 const buttonVariant = 'primary';
-
 const GlobalPlayerControls = () => {
-  const {playAll, pauseAll, stopAll, isPlaying} = usePlayers();
+  const {playAll, pauseAll, stopAll} = usePlayers();
+  const [isPlaying, setIsPlaying] = React.useState(false);
+
+  useEffect(() => {
+    Transport.on('stop', () => {
+      setIsPlaying(false);
+    });
+
+    Transport.on('pause', () => {
+      setIsPlaying(false);
+    });
+  }, []);
+
+  const play = () => {
+    setIsPlaying(true);
+    playAll();
+  };
+
+  const pause = () => {
+    setIsPlaying(false);
+    pauseAll();
+  };
+
+  const stop = () => {
+    setIsPlaying(false);
+    stopAll();
+  };
 
   return (
-    <AutoFitGrid
-      min={'50px'}
-      css={{backgroundColor: ultraDark, marginTop: '1em'}}
-    >
-      <Button
-        css={{fontSize: '1.2em', padding: '0.2em'}}
-        variant={buttonVariant}
-        onClick={playAll}
-        disabled={isPlaying}
-      >
+    <AutoFitGrid min={'50px'}>
+      <IconButton variant={buttonVariant} onClick={play} disabled={isPlaying}>
         <FaPlayCircle />
-      </Button>
-      <Button
-        css={{fontSize: '1.2em', padding: '0.2em'}}
-        variant={buttonVariant}
-        onClick={pauseAll}
-        disabled={!isPlaying}
-      >
+      </IconButton>
+      <IconButton variant={buttonVariant} onClick={pause} disabled={!isPlaying}>
         <FaPauseCircle />
-      </Button>
-      <Button
-        css={{fontSize: '1.2em', padding: '0.2em'}}
-        variant={buttonVariant}
-        onClick={stopAll}
-        disabled={!isPlaying}
-      >
+      </IconButton>
+      <IconButton variant={buttonVariant} onClick={stop} disabled={!isPlaying}>
         <FaStopCircle />
-      </Button>
+      </IconButton>
     </AutoFitGrid>
   );
 };

@@ -9,17 +9,6 @@ PlayersContext.displayName = 'PlayersContext';
 
 function PlayersProvider(props) {
   const players = React.useRef({});
-  const [isPlaying, setIsPlaying] = React.useState(false);
-
-  useEffect(() => {
-    Transport.on('stop', () => {
-      setIsPlaying(false);
-    });
-
-    Transport.on('pause', () => {
-      setIsPlaying(false);
-    });
-  }, []);
 
   const getPlayer = useCallback(trackId => {
     if (players.current[trackId] !== undefined) {
@@ -66,7 +55,6 @@ function PlayersProvider(props) {
     }
     Transport.start();
     Transport.stop(`+${lofiDurationMinutes * 60}`);
-    setIsPlaying(true);
   }, []);
 
   const pauseAll = useCallback(() => {
@@ -97,7 +85,6 @@ function PlayersProvider(props) {
     pauseAll,
     unmute,
     mute,
-    isPlaying,
     serialize,
     disposeAll,
   };
