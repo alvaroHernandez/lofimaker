@@ -6,7 +6,7 @@ Make and share your own Lo-fi creations!
 
 #### MVP
 - [x] improve music controls: better resolution and use/show default values
-- [ ] save and gallery
+- [x] save and gallery
 - [x] add loop to drums kit
 - [x] Check why I'm getting so little results with sound cloud api
 - [x] longer songs should be trimmed
@@ -20,9 +20,14 @@ Make and share your own Lo-fi creations!
     - [x] Add "hide" to gif results   
 - [ ] check if sounds are actually lofi style (add some?)
 - [ ] change beats tracks text for icons
-
+- [ ] check if some audios are too heavy for mobile
+- [ ] Fix track position indicator responsive
+- [ ] make top buttons sticky, and smaller in mobile?
+- [ ] improve preview to make it really full screen
 
 #### Enhancements
+- [ ] add some tests
+- [ ] migrate to typescript
 - [ ] Responsive improvements
     - [ ] increase button size 
 - [ ] add loop music and sound effects

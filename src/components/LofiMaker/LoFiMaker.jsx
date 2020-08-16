@@ -51,14 +51,14 @@ const LoFiMaker = () => {
           <Section>
             <TracksEditor />
           </Section>
-          <FinalImageContainer
-            finalImage={finalImage}
-            finalImageFilter={finalImageFilter}
-            isDialogOpen={isDialogOpen}
-            setIsDialogOpen={setIsDialogOpen}
-          />
         </Column>
       </Layout>
+      <FinalImageContainer
+        finalImage={finalImage}
+        finalImageFilter={finalImageFilter}
+        isDialogOpen={isDialogOpen}
+        setIsDialogOpen={setIsDialogOpen}
+      />
     </Fragment>
   );
 };
