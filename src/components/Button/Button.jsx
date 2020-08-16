@@ -6,9 +6,6 @@ const buttonVariants = {
     background: light,
     color: 'white',
     fontWeight: 'bold',
-    '&:disabled': {
-      opacity: 0.5,
-    },
   },
   secondary: {
     background: dark,
@@ -31,6 +28,9 @@ const Button = styled.button(
     border: '0',
     lineHeight: '1',
     borderRadius: '3px',
+    '&:disabled': {
+      opacity: 0.5,
+    },
   },
   ({variant = 'primary'}) => buttonVariants[variant],
 );

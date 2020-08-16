@@ -3,10 +3,10 @@ import {jsx} from '@emotion/core';
 import React, {Fragment, useState} from 'react';
 import Button from '../Button/Button';
 import {useHistory} from 'react-router-dom';
-
-import AutoFitGrid from '../AutoFitGrid/AutoFitGrid';
 import SaveLoFiModal from '../SaveLoFiModal/SaveLoFiModal';
+import {Grid} from '../Layout/Layout';
 const buttonVariant = 'primary';
+
 const ExportControls = ({preview}) => {
   const history = useHistory();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -17,7 +17,7 @@ const ExportControls = ({preview}) => {
 
   return (
     <Fragment>
-      <AutoFitGrid min={'100px'}>
+      <Grid css={{gridTemplateColumns: '1fr 1fr 1fr'}}>
         <Button variant={buttonVariant} onClick={preview}>
           Preview
         </Button>
@@ -30,7 +30,7 @@ const ExportControls = ({preview}) => {
         >
           Gallery
         </Button>
-      </AutoFitGrid>
+      </Grid>
       {isDialogOpen && (
         <SaveLoFiModal
           setIsDialogOpen={setIsDialogOpen}

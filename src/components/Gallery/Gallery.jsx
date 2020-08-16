@@ -5,7 +5,7 @@ import {useAsync} from '../../hooks/useAsync';
 import {getAll} from '../../clients/LofiClient';
 import useLoFiLoader from '../LoFiLoader/LoFiLoader';
 import FinalImageContainer from '../FinalImageContainer/FinalImageContainer';
-import {Column, HeaderSection, Layout} from '../Layout/Column';
+import {Column, HeaderSection, Layout} from '../Layout/Layout';
 import {dark, darker, light, lighter} from '../../styles/colors';
 import GalleryControls from '../GalleryControls/GalleryControls';
 import styled from '@emotion/styled/macro';

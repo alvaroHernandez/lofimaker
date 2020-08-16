@@ -10,7 +10,7 @@ import {lofiDurationMinutes} from '../../configs/playerConfig';
 import styled from '@emotion/styled/macro';
 import {dark} from '../../styles/colors';
 import {GoMute, GoUnmute} from 'react-icons/go';
-import {ToggleVisible} from '../Layout/Column';
+import {ToggleVisible} from '../Layout/Layout';
 import ToneBeatsCreator from '../BeatsCreator/ToneBeatsCreator';
 import {IoIosArrowDropdownCircle, IoIosArrowDropupCircle} from 'react-icons/io';
 

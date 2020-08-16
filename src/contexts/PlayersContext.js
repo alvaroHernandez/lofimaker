@@ -99,7 +99,7 @@ function PlayersProvider(props) {
     mute,
     isPlaying,
     serialize,
-    disposeAll
+    disposeAll,
   };
   return <PlayersContext.Provider value={value} {...props} />;
 }

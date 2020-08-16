@@ -9,7 +9,7 @@ import Input from '../Input/Input';
 import {useAsync} from '../../hooks/useAsync';
 import Spinner from '../Spinner/Spinner';
 import {darker, light, lighter} from '../../styles/colors';
-import {Section} from '../Layout/Column';
+import {Section} from '../Layout/Layout';
 import Button from '../Button/Button';
 import {Link} from 'react-router-dom';
 

@@ -6,8 +6,6 @@ import {usePlayers} from '../../contexts/PlayersContext';
 import PropTypes from 'prop-types';
 
 const FinalImageContainer = ({
-  finalImage,
-  finalImageFilter,
   setIsDialogOpen,
   isDialogOpen,
 }) => {
@@ -21,10 +19,8 @@ const FinalImageContainer = ({
   return (
     <div>
       <FinalImageModal
-        imageFilter={finalImageFilter}
         setIsDialogOpen={closePreviewHandler}
         isDialogOpen={isDialogOpen}
-        image={finalImage}
       />
     </div>
   );

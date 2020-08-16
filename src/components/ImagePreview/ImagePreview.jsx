@@ -2,74 +2,49 @@
 import {jsx} from '@emotion/core';
 import {useState} from 'react';
 import BoxWithCenteredContent from '../BoxWithCenteredText/BoxWithCenteredContent';
-import AutoFitGrid from '../AutoFitGrid/AutoFitGrid';
 import Button from '../Button/Button';
-import Spinner from '../Spinner/Spinner';
 import {useImage} from '../../contexts/ImageContext';
+import PropTypes from 'prop-types';
 
 const classes = ['normal', 'toaster', 'reyes', 'nashville'];
 
-const ImagePreview = ({
-  data,
-  isError,
-  isLoading,
-  isSuccess,
-  updateFinalImage,
-  setGlobalFilter,
-}) => {
+const ImagePreview = ({data}) => {
   const [currentClass, setCurrentClass] = useState('');
   const {setFilter} = useImage();
 
   function applyFilter(filter) {
     setCurrentClass(filter);
     setFilter(filter);
-    setGlobalFilter(filter);
-  }
-  if (isLoading) {
-    return (
-      <BoxWithCenteredContent css={{margin: '0', height: '300px'}}>
-        <Spinner />
-      </BoxWithCenteredContent>
-    );
   }
 
-  if (isError) {
-    return (
-      <BoxWithCenteredContent css={{margin: '0', height: '300px'}}>
-        <span>Error Loading Image, try with another URL</span>
+  return (
+    <div>
+      <BoxWithCenteredContent css={{margin: '0'}}>
+        <figure className={currentClass}>
+          <img width={'100%'} src={data} alt={'custom user loaded'} />
+        </figure>
       </BoxWithCenteredContent>
-    );
-  } else if (isSuccess) {
-    updateFinalImage(data);
-    return (
-      <div>
-        <BoxWithCenteredContent css={{margin: '0'}}>
-          <figure className={currentClass}>
-            <img width={'100%'} src={data} alt={'custom user loaded'} />
-          </figure>
-        </BoxWithCenteredContent>
-        <div>
-          <div css={{textAlign: 'center', marginBottom: '0.5em'}}>
-            <span>pick a filter: </span>
-          </div>
-          <div css={{display: 'flex', justifyContent: 'center'}}>
-            {classes.map(filter => (
-              <Button
-                css={{marginRight: '0.5em'}}
-                key={filter}
-                variant={'secondary'}
-                onClick={() => applyFilter(filter)}
-              >
-                {filter}
-              </Button>
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-  } else {
-    return null;
-  }
+      <BoxWithCenteredContent>
+        <span>pick a filter: </span>
+      </BoxWithCenteredContent>
+      <BoxWithCenteredContent>
+        {classes.map(filter => (
+          <Button
+            css={{marginRight: '0.5em'}}
+            key={filter}
+            variant={'secondary'}
+            onClick={() => applyFilter(filter)}
+          >
+            {filter}
+          </Button>
+        ))}
+      </BoxWithCenteredContent>
+    </div>
+  );
+};
+
+ImagePreview.propTypes = {
+  data: PropTypes.string.isRequired,
 };
 
 export default ImagePreview;

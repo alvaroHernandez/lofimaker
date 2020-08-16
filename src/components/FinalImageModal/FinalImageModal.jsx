@@ -3,8 +3,10 @@ import {jsx} from '@emotion/core';
 import {DialogContent, DialogOverlay} from '@reach/dialog';
 import React from 'react';
 import {landscape, medium} from '../../styles/mediaqueries';
+import {useImage} from "../../contexts/ImageContext";
 
-function FinalImageModal({setIsDialogOpen, isDialogOpen, image, imageFilter}) {
+function FinalImageModal({setIsDialogOpen, isDialogOpen}) {
+  const { getImage, getFilter } = useImage();
   return (
     <DialogOverlay
       onDismiss={() => setIsDialogOpen(false)}
@@ -24,8 +26,8 @@ function FinalImageModal({setIsDialogOpen, isDialogOpen, image, imageFilter}) {
           padding: 0,
         }}
       >
-        <figure className={imageFilter}>
-          <img alt={'final cover'} src={image} width={'100%'} />
+        <figure className={getFilter()}>
+          <img alt={'final cover'} src={getImage()} width={'100%'} />
         </figure>
       </DialogContent>
     </DialogOverlay>
