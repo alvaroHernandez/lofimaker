@@ -12,6 +12,7 @@ import {usePlayers} from '../../contexts/PlayersContext';
 import ExportControls from '../ExportControls/ExportControls';
 import TracksEditor from '../TracksEditor/TracksEditor';
 import GlobalPlayerControls from '../GlobalPlayerControls/GlobalPlayerControls';
+import {StickySection} from '../StickySection/StickySection';
 
 const LoFiMaker = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -35,11 +36,9 @@ const LoFiMaker = () => {
           </Section>
         </Column>
         <Column backgroundColor={ultraDark} spanSmall={12} spanMedium={9}>
-          <Section
-            css={{ backgroundColor: ultraDark, zIndex:2, position: 'sticky', top: 0}}
-          >
+          <StickySection>
             <GlobalPlayerControls />
-          </Section>
+          </StickySection>
           <Section>
             <TracksEditor />
           </Section>
