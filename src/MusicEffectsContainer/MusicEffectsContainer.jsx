@@ -1,10 +1,10 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /** @jsx jsx */
 import {jsx} from '@emotion/core';
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useMemo, useRef} from 'react';
 import {Distortion, EQ3, Reverb} from 'tone';
 import MusicEffect from '../components/MusicEffect/MusicEffect';
-import { Knob, Arc, Value} from './rc-knob';
+import {Knob, Arc, Value} from './rc-knob';
 import {darker, lighter} from '../styles/colors';
 import Toggle from 'react-toggle';
 import './Knob.css';
@@ -16,19 +16,19 @@ const arcSize = 29;
 const MusicEffectsContainer = ({player, updateDuration}) => {
   const tonePlayer = player?.player;
   const containerRef = useRef();
-  const reverberation = useRef(new Reverb().toDestination());
-  const distortion = useRef(new Distortion().toDestination());
-  const equalizer = useRef(new EQ3().toDestination());
+  const reverberation = useMemo(() => new Reverb().toDestination(), []);
+  const distortion = useMemo(() => new Distortion().toDestination(), []);
+  const equalizer = useMemo(() => new EQ3().toDestination(), []);
 
   useEffect(() => {
     if (player !== undefined) {
-      player.effects.decay = reverberation.current.decay;
-      player.effects.distortion = distortion.current.distortion;
-      player.effects.low = equalizer.current.low.value;
-      player.effects.mid = equalizer.current.mid.value;
-      player.effects.high = equalizer.current.high.value;
+      player.effects.decay = reverberation.decay;
+      player.effects.distortion = distortion.distortion;
+      player.effects.low = equalizer.low.value;
+      player.effects.mid = equalizer.mid.value;
+      player.effects.high = equalizer.high.value;
     }
-  }, [player]);
+  }, [distortion, equalizer, player, reverberation]);
 
   function sliderChangeHandlerForProperty(effect, property, value) {
     effect[property] = value;
@@ -116,7 +116,7 @@ const MusicEffectsContainer = ({player, updateDuration}) => {
       <MusicEffect>
         <Knob
           scrollParent={containerRef}
-          value={reverberation.current.decay}
+          value={reverberation.decay}
           size={knobSize}
           angleOffset={220}
           angleRange={280}
@@ -124,11 +124,7 @@ const MusicEffectsContainer = ({player, updateDuration}) => {
           max={10}
           steps={100}
           onChange={value =>
-            sliderChangeHandlerForProperty(
-              reverberation.current,
-              'decay',
-              value,
-            )
+            sliderChangeHandlerForProperty(reverberation, 'decay', value)
           }
         >
           <Arc arcWidth={arcSize} color={lighter} background={darker} />
@@ -142,14 +138,14 @@ const MusicEffectsContainer = ({player, updateDuration}) => {
         >
           <Toggle
             icons={false}
-            onChange={state => toggleEffect(reverberation.current, state)}
+            onChange={state => toggleEffect(reverberation, state)}
           />
         </label>
       </MusicEffect>
       <MusicEffect>
         <Knob
           scrollParent={containerRef}
-          value={distortion.current.distortion}
+          value={distortion.distortion}
           size={knobSize}
           angleOffset={220}
           angleRange={280}
@@ -157,11 +153,7 @@ const MusicEffectsContainer = ({player, updateDuration}) => {
           max={2}
           steps={100}
           onChange={value =>
-            sliderChangeHandlerForProperty(
-              distortion.current,
-              'distortion',
-              value,
-            )
+            sliderChangeHandlerForProperty(distortion, 'distortion', value)
           }
         >
           <Arc arcWidth={arcSize} color={lighter} background={darker} />
@@ -175,7 +167,7 @@ const MusicEffectsContainer = ({player, updateDuration}) => {
         >
           <Toggle
             icons={false}
-            onChange={state => toggleEffect(distortion.current, state)}
+            onChange={state => toggleEffect(distortion, state)}
           />
         </label>
       </MusicEffect>
@@ -186,12 +178,12 @@ const MusicEffectsContainer = ({player, updateDuration}) => {
           <MusicEffect>
             <Knob
               scrollParent={containerRef}
-              value={equalizer.current.low.value}
+              value={equalizer.low.value}
               size={knobSize}
               angleOffset={220}
               angleRange={280}
               onChange={value =>
-                sliderChangeHandlerForParameter(equalizer.current, 'low', value)
+                sliderChangeHandlerForParameter(equalizer, 'low', value)
               }
               min={-18}
               max={18}
@@ -209,12 +201,12 @@ const MusicEffectsContainer = ({player, updateDuration}) => {
           <MusicEffect>
             <Knob
               scrollParent={containerRef}
-              value={equalizer.current.mid.value}
+              value={equalizer.mid.value}
               size={knobSize}
               angleOffset={220}
               angleRange={280}
               onChange={value =>
-                sliderChangeHandlerForParameter(equalizer.current, 'mid', value)
+                sliderChangeHandlerForParameter(equalizer, 'mid', value)
               }
               min={-18}
               max={18}
@@ -232,16 +224,12 @@ const MusicEffectsContainer = ({player, updateDuration}) => {
           <MusicEffect>
             <Knob
               scrollParent={containerRef}
-              value={equalizer.current.high.value}
+              value={equalizer.high.value}
               size={knobSize}
               angleOffset={220}
               angleRange={280}
               onChange={value =>
-                sliderChangeHandlerForParameter(
-                  equalizer.current,
-                  'high',
-                  value,
-                )
+                sliderChangeHandlerForParameter(equalizer, 'high', value)
               }
               min={-18}
               max={18}
@@ -264,7 +252,7 @@ const MusicEffectsContainer = ({player, updateDuration}) => {
         >
           <Toggle
             icons={false}
-            onChange={state => toggleEffect(equalizer.current, state)}
+            onChange={state => toggleEffect(equalizer, state)}
           />
         </label>
       </div>

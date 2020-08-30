@@ -30,6 +30,8 @@ Make and share your own Lo-fi creations!
 - [ ] Improve 
 
 #### Enhancements
+- [ ] refactor music effects
+- [ ] add props validation
 - [ ] check if sounds are actually lofi style (add some?)
 - [ ] change beats tracks text for icons
 - [ ] check if some audios are too heavy for mobile

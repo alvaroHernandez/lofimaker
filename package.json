@@ -11,6 +11,7 @@
     "@reach/slider": "^0.10.5",
     "@reach/tabs": "^0.10.4",
     "@reach/visually-hidden": "^0.10.4",
+    "@simbathesailor/use-what-changed": "^0.1.25",
     "es6-promisify": "^6.1.1",
     "freesound": "^0.0.4",
     "prop-types": "^15.7.2",
