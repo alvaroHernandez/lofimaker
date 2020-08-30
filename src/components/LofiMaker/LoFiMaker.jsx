@@ -35,7 +35,9 @@ const LoFiMaker = () => {
           </Section>
         </Column>
         <Column backgroundColor={ultraDark} spanSmall={12} spanMedium={9}>
-          <Section>
+          <Section
+            css={{ backgroundColor: ultraDark, zIndex:2, position: 'sticky', top: 0}}
+          >
             <GlobalPlayerControls />
           </Section>
           <Section>
