@@ -8,7 +8,7 @@ import FreeSoundClient from '../../clients/FreeSoundClient';
 import {usePlayers} from '../../contexts/PlayersContext';
 import {GrainPlayer} from 'tone';
 import {MusicTrackPlayer} from '../../contexts/TrackPlayer';
-import MusicEffectsContainer from '../../MusicEffectsContainer/MusicEffectsContainer';
+import MusicEffectsContainer from '../MusicEffectsContainer/MusicEffectsContainer';
 import Spinner from '../Spinner/Spinner';
 import BoxWithCenteredContent from '../BoxWithCenteredText/BoxWithCenteredContent';
 import {scrollToRef} from "../../utils/scrollToRef";

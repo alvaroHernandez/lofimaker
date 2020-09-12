@@ -3,7 +3,7 @@
 import {jsx} from '@emotion/core';
 import React, {useRef} from 'react';
 import MusicEffect from '../MusicEffect/MusicEffect';
-import {Arc, Knob, Value} from '../../MusicEffectsContainer/rc-knob';
+import {Arc, Knob, Value} from '../MusicEffectsContainer/rc-knob';
 import {darker, lighter} from '../../styles/colors';
 import {findClosest} from '../../utils/findClosest';
 import {medium} from '../../styles/mediaqueries';
