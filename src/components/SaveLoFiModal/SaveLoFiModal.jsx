@@ -64,12 +64,21 @@ function SaveLoFiModal({setIsDialogOpen, isDialogOpen}) {
           {isSuccess ? (
             <div css={{color: light}}>
               <p>
-                All good!, <Link css={{color: lighter}} to={'/gallery'}>go to the gallery</Link>
+                All good!,{' '}
+                <Link css={{color: lighter}} to={'/gallery'}>
+                  go to the gallery
+                </Link>
               </p>
             </div>
           ) : (
             <Fragment>
               <form onSubmit={saveLoFiHandler}>
+                <div css={{marginBottom: '10px'}}>
+                  <label htmlFor="name">
+                    Lo-fi name:
+                  </label>
+
+                </div>
                 <Input
                   placeholder="super mega lofi..."
                   id="name"
@@ -77,7 +86,11 @@ function SaveLoFiModal({setIsDialogOpen, isDialogOpen}) {
                   css={{width: '100%', marginBottom: '2em'}}
                   onChange={e => setName(e.target.value)}
                 />
-                <label htmlFor="author">Author:</label>
+                <div css={{marginBottom: '10px'}}>
+                <label htmlFor="author">
+                  Author:
+                </label>
+                </div>
                 <Input
                   placeholder="your name..."
                   id="author"
@@ -85,7 +98,6 @@ function SaveLoFiModal({setIsDialogOpen, isDialogOpen}) {
                   css={{width: '100%', marginBottom: '2em'}}
                   onChange={e => setAuthor(e.target.value)}
                 />
-                <label htmlFor="name">Lo-fi name:</label>
                 <Button
                   disabled={!author || !name}
                   type="submit"
