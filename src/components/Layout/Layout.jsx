@@ -1,6 +1,7 @@
 import styled from '@emotion/styled/macro';
 import {medium} from '../../styles/mediaqueries';
-import {dark, darker} from '../../styles/colors';
+import {dark} from '../../styles/colors';
+import {simple} from '../../styles/spacing';
 
 const Layout = styled.div`
   background-color: ${props => props.backgroundColor};
@@ -22,6 +23,7 @@ const Column = styled.div`
 `;
 
 const Section = styled.div`
+  color: #fff;
   margin-top: 0.2em;
   background-color: ${props => props.backgroundColor};
   padding: 0.2em 1em;
@@ -45,4 +47,23 @@ const ShowOnMedium = styled.div`
   }
 `;
 
-export {Column, Layout, Section, ToggleVisible, ShowOnMedium, HeaderSection};
+const Grid = styled.div`
+  display: grid;
+  grid-gap: ${simple};
+`;
+
+const JustifiedItems = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+export {
+  Column,
+  Layout,
+  Section,
+  ToggleVisible,
+  ShowOnMedium,
+  HeaderSection,
+  Grid,
+  JustifiedItems,
+};

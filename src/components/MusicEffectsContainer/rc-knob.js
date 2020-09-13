@@ -228,7 +228,7 @@ var addEventToBody = function addEventToBody(name, fn) {
 var removeEventFromBody = function removeEventFromBody(name, fn) {
   return document.body.removeEventListener(name, fn);
 };
-
+var lastVal = 0;
 const preventDefault = e => e.preventDefault();
 var handleEventListener = function handleEventListener(_ref) {
   var dispatch = _ref.dispatch,
@@ -248,6 +248,7 @@ var handleEventListener = function handleEventListener(_ref) {
     };
 
     var onStop = function onStop() {
+      _ref.onStop(lastVal)
       return dispatch({
         type: 'STOP',
       });
@@ -293,6 +294,7 @@ var onMove = function onMove(_ref) {
       percentage: percentage,
     }),
   );
+  lastVal = value;
   onChange(value);
   return _objectSpread({}, state, {
     percentage: percentage,
@@ -346,6 +348,7 @@ var reducer = function reducer(onChange) {
 };
 
 var useUpdate = function (_ref3) {
+  lastVal = _ref3.initialValue;
   var min = _ref3.min,
     max = _ref3.max,
     initialValue = _ref3.initialValue,
@@ -386,6 +389,7 @@ var useUpdate = function (_ref3) {
       dispatch: dispatch,
       isActive: isActive,
       scrollParent: _ref3.scrollParent,
+      onStop: _ref3.onStop,
     }),
     [isActive],
   );
@@ -739,7 +743,8 @@ var Knob = function Knob(_ref2) {
     ariaValueText = _ref2.ariaValueText,
     ariaLabelledBy = _ref2.ariaLabelledBy,
     className = _ref2.className,
-    scrollParent = _ref2.scrollParent;
+    scrollParent = _ref2.scrollParent,
+    onStop = _ref2.onStop;
 
   var _useUpdate = useUpdate({
       min: min,
@@ -751,6 +756,7 @@ var Knob = function Knob(_ref2) {
       steps: stepsToSnapTo(steps, snap),
       onChange: onChange,
       scrollParent: scrollParent,
+      onStop: onStop,
     }),
     percentage = _useUpdate.percentage,
     value = _useUpdate.value,

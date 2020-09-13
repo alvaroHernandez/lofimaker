@@ -1,14 +1,11 @@
 import styled from '@emotion/styled/macro';
-import {alternative, dark, darker, light} from '../../styles/colors';
+import {alternative, dark, light} from '../../styles/colors';
 
 const buttonVariants = {
   primary: {
     background: light,
     color: 'white',
     fontWeight: 'bold',
-    '&:disabled': {
-      opacity: 0.5,
-    },
   },
   secondary: {
     background: dark,
@@ -19,20 +16,27 @@ const buttonVariants = {
     color: light,
     fontWeight: 'bold',
   },
-  quaternary: {
-    background: darker,
-    color: 'white',
-  },
 };
 
-const Button = styled.button(
+const BaseButton = styled.button(
   {
-    padding: '10px 10px',
     border: '0',
     lineHeight: '1',
     borderRadius: '3px',
+    '&:disabled': {
+      opacity: 0.5,
+    },
   },
   ({variant = 'primary'}) => buttonVariants[variant],
 );
+
+const Button = styled(BaseButton)({
+  padding: '10px 10px',
+});
+
+export const IconButton = styled(BaseButton)({
+  fontSize: '1.2em',
+  padding: '0.2em',
+});
 
 export default Button;
