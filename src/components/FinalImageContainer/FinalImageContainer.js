@@ -5,23 +5,10 @@ import '@reach/dialog/styles.css';
 import {usePlayers} from '../../contexts/PlayersContext';
 import PropTypes from 'prop-types';
 
-const FinalImageContainer = ({
-  setIsDialogOpen,
-  isDialogOpen,
-}) => {
-  const {stopAll} = usePlayers();
-
-  function closePreviewHandler(value) {
-    stopAll();
-    setIsDialogOpen(value);
-  }
-
+const FinalImageContainer = () => {
   return (
     <div>
-      <FinalImageModal
-        setIsDialogOpen={closePreviewHandler}
-        isDialogOpen={isDialogOpen}
-      />
+      <FinalImageModal />
     </div>
   );
 };

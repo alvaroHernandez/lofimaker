@@ -53,7 +53,6 @@ const ToneBeatsCreator = ({updateCurrentPlayer, trackId}) => {
       if (value === 0) {
         value = true;
       }
-      console.log(value);
       await setLoops(value);
       currentPlayer.updateLoop(value);
     }

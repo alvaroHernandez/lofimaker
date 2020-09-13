@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import {jsx} from '@emotion/core';
-import {Fragment, useState} from 'react';
+import React, {Fragment, useCallback, useState} from 'react';
 import {Layout, Column, HeaderSection} from '../Layout/Layout';
 import ImageLoader from '../ImageLoader/ImageLoader';
 import {dark, darker, ultraDark} from '../../styles/colors';
@@ -13,16 +13,26 @@ import ExportControls from '../ExportControls/ExportControls';
 import TracksEditor from '../TracksEditor/TracksEditor';
 import GlobalPlayerControls from '../GlobalPlayerControls/GlobalPlayerControls';
 import {StickySection} from '../StickySection/StickySection';
+import {FullScreen, useFullScreenHandle} from 'react-full-screen';
 
 const LoFiMaker = () => {
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const {playAll, stopAll} = usePlayers();
+  const handle = useFullScreenHandle();
 
   function previewHandler() {
-    setIsDialogOpen(true);
+    handle.enter();
     stopAll();
     playAll();
   }
+
+  const reportChange = useCallback(
+    (state, handle) => {
+      if (state === false) {
+        stopAll();
+      }
+    },
+    [stopAll],
+  );
 
   return (
     <Fragment>
@@ -44,10 +54,9 @@ const LoFiMaker = () => {
           </Section>
         </Column>
       </Layout>
-      <FinalImageContainer
-        isDialogOpen={isDialogOpen}
-        setIsDialogOpen={setIsDialogOpen}
-      />
+      <FullScreen handle={handle} onChange={reportChange}>
+        {handle.active && <FinalImageContainer />}
+      </FullScreen>
     </Fragment>
   );
 };

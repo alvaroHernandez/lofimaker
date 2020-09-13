@@ -29,7 +29,6 @@ const MusicEffectDistortion = ({
     } else {
       player.player.disconnect(distortion);
       player.effectsToggles[distortion] = false;
-      console.log(player.effectsToggles);
     }
   }
 

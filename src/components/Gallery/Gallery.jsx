@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect} from 'react';
+import React, {Fragment, useCallback, useEffect} from 'react';
 import {useAsync} from '../../hooks/useAsync';
 import {getAll} from '../../clients/LofiClient';
 import useLoFiLoader from '../LoFiLoader/LoFiLoader';
@@ -7,24 +7,33 @@ import {Column, HeaderSection, Layout} from '../Layout/Layout';
 import {dark, darker} from '../../styles/colors';
 import GalleryControls from '../GalleryControls/GalleryControls';
 import GalleryGrid from '../GalleryGrid/GalleryGrid';
+import {usePlayers} from 'contexts/PlayersContext';
+import {FullScreen, useFullScreenHandle} from 'react-full-screen';
 
 const Gallery = () => {
   const {data: loFis, run} = useAsync({data: []});
+  const {stopAll} = usePlayers();
+  const handle = useFullScreenHandle();
+
   useEffect(() => {
     run(getAll());
   }, [run]);
 
-  const {
-    imageData,
-    filter,
-    isDialogOpen,
-    setIsDialogOpen,
-    loadLoFi,
-  } = useLoFiLoader();
+  const {loadLoFi} = useLoFiLoader();
 
   async function elementClickHandler(loFi) {
+    handle.enter();
     await loadLoFi(loFi);
   }
+
+  const reportChange = useCallback(
+    (state, handle) => {
+      if (state === false) {
+        stopAll();
+      }
+    },
+    [stopAll],
+  );
 
   return (
     <Fragment>
@@ -39,12 +48,9 @@ const Gallery = () => {
           />
         </Column>
       </Layout>
-      <FinalImageContainer
-        finalImage={imageData}
-        finalImageFilter={filter}
-        isDialogOpen={isDialogOpen}
-        setIsDialogOpen={setIsDialogOpen}
-      />
+      <FullScreen handle={handle} onChange={reportChange}>
+        {handle.active && <FinalImageContainer />}
+      </FullScreen>
     </Fragment>
   );
 };
