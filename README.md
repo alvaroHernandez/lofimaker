@@ -19,7 +19,7 @@ Make and share your own Lo-fi creations!
     - [x] make music controls responsive
     - [x] Add "hide" to gif results   
 - [ ] make top buttons sticky, and smaller in mobile?
-- [ ] improve preview to make it really full screen
+- [x] improve preview to make it really full screen
 - [ ] Scroll up to track controls after clicking music or improve player control position
 - [ ] Cancel song after pressing too many
 - [ ] filter out big songs
