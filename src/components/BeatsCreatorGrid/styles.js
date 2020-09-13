@@ -18,5 +18,5 @@ export const TrackBeats = styled.div`
   grid-gap: ${separation};
   grid-area: trackBeats;
   grid-template-columns: repeat(${props => props.totalBeats}, 1fr);
-  overflow: scroll;
+  overflow: auto;
 `;

@@ -8,7 +8,7 @@ import FreeSoundClient from '../../clients/FreeSoundClient';
 import {usePlayers} from '../../contexts/PlayersContext';
 import {GrainPlayer} from 'tone';
 import {MusicTrackPlayer} from '../../contexts/TrackPlayer';
-import MusicEffectsContainer from '../../MusicEffectsContainer/MusicEffectsContainer';
+import MusicEffectsContainer from '../MusicEffectsContainer/MusicEffectsContainer';
 import Spinner from '../Spinner/Spinner';
 import BoxWithCenteredContent from '../BoxWithCenteredText/BoxWithCenteredContent';
 import {scrollToRef} from "../../utils/scrollToRef";
@@ -62,6 +62,7 @@ const MusicTrack = ({trackId, updateCurrentPlayer, type, refToScroll}) => {
             onerror: e => {
               // eslint-disable-next-line no-console
               console.log('error loading buffer for player ' + e);
+              setLoadingState('error');
             },
             onload: () => {
               player.onload();
@@ -73,6 +74,7 @@ const MusicTrack = ({trackId, updateCurrentPlayer, type, refToScroll}) => {
           newPlayer => {
             onloadPlayer(newPlayer, oldPlayer);
           },
+          url,
         );
         addPlayer(trackId, player);
         await setCurrentPlayer(player);
@@ -100,7 +102,7 @@ const MusicTrack = ({trackId, updateCurrentPlayer, type, refToScroll}) => {
   const musicEffectContainer = useMemo(
     () => (
       <MusicEffectsContainer
-        player={currentPlayer?.player}
+        player={currentPlayer}
         updateDuration={updateDuration}
       />
     ),
@@ -123,7 +125,7 @@ const MusicTrack = ({trackId, updateCurrentPlayer, type, refToScroll}) => {
       )}
       {loadingState === 'error' && (
         <BoxWithCenteredContent>
-          <text>Error</text>
+          <text>Error loading sound, please try again.</text>
         </BoxWithCenteredContent>
       )}
       {loadingState === 'done' && currentPlayer && musicEffectContainer}

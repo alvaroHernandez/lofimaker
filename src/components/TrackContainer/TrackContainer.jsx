@@ -3,16 +3,15 @@ import {jsx} from '@emotion/core';
 import {useRef, useState} from 'react';
 import Track from '../Track/Track';
 import Button from '../Button/Button';
-import MusicTrack from '../MusicTrack/MusicTrack';
 import {usePlayers} from '../../contexts/PlayersContext';
 import {v4 as uuidv4} from 'uuid';
 import {lofiDurationMinutes} from '../../configs/playerConfig';
 import styled from '@emotion/styled/macro';
 import {dark} from '../../styles/colors';
 import {GoMute, GoUnmute} from 'react-icons/go';
-import {ToggleVisible} from '../Layout/Column';
-import ToneBeatsCreator from '../BeatsCreator/ToneBeatsCreator';
+import {ToggleVisible} from '../Layout/Layout';
 import {IoIosArrowDropdownCircle, IoIosArrowDropupCircle} from 'react-icons/io';
+import TrackSettings from '../TrackSettings/TrackSettings';
 
 const StyledTrackContainer = styled.div`
   padding: 1em;
@@ -67,30 +66,6 @@ const TrackContainer = ({type}) => {
     );
   }
 
-  function trackFactory(type) {
-    switch (type) {
-      case 'Sound':
-      case 'Effect':
-        return (
-          <MusicTrack
-            refToScroll={containerRef}
-            trackId={trackId.current}
-            updateCurrentPlayer={updateCurrentPlayer}
-            type={type}
-          />
-        );
-      case 'Drums':
-        return (
-          <ToneBeatsCreator
-            trackId={trackId.current}
-            updateCurrentPlayer={updateCurrentPlayer}
-          />
-        );
-      default:
-        return null;
-    }
-  }
-
   const onStopDrag = (e, ui) => {
     const selectedTime =
       (ui.lastX * lofiDurationMinutes * 60) / ui.node.parentNode.clientWidth;
@@ -132,7 +107,12 @@ const TrackContainer = ({type}) => {
         </div>
       </TrackControl>
       <ToggleVisible show={showTrackSettings}>
-        {trackFactory(type)}
+        <TrackSettings
+          type={type}
+          trackId={trackId.current}
+          containerRef={containerRef}
+          updateCurrentPlayer={updateCurrentPlayer}
+        />
       </ToggleVisible>
     </StyledTrackContainer>
   );

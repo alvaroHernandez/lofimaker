@@ -1,26 +1,43 @@
 /** @jsx jsx */
 import {jsx} from '@emotion/core';
-import React from 'react';
+import React, {Fragment, useState} from 'react';
 import Button from '../Button/Button';
-
-import AutoFitGrid from '../AutoFitGrid/AutoFitGrid';
+import {useHistory} from 'react-router-dom';
+import SaveLoFiModal from '../SaveLoFiModal/SaveLoFiModal';
+import {Grid} from '../Layout/Layout';
 const buttonVariant = 'primary';
+
 const ExportControls = ({preview}) => {
+  const history = useHistory();
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const openSaveLoFiModal = () => {
+    setIsDialogOpen(true);
+  };
+
   return (
-    <AutoFitGrid min={'100px'}>
-      <Button
-        variant={buttonVariant}
-        onClick={preview}
-      >
-        Preview
-      </Button>
-      <Button
-        variant={buttonVariant}
-        onClick={() => {}}
-      >
-        Share
-      </Button>
-    </AutoFitGrid>
+    <Fragment>
+      <Grid css={{gridTemplateColumns: '1fr 1fr 1fr'}}>
+        <Button variant={buttonVariant} onClick={preview}>
+          Preview
+        </Button>
+        <Button variant={buttonVariant} onClick={openSaveLoFiModal}>
+          Share
+        </Button>
+        <Button
+          variant={buttonVariant}
+          onClick={() => history.push('/gallery')}
+        >
+          Gallery
+        </Button>
+      </Grid>
+      {isDialogOpen && (
+        <SaveLoFiModal
+          setIsDialogOpen={setIsDialogOpen}
+          isDialogOpen={isDialogOpen}
+        />
+      )}
+    </Fragment>
   );
 };
 

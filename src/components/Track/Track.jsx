@@ -39,7 +39,7 @@ const NonEmptyTrackMusicContainer = styled(TrackMusicContainer)`
   width: ${props => props.filledPercentage}%;
 `;
 
-const ResponsiveText = styled.text`
+const ResponsiveText = styled.span`
   padding-left: 1em;
   white-space: nowrap;
   overflow: hidden;
