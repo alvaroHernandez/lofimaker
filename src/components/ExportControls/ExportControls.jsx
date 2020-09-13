@@ -5,14 +5,17 @@ import Button from '../Button/Button';
 import {useHistory} from 'react-router-dom';
 import SaveLoFiModal from '../SaveLoFiModal/SaveLoFiModal';
 import {Grid} from '../Layout/Layout';
+import { usePlayers } from "contexts/PlayersContext";
 const buttonVariant = 'primary';
 
 const ExportControls = ({preview}) => {
   const history = useHistory();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const { stopAll } = usePlayers();
 
   const openSaveLoFiModal = () => {
     setIsDialogOpen(true);
+    stopAll();
   };
 
   return (

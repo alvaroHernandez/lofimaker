@@ -23,11 +23,10 @@ Make and share your own Lo-fi creations!
 - [ ] Scroll up to track controls after clicking music or improve player control position
 - [ ] Cancel song after pressing too many
 - [ ] filter out big songs
-- [ ] Pause on share
-- [ ] Check why gallery and maker are sharing players   
+- [x] Pause on share
+- [x] Check why gallery and maker are sharing players   
 - [x] Fix track position indicator responsive
 - [ ] Improve color scheme
-- [ ] Improve 
 
 #### Enhancements
 - [ ] refactor music effects
