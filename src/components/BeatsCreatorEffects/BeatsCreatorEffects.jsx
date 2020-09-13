@@ -32,6 +32,7 @@ const BeatsCreatorEffects = ({bpm, loops, updateBpm, updateLoops}) => {
           onChange={updateBpm}
           min={60}
           max={180}
+          onStop={()=>{}}
         >
           <Arc arcWidth={arcSize} color={lighter} background={darker} />
           <Value decimalPlace={0} marginBottom={20} className="knob-value" />
@@ -50,6 +51,7 @@ const BeatsCreatorEffects = ({bpm, loops, updateBpm, updateLoops}) => {
           max={totalAvailableLoops}
           steps={totalAvailableLoops - 1}
           snap={true}
+          onStop={()=>{}}
         >
           <Arc arcWidth={arcSize} color={lighter} background={darker} />
           <Value

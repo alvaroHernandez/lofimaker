@@ -21,7 +21,7 @@ const StyledTrackContainer = styled.div`
   -webkit-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.31);
   -moz-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.31);
   box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.31);
-  background: linear-gradient(to right,rgb(220 220 220),#e2dbdf);
+  background: linear-gradient(to right, rgb(220 220 220), #e2dbdf);
 `;
 
 const TrackControl = styled.div`
@@ -82,17 +82,28 @@ const TrackContainer = ({type}) => {
     <StyledTrackContainer ref={containerRef}>
       <TrackControl>
         <div>
-          <TrackControlButton onClick={toggleShowTrackSettings}>
+          <TrackControlButton
+            variant="tertiary"
+            onClick={toggleShowTrackSettings}
+          >
             {showTrackSettings ? (
               <IoIosArrowDropupCircle size={'1.2em'} />
             ) : (
               <IoIosArrowDropdownCircle size={'1.2em'} />
             )}
           </TrackControlButton>
-          <TrackControlButton disabled={!isMuted} onClick={unmuteHandler}>
+          <TrackControlButton
+            variant="tertiary"
+            disabled={!isMuted}
+            onClick={unmuteHandler}
+          >
             <GoUnmute size={'1.2em'} />
           </TrackControlButton>
-          <TrackControlButton disabled={isMuted} onClick={muteHandler}>
+          <TrackControlButton
+            variant="tertiary"
+            disabled={isMuted}
+            onClick={muteHandler}
+          >
             <GoMute size={'1.2em'} />
           </TrackControlButton>
         </div>
