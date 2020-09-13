@@ -30,12 +30,14 @@ const TrackMusicContainer = styled.div`
 `;
 
 const EmptyTrackMusicContainer = styled(TrackMusicContainer)`
-  background-color: ${alternative};
+  background-color: #3F2235;
   width: 100%;
+  color: #f1f1f4;
 `;
 
 const NonEmptyTrackMusicContainer = styled(TrackMusicContainer)`
-  background-color: ${alternative};
+  color: #f1f1f4;
+  background-color: #C62462;
   width: ${props => props.filledPercentage}%;
 `;
 

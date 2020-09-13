@@ -47,12 +47,12 @@ function SaveLoFiModal({setIsDialogOpen, isDialogOpen}) {
       onDismiss={closeDialog}
       aria-label="share lofi"
       isOpen={isDialogOpen}
-      style={{zIndex: '1', background: 'hsla(0, 0%, 0%, 0.9)'}}
+      style={{zIndex: '2', background: 'hsla(0, 0%, 0%, 0.9)'}}
     >
       <DialogContent
         aria-label={'share lofi content'}
         style={{
-          background: darker,
+          background: 'linear-gradient(to right, #61045F, #AA076B)',
           width: '50%',
           padding: '2em',
         }}

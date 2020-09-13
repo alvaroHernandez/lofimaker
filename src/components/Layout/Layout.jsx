@@ -10,7 +10,7 @@ const Layout = styled.div`
   grid-template-columns: repeat(12, 1fr);
   grid-column-gap: 0em;
   grid-row-gap: 0em;
-  min-height: 100vh;
+  //min-height: 100vh;
 `;
 
 const Column = styled.div`
@@ -24,15 +24,15 @@ const Column = styled.div`
 
 const Section = styled.div`
   color: #fff;
-  margin-top: 0.2em;
-  background-color: ${props => props.backgroundColor};
-  padding: 0.2em 1em;
+  margin-top: 1em;
+  //background-color: #5e60ce;
+  //padding: 0.2em 1em;
 `;
 
 const HeaderSection = styled(Section)`
   padding: 0.7em;
   margin-top: 0;
-  background-color: ${dark};
+  //background-color: ${dark};
 `;
 
 const ToggleVisible = styled.div`

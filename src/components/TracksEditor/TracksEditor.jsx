@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import {jsx} from '@emotion/core';
+import { css, jsx } from '@emotion/core';
 import React, {useRef, useState} from 'react';
 import AutoFitGrid from '../AutoFitGrid/AutoFitGrid';
 import Button from '../Button/Button';
@@ -18,7 +18,7 @@ const TracksEditor = () => {
     await stopAll();
     setTracks([
       ...tracks,
-      <TrackContainer key={nextTrackId.current} type={type} />,
+        <TrackContainer key={nextTrackId.current} type={type} />
     ]);
     nextTrackId.current += 1;
   };

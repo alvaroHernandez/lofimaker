@@ -4,7 +4,7 @@ import {alternative, light, lighter} from '../../styles/colors';
 
 const StyledBeat = styled.div`
   background-color: ${props =>
-  props.isHighlighted ? alternative : props.isOn ? light : lighter};
+  props.isHighlighted ? alternative : props.isOn ? lighter:light};
   width: 30px;
   height: 30px;
   margin-right: ${props => props.addMoreMargin ? '14px' : 'inherit'};

@@ -3,12 +3,17 @@ import {alternative, dark, light} from '../../styles/colors';
 
 const buttonVariants = {
   primary: {
-    background: light,
     color: 'white',
     fontWeight: 'bold',
-  },
+    background: 'linear-gradient(to right, #ff5e62, #ff9966)',
+    '&:disabled': {
+      background: 'linear-gradient(to right,#adabab,#908d8e)',
+      opacity: 1,
+    },
+},
   secondary: {
-    background: dark,
+    background: 0,
+    border: '1px solid white',
     color: 'white',
   },
   tertiary: {

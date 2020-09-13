@@ -14,10 +14,16 @@ import {IoIosArrowDropdownCircle, IoIosArrowDropupCircle} from 'react-icons/io';
 import TrackSettings from '../TrackSettings/TrackSettings';
 
 const StyledTrackContainer = styled.div`
+  color: #3f2234;
   padding: 1em;
-  margin-top: 1em;
-  background-color: ${dark};
+  box-sizing: border-box;
+  margin: 20px 0;
+  -webkit-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.31);
+  -moz-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.31);
+  box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.31);
+  background: linear-gradient(to right,rgb(220 220 220),#e2dbdf);
 `;
+
 const TrackControl = styled.div`
   display: grid;
   grid-template-columns: auto 1fr;
@@ -92,7 +98,7 @@ const TrackContainer = ({type}) => {
         </div>
         <div
           css={{
-            backgroundColor: '#8EA8C3',
+            backgroundColor: '#3F2235',
             position: 'relative',
             height: '38px',
           }}

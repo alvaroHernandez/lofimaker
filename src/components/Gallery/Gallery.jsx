@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import {css, jsx} from '@emotion/core';
 import React, {Fragment, useCallback, useEffect} from 'react';
 import {useAsync} from '../../hooks/useAsync';
 import {getAll} from '../../clients/LofiClient';
@@ -36,12 +38,16 @@ const Gallery = () => {
   );
 
   return (
-    <Fragment>
+    <div
+      css={css`
+        background: linear-gradient(to right, #61045f, #aa076b);
+      `}
+    >
       <HeaderSection>
         <GalleryControls />
       </HeaderSection>
-      <Layout color={'white'} backgroundColor={dark}>
-        <Column backgroundColor={darker} back spanSmall={12} spanMedium={12}>
+      <Layout color={'white'}>
+        <Column spanSmall={12} spanMedium={12}>
           <GalleryGrid
             elements={loFis}
             elementClickHandler={elementClickHandler}
@@ -51,7 +57,7 @@ const Gallery = () => {
       <FullScreen handle={handle} onChange={reportChange}>
         {handle.active && <FinalImageContainer />}
       </FullScreen>
-    </Fragment>
+    </div>
   );
 };
 

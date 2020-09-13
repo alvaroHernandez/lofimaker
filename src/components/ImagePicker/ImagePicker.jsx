@@ -11,12 +11,12 @@ import {GoLink} from 'react-icons/go';
 
 const ImagePicker = ({loadImage, isLoading}) => {
   return (
-    <Tabs css={{marginTop: '1em'}}>
-      <TabList css={{backgroundColor: darker}}>
-        <CustomTab index={0} css={{backgroundColor: darker}}>
+    <Tabs css={{ marginTop: '1em'}}>
+      <TabList css={{background:0, borderBottom: "1px solid white"}}>
+        <CustomTab index={0}>
           Search a Gif
         </CustomTab>
-        <CustomTab index={1} css={{backgroundColor: darker}}>
+        <CustomTab index={1}>
           Load Image from URL
         </CustomTab>
       </TabList>

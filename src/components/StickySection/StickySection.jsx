@@ -8,7 +8,6 @@ export const StickySection = ({children}) => {
   return (
     <Section
       css={{
-        backgroundColor: ultraDark,
         zIndex: 2,
         position: 'sticky',
         top: 0,

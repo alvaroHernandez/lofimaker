@@ -7,7 +7,8 @@ function CustomTab({index, ...props}) {
   return (
     <Tab
       style={{
-        backgroundColor: `${selectedIndex === index ? dark : darker}`,
+        backgroundColor: `${selectedIndex === index ? '#FE5B5C' : '#FE4A5C'}`,
+        outline: 0,
       }}
       {...props}
     />

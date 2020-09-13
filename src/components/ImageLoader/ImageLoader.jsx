@@ -63,7 +63,7 @@ const ImageLoader = () => {
       ) : null}
       <ShowOnMedium>
         <BoxWithCenteredContent>
-          <Button css={{width: '100%'}} onClick={hideImagePicker}>
+          <Button variant="secondary" css={{width: '100%'}} onClick={hideImagePicker}>
             {showImagePicker ? 'Hide Image Picker' : 'Show Image Picker'}
           </Button>
         </BoxWithCenteredContent>

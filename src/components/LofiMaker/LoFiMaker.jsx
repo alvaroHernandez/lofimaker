@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import {jsx} from '@emotion/core';
+import {css, jsx} from '@emotion/core';
 import React, {Fragment, useCallback, useState} from 'react';
 import {Layout, Column, HeaderSection} from '../Layout/Layout';
 import ImageLoader from '../ImageLoader/ImageLoader';
@@ -14,6 +14,17 @@ import TracksEditor from '../TracksEditor/TracksEditor';
 import GlobalPlayerControls from '../GlobalPlayerControls/GlobalPlayerControls';
 import {StickySection} from '../StickySection/StickySection';
 import {FullScreen, useFullScreenHandle} from 'react-full-screen';
+
+const style = css`
+  height: 100%;
+  box-sizing: border-box;
+  margin: 0 20px 1em 20px;
+  -webkit-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.31);
+  -moz-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.31);
+  box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.31);
+  background: linear-gradient(to right, #ed6c6c, #aa076b);
+  padding: 1em;
+`;
 
 const LoFiMaker = () => {
   const {playAll, stopAll} = usePlayers();
@@ -35,29 +46,40 @@ const LoFiMaker = () => {
   );
 
   return (
-    <Fragment>
+    <div
+      css={{
+        background: 'linear-gradient(to right, #61045F, #AA076B)',
+      }}
+    >
       <HeaderSection>
         <ExportControls preview={previewHandler} />
       </HeaderSection>
-      <Layout color={'white'} backgroundColor={dark}>
-        <Column backgroundColor={darker} back spanSmall={12} spanMedium={3}>
-          <Section>
+      <Layout color={'white'}>
+        <Column spanSmall={12} spanMedium={3}>
+          <div css={style}>
             <ImageLoader />
-          </Section>
+          </div>
         </Column>
-        <Column backgroundColor={ultraDark} spanSmall={12} spanMedium={9}>
-          <StickySection>
-            <GlobalPlayerControls />
-          </StickySection>
-          <Section>
-            <TracksEditor />
-          </Section>
+        <Column spanSmall={12} spanMedium={9}>
+          <div
+            css={css`
+              height: 100vh;
+              margin: 0 20px 1em 20px;
+            `}
+          >
+            <StickySection>
+              <GlobalPlayerControls />
+            </StickySection>
+            <Section>
+              <TracksEditor />
+            </Section>
+          </div>
         </Column>
       </Layout>
       <FullScreen handle={handle} onChange={reportChange}>
         {handle.active && <FinalImageContainer />}
       </FullScreen>
-    </Fragment>
+    </div>
   );
 };
 
