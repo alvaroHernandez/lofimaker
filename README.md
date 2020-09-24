@@ -26,7 +26,8 @@ Make and share your own Lo-fi creations!
 - [x] Pause on share
 - [x] Check why gallery and maker are sharing players   
 - [x] Fix track position indicator responsive
-- [ ] Improve color scheme
+- [x] Improve color scheme
+- [ ] add gallery voting system
 
 #### Enhancements
 - [ ] refactor music effects
