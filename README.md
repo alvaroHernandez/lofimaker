@@ -14,14 +14,10 @@ Make and share your own Lo-fi creations!
 - [x] Preview should control beats player
 - [x] Add sidebar
 - [x] Refactor
-- [ ] add global tracks slider player control
 - [x] make it responsive
     - [x] make music controls responsive
     - [x] Add "hide" to gif results   
-- [ ] make top buttons sticky, and smaller in mobile?
 - [x] improve preview to make it really full screen
-- [ ] Scroll up to track controls after clicking music or improve player control position
-- [ ] Cancel song after pressing too many
 - [ ] filter out big songs
 - [x] Pause on share
 - [x] Check why gallery and maker are sharing players   
@@ -30,6 +26,10 @@ Make and share your own Lo-fi creations!
 - [ ] add gallery voting system
 
 #### Enhancements
+- [ ] after adding many song tracks, pages does not grows properly on mobile so sticky buttons are not sticky anymore
+- [ ] Scroll up to track controls after clicking music or improve player control position
+- [ ] Cancel song after pressing too many
+- [ ] add global tracks slider player control
 - [ ] refactor music effects
 - [ ] add props validation
 - [ ] check if sounds are actually lofi style (add some?)

@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import {css, jsx} from '@emotion/core';
-import React, {Fragment, useCallback, useEffect} from 'react';
+import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import {useAsync} from '../../hooks/useAsync';
 import {getAll} from '../../clients/LofiClient';
 import useLoFiLoader from '../LoFiLoader/LoFiLoader';
@@ -11,11 +11,16 @@ import GalleryControls from '../GalleryControls/GalleryControls';
 import GalleryGrid from '../GalleryGrid/GalleryGrid';
 import {usePlayers} from 'contexts/PlayersContext';
 import {FullScreen, useFullScreenHandle} from 'react-full-screen';
+import fscreen from "fscreen";
+import FinalImageModal from "components/FinalImageModal/FinalImageModal";
+
+const isFullScreenAvailable = fscreen.fullscreenEnabled;
 
 const Gallery = () => {
   const {data: loFis, run} = useAsync({data: []});
   const {stopAll} = usePlayers();
   const handle = useFullScreenHandle();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     run(getAll());
@@ -24,9 +29,18 @@ const Gallery = () => {
   const {loadLoFi} = useLoFiLoader();
 
   async function elementClickHandler(loFi) {
-    handle.enter();
+    if (isFullScreenAvailable) {
+      handle.enter();
+    } else {
+      setIsModalOpen(true);
+    }
     await loadLoFi(loFi);
   }
+
+  const onModalClose = () => {
+    stopAll();
+    setIsModalOpen(false);
+  };
 
   const reportChange = useCallback(
     (state, handle) => {
@@ -54,9 +68,16 @@ const Gallery = () => {
           />
         </Column>
       </Layout>
-      <FullScreen handle={handle} onChange={reportChange}>
-        {handle.active && <FinalImageContainer />}
-      </FullScreen>
+      {isFullScreenAvailable ? (
+        <FullScreen handle={handle} onChange={reportChange}>
+          {handle.active && <FinalImageContainer />}
+        </FullScreen>
+      ) : (
+        <FinalImageModal
+          setIsDialogOpen={onModalClose}
+          isDialogOpen={isModalOpen}
+        />
+      )}
     </div>
   );
 };
