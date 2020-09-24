@@ -5,6 +5,7 @@ import {Layout, Column, HeaderSection} from '../Layout/Layout';
 import ImageLoader from '../ImageLoader/ImageLoader';
 import {dark, darker, ultraDark} from '../../styles/colors';
 import '@reach/tabs/styles.css';
+import fscreen from 'fscreen';
 
 import {Section} from '../Layout/Layout';
 import FinalImageContainer from '../FinalImageContainer/FinalImageContainer';
@@ -14,6 +15,9 @@ import TracksEditor from '../TracksEditor/TracksEditor';
 import GlobalPlayerControls from '../GlobalPlayerControls/GlobalPlayerControls';
 import {StickySection} from '../StickySection/StickySection';
 import {FullScreen, useFullScreenHandle} from 'react-full-screen';
+import FinalImageModal from 'components/FinalImageModal/FinalImageModal';
+
+const isFullScreenAvailable = fscreen.fullscreenEnabled;
 
 const style = css`
   height: 100%;
@@ -29,12 +33,22 @@ const style = css`
 const LoFiMaker = () => {
   const {playAll, stopAll} = usePlayers();
   const handle = useFullScreenHandle();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   function previewHandler() {
-    handle.enter();
+    if (isFullScreenAvailable) {
+      handle.enter();
+    } else {
+      setIsModalOpen(true);
+    }
     stopAll();
     playAll();
   }
+
+  const onModalClose = () => {
+    stopAll();
+    setIsModalOpen(false);
+  };
 
   const reportChange = useCallback(
     (state, handle) => {
@@ -76,9 +90,16 @@ const LoFiMaker = () => {
           </div>
         </Column>
       </Layout>
-      <FullScreen handle={handle} onChange={reportChange}>
-        {handle.active && <FinalImageContainer />}
-      </FullScreen>
+      {isFullScreenAvailable ? (
+        <FullScreen handle={handle} onChange={reportChange}>
+          {handle.active && <FinalImageContainer />}
+        </FullScreen>
+      ) : (
+        <FinalImageModal
+          setIsDialogOpen={onModalClose}
+          isDialogOpen={isModalOpen}
+        />
+      )}
     </div>
   );
 };

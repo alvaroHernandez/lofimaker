@@ -1,14 +1,13 @@
 /** @jsx jsx */
 import {jsx} from '@emotion/core';
-import FinalImageModal from '../FinalImageModal/FinalImageModal';
+import FinalImageOnFullScreen from 'components/FinalImageOnFullScreen/FinalImageOnFullScreen';
 import '@reach/dialog/styles.css';
-import {usePlayers} from '../../contexts/PlayersContext';
 import PropTypes from 'prop-types';
 
 const FinalImageContainer = () => {
   return (
     <div>
-      <FinalImageModal />
+      <FinalImageOnFullScreen />
     </div>
   );
 };

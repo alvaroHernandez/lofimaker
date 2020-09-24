@@ -5709,7 +5709,7 @@ fsa@0.5.x:
   resolved "https://registry.yarnpkg.com/fsa/-/fsa-0.5.1.tgz#c5552c80563dda02f8c683ecac9f57c1951613db"
   integrity sha1-xVUsgFY92gL4xoPsrJ9XwZUWE9s=
 
-fscreen@^1.0.2:
+fscreen@^1.0.2, fscreen@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/fscreen/-/fscreen-1.1.0.tgz#80f432f24dc915ba0be0f5f6a7d60ca12ecbab5c"
   integrity sha512-nSRkgHknnCRy7ZBWIu9S4IWe1m/VBROczUEU4RzXK3QvDtc89m79m4e5mbyFSugewgB8ajQKsDzeqaQ8sZ+7hA==

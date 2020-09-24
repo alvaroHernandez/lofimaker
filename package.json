@@ -14,6 +14,7 @@
     "@simbathesailor/use-what-changed": "^0.1.25",
     "es6-promisify": "^6.1.1",
     "freesound": "^0.0.4",
+    "fscreen": "^1.1.0",
     "node-gyp": "^7.1.0",
     "prop-types": "^15.7.2",
     "rc-knob": "^1.0.1",
