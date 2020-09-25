@@ -6,11 +6,14 @@ async function save(loFiData) {
   });
 }
 
+async function vote(id) {
+  return client(`${process.env.REACT_APP_BACKEND_URL}lofi/${id}/vote`, {
+    data: {},
+  });
+}
+
 async function getAll() {
   return client(`${process.env.REACT_APP_BACKEND_URL}lofi`);
 }
 
-export {
-  getAll,
-  save,
-};
+export {getAll, save, vote};
