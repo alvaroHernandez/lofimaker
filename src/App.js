@@ -13,7 +13,7 @@ function App() {
     Transport.cancel();
   });
   return (
-    <Switch>
+    <>
       <Route exact path="/">
         <ImageProvider>
           <PlayersProvider>
@@ -29,7 +29,7 @@ function App() {
           </PlayersProvider>
         </ImageProvider>
       </Route>
-    </Switch>
+    </>
   );
 }
 

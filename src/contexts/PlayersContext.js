@@ -66,7 +66,7 @@ function PlayersProvider(props) {
   }, []);
 
   const disposeAll = useCallback(() => {
-    Object.values(players.current).forEach(player => player.player.dispose() );
+    Object.values(players.current).forEach(player => player.player.dispose());
     players.current = {};
   }, []);
 
