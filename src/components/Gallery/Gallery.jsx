@@ -96,15 +96,11 @@ const Gallery = () => {
             (loadingLoFi ? <FullScreenSpinner /> : <FinalImageContainer />)}
         </FullScreen>
       ) : (
-        !loadingLoFi &&
-        (loadingLoFi ? (
-          <FullScreenSpinner />
-        ) : (
-          <FinalImageModal
-            setIsDialogOpen={onModalClose}
-            isDialogOpen={isModalOpen}
-          />
-        ))
+        <FinalImageModal
+          isLoadingLofi={loadingLoFi}
+          setIsDialogOpen={onModalClose}
+          isDialogOpen={isModalOpen}
+        />
       )}
     </div>
   );

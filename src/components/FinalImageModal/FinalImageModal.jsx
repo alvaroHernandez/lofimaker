@@ -4,8 +4,9 @@ import {DialogContent, DialogOverlay} from '@reach/dialog';
 import React from 'react';
 import {landscape, medium} from '../../styles/mediaqueries';
 import {useImage} from '../../contexts/ImageContext';
+import FullScreenSpinner from 'components/FullScreenSpinner/FullScreenSpinner';
 
-function FinalImageModal({setIsDialogOpen, isDialogOpen}) {
+function FinalImageModal({setIsDialogOpen, isDialogOpen, isLoadingLofi}) {
   const {getImage, getFilter} = useImage();
   return (
     <DialogOverlay
@@ -26,9 +27,13 @@ function FinalImageModal({setIsDialogOpen, isDialogOpen}) {
           padding: 0,
         }}
       >
-        <figure className={getFilter()}>
-          <img alt={'final cover'} src={getImage()} width={'100%'} />
-        </figure>
+        {isLoadingLofi ? (
+          <FullScreenSpinner />
+        ) : (
+          <figure className={getFilter()}>
+            <img alt={'final cover'} src={getImage()} width={'100%'} />
+          </figure>
+        )}
       </DialogContent>
     </DialogOverlay>
   );
