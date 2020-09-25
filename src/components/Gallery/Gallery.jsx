@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import {css, jsx} from '@emotion/core';
-import React, { Fragment, useCallback, useEffect, useState } from 'react';
+import React, {Fragment, useCallback, useEffect, useState} from 'react';
 import {useAsync} from '../../hooks/useAsync';
 import {getAll} from '../../clients/LofiClient';
 import useLoFiLoader from '../LoFiLoader/LoFiLoader';
@@ -11,16 +11,19 @@ import GalleryControls from '../GalleryControls/GalleryControls';
 import GalleryGrid from '../GalleryGrid/GalleryGrid';
 import {usePlayers} from 'contexts/PlayersContext';
 import {FullScreen, useFullScreenHandle} from 'react-full-screen';
-import fscreen from "fscreen";
-import FinalImageModal from "components/FinalImageModal/FinalImageModal";
+import fscreen from 'fscreen';
+import FinalImageModal from 'components/FinalImageModal/FinalImageModal';
+import Spinner from 'components/Spinner/Spinner';
+import FullScreenSpinner from 'components/FullScreenSpinner/FullScreenSpinner';
 
 const isFullScreenAvailable = fscreen.fullscreenEnabled;
 
 const Gallery = () => {
-  const {data: loFis, run} = useAsync({data: []});
+  const {data: loFis, run, isLoadingGallery} = useAsync({data: []});
   const {stopAll} = usePlayers();
   const handle = useFullScreenHandle();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loadingLoFi, setLoadingLoFi] = useState(false);
 
   useEffect(() => {
     run(getAll());
@@ -34,7 +37,9 @@ const Gallery = () => {
     } else {
       setIsModalOpen(true);
     }
+    setLoadingLoFi(true);
     await loadLoFi(loFi);
+    setLoadingLoFi(false);
   }
 
   const onModalClose = () => {
@@ -62,21 +67,44 @@ const Gallery = () => {
       </HeaderSection>
       <Layout color={'white'}>
         <Column spanSmall={12} spanMedium={12}>
-          <GalleryGrid
-            elements={loFis}
-            elementClickHandler={elementClickHandler}
-          />
+          {isLoadingGallery ? (
+            <div
+              css={{
+                width: '100%',
+                fontSize: '7em',
+                height: '100vh',
+                alignContent: 'center',
+                display: 'grid',
+                justifyContent: 'center',
+              }}
+            >
+              <Spinner />
+            </div>
+          ) : (
+            <div css={{height: '100vh'}}>
+              <GalleryGrid
+                elements={loFis}
+                elementClickHandler={elementClickHandler}
+              />
+            </div>
+          )}
         </Column>
       </Layout>
       {isFullScreenAvailable ? (
         <FullScreen handle={handle} onChange={reportChange}>
-          {handle.active && <FinalImageContainer />}
+          {handle.active &&
+            (loadingLoFi ? <FullScreenSpinner /> : <FinalImageContainer />)}
         </FullScreen>
       ) : (
-        <FinalImageModal
-          setIsDialogOpen={onModalClose}
-          isDialogOpen={isModalOpen}
-        />
+        !loadingLoFi &&
+        (loadingLoFi ? (
+          <FullScreenSpinner />
+        ) : (
+          <FinalImageModal
+            setIsDialogOpen={onModalClose}
+            isDialogOpen={isModalOpen}
+          />
+        ))
       )}
     </div>
   );

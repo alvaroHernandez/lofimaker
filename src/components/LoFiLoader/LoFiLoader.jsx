@@ -1,7 +1,5 @@
-import {useCallback, useState} from 'react';
 import {MusicTrackPlayer} from '../../contexts/TrackPlayer';
 import {Distortion, EQ3, GrainPlayer, Reverb} from 'tone';
-import {useAsync} from '../../hooks/useAsync';
 import {usePlayers} from '../../contexts/PlayersContext';
 import {useImage} from '../../contexts/ImageContext';
 
@@ -29,7 +27,7 @@ const onloadPlayer = player => {
   player.sync(player.startTime).start();
 };
 
-const loadPlayer = playerData => {
+const loadPlayer = (playerData, playerLoadedCallback) => {
   const player = new MusicTrackPlayer(
     new GrainPlayer({
       url: playerData.url,
@@ -38,6 +36,7 @@ const loadPlayer = playerData => {
         console.log('error loading buffer for player ' + e);
       },
       onload: () => {
+        playerLoadedCallback();
         player.onload();
       },
     }),
@@ -55,21 +54,30 @@ const loadPlayer = playerData => {
 
 const useLoFiLoader = () => {
   const {addPlayer, stopAll, playAll, disposeAll} = usePlayers();
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const {run} = useAsync();
   const {setFilter, setImage} = useImage();
 
-  async function loadLoFi(deserializedLofi) {
-    await disposeAll();
-    setFilter(deserializedLofi.image.filter);
-    loadImage(deserializedLofi.image.url);
-    deserializedLofi.players
-      .map(loadPlayer)
-      .forEach(player => addPlayer(player.trackId, player));
-    setIsDialogOpen(true);
-    stopAll();
-    playAll();
-  }
+  const loadLoFi = deserializedLofi =>
+    new Promise(resolve => {
+      disposeAll();
+      setFilter(deserializedLofi.image.filter);
+      loadImageFromUrl(deserializedLofi.image.url);
+      let totalPlayers = deserializedLofi.players.length;
+      deserializedLofi.players
+        .map(player =>
+          loadPlayer(player, () => {
+            totalPlayers = totalPlayers - 1;
+          }),
+        )
+        .forEach(player => addPlayer(player.trackId, player));
+      const checkIfAllPlayerAreLoaded = setInterval(() => {
+        if (totalPlayers === 0) {
+          clearInterval(checkIfAllPlayerAreLoaded);
+          stopAll();
+          playAll();
+          resolve();
+        }
+      }, 330);
+    });
 
   function loadImageFromUrl(url) {
     return new Promise(function (resolve, reject) {
@@ -81,16 +89,7 @@ const useLoFiLoader = () => {
     });
   }
 
-  const loadImage = useCallback(
-    url => {
-      run(loadImageFromUrl(url));
-    },
-    [loadImageFromUrl, run],
-  );
-
   return {
-    isDialogOpen,
-    setIsDialogOpen,
     loadLoFi,
   };
 };
