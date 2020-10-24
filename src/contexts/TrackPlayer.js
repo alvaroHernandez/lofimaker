@@ -1,5 +1,5 @@
 //TODO: typescript interfaces?
-import {Player, Transport} from 'tone';
+import {Player, Sequence, Transport} from 'tone';
 import {tracks} from '../assets/sounds/tracks';
 
 class MusicTrackPlayer {
@@ -89,6 +89,7 @@ class MusicTrackPlayer {
       url: this.url,
       effects: this.effects,
       effectsToggles: this.effectsToggles,
+      type: 'MusicTrackPlayer',
     };
   }
 }
@@ -112,7 +113,14 @@ class SequencePlayer {
     this.sequence.start(Transport.seconds);
   }
 
-  constructor(sequence, trackId, title, duration) {
+  constructor(
+    setCurrentBeat,
+    timeBetweenBeats,
+    totalBeats,
+    trackId,
+    title,
+    duration,
+  ) {
     this.players = {};
     Object.entries(tracks).map(([key, value]) => {
       const newPlayer = new Player(value.sound);
@@ -121,12 +129,17 @@ class SequencePlayer {
       this.players = {...this.players, [key]: newPlayer};
     });
 
+    this.timeBetweenBeats = timeBetweenBeats;
+    this.totalBeats = totalBeats;
+
     this.title = title;
     this.duration = duration;
     this.trackId = trackId;
     this.startTime = 0;
 
-    this.sequence = sequence;
+    this.beatsContainer = [];
+    this.initializeBeatsContainer();
+    this.sequence = this.initNewSequence(setCurrentBeat, this.beatsContainer);
     this.sequence.start(Transport.seconds);
   }
 
@@ -165,6 +178,51 @@ class SequencePlayer {
 
   getPlayer(trackName) {
     return this.players[trackName];
+  }
+
+  initializeBeatsContainer() {
+    for (let i = 0; i < this.totalBeats; i++) {
+      this.beatsContainer.push({});
+    }
+  }
+
+  initNewSequence(setCurrentBeat, beatsContainer) {
+    const beatColumnsIndicators = Array.from(Array(this.totalBeats).keys());
+    return new Sequence(
+      function (time, col) {
+        setCurrentBeat(col);
+        for (let [, value] of Object.entries(beatsContainer[col])) {
+          if (value !== undefined) value.start(time);
+        }
+      },
+      beatColumnsIndicators,
+      this.timeBetweenBeats,
+    );
+  }
+
+  serialize() {
+    const serializedBeatsContainer = this.beatsContainer.map(beatTracks => {
+      const beatTracksIndicators = {};
+      Object.entries(beatTracks).forEach(([trackName, player]) => {
+        if (player !== undefined) {
+          beatTracksIndicators[trackName] = true;
+        }
+      });
+      return beatTracksIndicators;
+    });
+
+    return {
+      trackId: this.trackId,
+      title: this.title,
+      duration: this.duration,
+      startTime: this.startTime,
+      loops: this.sequence.loop,
+      playbackRate: this.sequence.playbackRate,
+      beatsContainer: serializedBeatsContainer,
+      timeBetweenBeats: this.timeBetweenBeats,
+      totalBeats: this.totalBeats,
+      type: 'SequencePlayer',
+    };
   }
 }
 

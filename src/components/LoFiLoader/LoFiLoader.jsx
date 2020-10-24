@@ -2,6 +2,7 @@ import {MusicTrackPlayer} from '../../contexts/TrackPlayer';
 import {Distortion, EQ3, GrainPlayer, Reverb} from 'tone';
 import {usePlayers} from '../../contexts/PlayersContext';
 import {useImage} from '../../contexts/ImageContext';
+import {SequencePlayer} from 'contexts/TrackPlayer';
 
 const onloadPlayer = player => {
   Object.entries(player.effectsToggles).forEach(([k, isOn]) => {
@@ -27,7 +28,44 @@ const onloadPlayer = player => {
   player.sync(player.startTime).start();
 };
 
-const loadPlayer = (playerData, playerLoadedCallback) => {
+const loadSequencePlayer = (playerData, playerLoadedCallback) => {
+  const {
+    timeBetweenBeats,
+    totalBeats,
+    trackId,
+    title,
+    duration,
+    beatsContainer,
+    loops,
+    playbackRate,
+    startTime,
+  } = playerData;
+  const sequencePlayer = new SequencePlayer(
+    () => {},
+    timeBetweenBeats,
+    totalBeats,
+    trackId,
+    title,
+    duration,
+  );
+  beatsContainer.forEach((beatTracks, beatIndex) => {
+    Object.entries(beatTracks).forEach(([trackName, hasPlayer]) => {
+      if (hasPlayer === true) {
+        sequencePlayer.beatsContainer[beatIndex][
+          trackName
+        ] = sequencePlayer.getPlayer(trackName);
+      }
+    });
+  });
+
+  sequencePlayer.updateLoop(loops);
+  sequencePlayer.updatePlaybackRate(playbackRate);
+  sequencePlayer.updatePlayerStartingOffset(startTime);
+  playerLoadedCallback();
+  return sequencePlayer;
+};
+
+const loadMusicTrackPlayer = (playerData, playerLoadedCallback) => {
   const player = new MusicTrackPlayer(
     new GrainPlayer({
       url: playerData.url,
@@ -63,12 +101,25 @@ const useLoFiLoader = () => {
       loadImageFromUrl(deserializedLofi.image.url);
       let totalPlayers = deserializedLofi.players.length;
       deserializedLofi.players
-        .map(player =>
-          loadPlayer(player, () => {
+        .map(player => {
+          if (player.type === 'MusicTrackPlayer') {
+            return loadMusicTrackPlayer(player, () => {
+              totalPlayers = totalPlayers - 1;
+            });
+          } else if (player.type === 'SequencePlayer') {
+            return loadSequencePlayer(player, () => {
+              totalPlayers = totalPlayers - 1;
+            });
+          } else {
+            // eslint-disable-next-line no-console
+            console.log('error loading player', player);
             totalPlayers = totalPlayers - 1;
-          }),
-        )
-        .forEach(player => addPlayer(player.trackId, player));
+            return null;
+          }
+        })
+        .forEach(player => {
+          if (player !== null) addPlayer(player.trackId, player);
+        });
       const checkIfAllPlayerAreLoaded = setInterval(() => {
         if (totalPlayers === 0) {
           clearInterval(checkIfAllPlayerAreLoaded);

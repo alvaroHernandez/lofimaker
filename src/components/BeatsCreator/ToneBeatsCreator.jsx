@@ -11,20 +11,6 @@ import {lofiDurationMinutes} from '../../configs/playerConfig';
 
 const totalBeats = 28;
 
-const initNewSequence = (setCurrentBeat, timeBetweenBeats, beatsRef) => {
-  const beatColumnsIndicators = Array.from(Array(totalBeats).keys());
-  return new Sequence(
-    function (time, col) {
-      setCurrentBeat(col);
-      for (let [, value] of Object.entries(beatsRef.current[col])) {
-        if (value !== undefined) value.start(time);
-      }
-    },
-    beatColumnsIndicators,
-    timeBetweenBeats,
-  );
-};
-
 const ToneBeatsCreator = ({updateCurrentPlayer, trackId}) => {
   const [bpm, setBpm] = useState(120);
   const [loops, setLoops] = useState(true);
@@ -35,7 +21,7 @@ const ToneBeatsCreator = ({updateCurrentPlayer, trackId}) => {
   const sequenceDuration = (totalBeats * 60) / (bpm * 4);
 
   const [currentBeat, setCurrentBeat] = useState(-1);
-  const beatsContainer = useRef([]);
+
 
   const updateBpm = async value => {
     if (Transport.state !== 'stopped') {
@@ -58,19 +44,14 @@ const ToneBeatsCreator = ({updateCurrentPlayer, trackId}) => {
     }
   };
 
-  useEffect(() => {
-    if (beatsContainer.current.length === 0) {
-      for (let i = 0; i < totalBeats; i++) {
-        beatsContainer.current.push({});
-      }
-    }
-  }, []);
 
   useLayoutEffect(() => {
     if (!currentPlayer) {
       const timeBetweenBeats = sequenceDuration / totalBeats;
       const sequencePlayer = new SequencePlayer(
-        initNewSequence(setCurrentBeat, timeBetweenBeats, beatsContainer),
+        setCurrentBeat,
+        timeBetweenBeats,
+        totalBeats,
         trackId,
         'Drum Kit',
         loops * sequenceDuration * 1000,
@@ -101,12 +82,12 @@ const ToneBeatsCreator = ({updateCurrentPlayer, trackId}) => {
   ]);
 
   const toggleBeat = (trackName, beatIndex) => {
-    if (beatsContainer.current[beatIndex][trackName] === undefined) {
-      beatsContainer.current[beatIndex][trackName] = currentPlayer.getPlayer(
-        trackName,
-      );
+    if (currentPlayer.beatsContainer[beatIndex][trackName] === undefined) {
+      currentPlayer.beatsContainer[beatIndex][
+        trackName
+      ] = currentPlayer.getPlayer(trackName);
     } else {
-      beatsContainer.current[beatIndex][trackName] = undefined;
+      currentPlayer.beatsContainer[beatIndex][trackName] = undefined;
     }
   };
 
