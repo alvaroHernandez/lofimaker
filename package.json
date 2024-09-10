@@ -23,7 +23,7 @@
     "react-draggable": "^4.4.3",
     "react-full-screen": "^0.3.1",
     "react-icons": "^3.10.0",
-    "react-router-dom": "^5.2.0",
+    "react-router-dom": "^6.0.0",
     "react-scripts": "3.4.3",
     "react-toggle": "^4.1.1",
     "soundcloud": "^3.3.2",
